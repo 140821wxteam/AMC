@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>  
+    <class name="com.amc.model.models.Customer" table="t_customerinfo" lazy="false">  
+
+		<id name="id" column="id" type="integer" >
+		  <generator class="native" />
+		</id>
+		
+		<version name="version" column="version" type="integer"/>
+		<property name="enable" column="enable" type="boolean" not-null="true"/>
+		<property name="name" column="name" type="string" not-null="true"/>
+		<property name="englishName" column="englishName" type="string" not-null="false"/>	
+		<property name="chineseName" column="chineseName" type="string" not-null="true"/>
+		<property name="address" column="address" type="string" not-null="true"/>
+		<property name="phone" column="phone" type="string" not-null="true"/>
+        <property name="contactPerson" column="contactPerson" type="string" not-null="true"/>
+
+    </class>  
+</hibernate-mapping> 
