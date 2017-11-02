@@ -148,7 +148,7 @@
 		                        	<c:forEach items="${contentModel.items}" var="item">
 							        <tr class="odd gradeX">
 							        	<td class="check_cell">
-									        <input type="checkbox" class="checkboxes" name="Id" value="${item.id}" />
+									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
 							            <td>${item.vendorId}</td>
 							            <td>${item.vendorName}</td>

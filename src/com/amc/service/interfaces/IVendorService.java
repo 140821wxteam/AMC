@@ -17,6 +17,7 @@ public interface IVendorService extends IEnableEntityService<Integer, Vendor, IV
 	public PageList<Vendor> listPage(String vendorId, String vendorName, int pageNo, int pageSize);
 	
 	public void saveVendor(Vendor vendor) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
+	public void updateVendor(Vendor vendor) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	//public void updateBind(Integer id, Integer roleId, Integer organizationId) throws ValidatException, EntityOperateException;
 
 }

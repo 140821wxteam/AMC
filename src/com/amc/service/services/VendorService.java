@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.amc.dao.IVendorDao;
 import com.amc.model.models.Vendor;
 import com.amc.model.models.Account;
+import com.amc.model.models.Authority;
 import com.amc.model.models.Organization;
 import com.amc.model.models.Role;
 import com.amc.service.interfaces.IVendorService;
@@ -72,6 +73,18 @@ public class VendorService extends EnableEntityService<Integer, Vendor, IVendorD
 		super.save(vendor);
 	}
 	
+	@Override
+	public void updateVendor(Vendor vendor) throws ValidatException, EntityOperateException{
+		Vendor dbModel=super.get(vendor.getId());
+		dbModel.setvendorId(vendor.getvendorId());
+		dbModel.setvendorName(vendor.getvendorName());
+		dbModel.setvendorAddr(vendor.getvendorAddr());
+		dbModel.setcontactPerson(vendor.getcontactPerson());
+		dbModel.setvendorTele(vendor.getvendorTele());
+		dbModel.setvendorEmail(vendor.getvendorEmail());
+		dbModel.setnote(vendor.getnote());
+		super.update(dbModel);
+	}
 	/*@Override
 	public boolean vendorExist(String vendorId){
 		Criteria criteria = entityDao.getCriteria();
