@@ -81,7 +81,7 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品编号</label>
                               <div class="col-md-10">
-                                 <form:input path="productId" class="form-control" placeholder="产品编号"/>
+                                 <form:input path="productId" class="form-control" placeholder="产品编号"/>                                 
                               </div>
                            </div>
                            <div class="form-group">
@@ -93,7 +93,13 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品类型</label>
                               <div class="col-md-10">
-                                 <form:input path="productType" class="form-control" placeholder="产品类型"/>
+                                 <!--<form:input path="productType" class="form-control" placeholder="产品类型"/>-->
+                                 <form:select path="productType" class="form-control" placeholder="产品类型">
+                                 	<option value="">请选择</option>
+                                 	<option value="G">G</option>
+                                 	<option value="M">M</option>
+                                 	<option value="S">S</option>
+                                 </form:select>
                               </div>
                            </div>
                            <div class="form-group">

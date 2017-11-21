@@ -9,7 +9,7 @@ public class Product extends EnableEntity<Integer> implements ICUDEable{
 	private String productName;
 	private String productType;
 	private String productUnit;
-	private Integer safeStock;
+	private int safeStock;
 	private String note;
 	
 	public void setproductId(String productId){
@@ -36,10 +36,10 @@ public class Product extends EnableEntity<Integer> implements ICUDEable{
 	public String getproductUnit(){
 		return this.productUnit;
 	}
-	public void setsafeStock(Integer safeStock){
+	public void setsafeStock(int safeStock){
 		this.safeStock=safeStock;
 	}
-	public Integer getsafeStock(){
+	public int getsafeStock(){
 		return this.safeStock;
 	}
 	public void setnote(String note){

@@ -22,8 +22,11 @@
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script type="text/javascript" src="<c:url value='/js/jquery.treeLite.js?ver=10'/>"></script>
    <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script> 
+   <script type="text/javascript" src="<c:url value='/js/jqurey-1.10.2.min.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/plugins/data-tables/jquery.dataTables.js'/>"></script>  
+   <script type="text/javascript" src="<c:url value='/plugins/table/bootstrap-table.js'/>"></script>
    <!-- END PAGE LEVEL SCRIPTS -->
-
+   <link rel="stylesheet" href="<c:url value='/plugins/data-tables/DT_bootstrap.css'/>" type="text/css"/>
    <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <!-- END HEAD -->
@@ -68,70 +71,66 @@
          </div>
          <!-- END PAGE HEADER-->
          <!-- BEGIN PAGE CONTENT-->
+          
          <div class="row">
             <div class="col-md-12">
-               <!-- BEGIN SAMPLE FORM PORTLET-->   
+               <!-- BEGIN SAMPLE FORM PORTLET-->
                <div class="portlet ">
                   <div class="portlet-title">
                      <div class="caption"><i class="icon-edit"></i>${requestScope.permissionMenu.curName}</div>
                   </div>
                   <div class="portlet-body form">
-                     <form:form modelAttribute="contentModel" class="form-horizontal" method="POST">
-                        <div class="form-body">
+				  <form:form modelAttribute="contentModel" id="orderinfo" name="orderinfo" class="form-horizontal" method="POST">
+				   	<div class="form-body">
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">产品编号</label>
+                              <label  class="col-md-2 control-label">订单编号</label>
                               <div class="col-md-10">
-                                 <form:input path="productId" class="form-control" placeholder="产品编号"/>
+                                 <form:input path="orderId" id="orderId" name="orderId" class="form-control" placeholder="订单编号"/>
                               </div>
                            </div>
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">产品名称</label>
+                              <label  class="col-md-2 control-label">顾客编号</label>
                               <div class="col-md-10">
-                                 <form:input path="productName" class="form-control" placeholder="产品名称"/>                               
+                                 <form:input path="customerId" name="customerId" class="form-control" placeholder="顾客编号"/>
+                                                            
                               </div>
                            </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">产品类型</label>
+                           <!--<div class="form-group">
+                              <label  class="col-md-2 control-label">总金额</label>
                               <div class="col-md-10">
-                                 <!--<form:input path="productType" class="form-control" placeholder="产品类型"/>-->
-                                 <form:select path="productType" class="form-control" placeholder="产品类型">
-                                 	<option value="${contentModel.productType}">${contentModel.productType}</option>
-                                 	<option value="G">G</option>
-                                 	<option value="M">M</option>
-                                 	<option value="S">S</option>
-                                 </form:select>
+                                 <form:input path="totalPrice" id="totalPrice" name="totalPrice" class="form-control" value="0" placeholder="总金额"/>
+                              	
                               </div>
-                           </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">计量单位</label>
-                              <div class="col-md-10">
-                                 <form:input path="productUnit" class="form-control" placeholder="计量单位"/>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">安全库存</label>
-                              <div class="col-md-10">
-                                 <form:input path="safeStock" class="form-control" placeholder="安全库存"/>
-                              </div>
-                           </div>
+                           </div>-->
                            <div class="form-group">
                               <label  class="col-md-2 control-label">备注</label>
                               <div class="col-md-10">
-                                 <form:input path="note" class="form-control" placeholder="备注"/>
+                                 <form:input path="note" name="note" class="form-control" placeholder="备注"/>
+                                 
                               </div>
+                           
                            </div>                                      
                         </div>
                         <div class="form-actions fluid">
-                           <div class="col-md-offset-6 col-md-6">
-                              <button type="submit" class="btn btn-success">保存</button>                             
+                           <div class="col-md-offset-4 col-md-6">
+                              <button type="button" class="btn btn-success" onclick="Orderfigure()">刷新总金额</button>
+                              <button type="button" class="btn btn-success" onclick="Orderdetail()">增加明细</button>
+                              <button type="button" class="btn btn-success" onclick="saveOrder()">保存</button>
+                              <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>                              
                            </div>
-                        </div>
-                     </form:form>
+                        	</div>
+                     
+                     </form:form>	
                   </div>
                </div>
                <!-- END SAMPLE FORM PORTLET-->
+                     
+               
+
             </div>
+            
          </div>
+         
          <!-- END PAGE CONTENT-->    
       </div>
       <!-- END PAGE -->  
@@ -143,6 +142,18 @@
    	  $(function() {   
          App.init();
       });
+   	  function Orderdetail(){
+   		  var orderId = document.getElementById("orderId").value;
+   		  window.location.href = '../sales/orderdetail/'+orderId;
+   	  }
+   	function saveOrder(){
+   		document.getElementById("orderinfo").submit();
+ 	  }
+   	  //function Orderfigure(){
+   	//	var orderId = document.getElementById("orderId").value;
+   	//	window.location.href = '../sales/orderfigure/'+orderId; 
+   	//  }
+   	
    </script>
    <!-- END JAVASCRIPTS -->   
 </body>

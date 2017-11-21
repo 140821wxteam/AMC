@@ -79,51 +79,70 @@
                      <form:form modelAttribute="contentModel" class="form-horizontal" method="POST">
                         <div class="form-body">
                            <div class="form-group">
+                              <label  class="col-md-2 control-label">订单编号</label>
+                              <div class="col-md-10">
+                                 <form:input path="orderId" name="orderId" class="form-control" placeholder="订单编号"/>                                 
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">订单明细编号</label>
+                              <div class="col-md-10">
+                                 <form:input path="orderdetailId" name="orderdetailId" class="form-control" placeholder="订单明细编号"/>                               
+                              </div>
+                           </div>
+                           <div class="form-group">
                               <label  class="col-md-2 control-label">产品编号</label>
                               <div class="col-md-10">
-                                 <form:input path="productId" class="form-control" placeholder="产品编号"/>
+                                 <form:input path="productId" name="productId" class="form-control" placeholder="产品编号"/>                               
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品名称</label>
                               <div class="col-md-10">
-                                 <form:input path="productName" class="form-control" placeholder="产品名称"/>                               
+                                 <form:input path="productName" name="productName" class="form-control" placeholder="产品名称"/>                               
                               </div>
                            </div>
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">产品类型</label>
+                              <label  class="col-md-2 control-label">需求数量</label>
                               <div class="col-md-10">
-                                 <!--<form:input path="productType" class="form-control" placeholder="产品类型"/>-->
-                                 <form:select path="productType" class="form-control" placeholder="产品类型">
-                                 	<option value="${contentModel.productType}">${contentModel.productType}</option>
-                                 	<option value="G">G</option>
-                                 	<option value="M">M</option>
-                                 	<option value="S">S</option>
-                                 </form:select>
+                                 <form:input path="quantityDemand" name="quantityDemand" id="quantityDemand" class="form-control" placeholder="需求数量" onchange="figure()"/>
                               </div>
                            </div>
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">计量单位</label>
+                              <label  class="col-md-2 control-label">已供数量</label>
                               <div class="col-md-10">
-                                 <form:input path="productUnit" class="form-control" placeholder="计量单位"/>
+                                 <form:input path="quantitySupplied" name="quantitySupplied" class="form-control" placeholder="已供数量"/>
                               </div>
                            </div>
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">安全库存</label>
+                              <label  class="col-md-2 control-label">单价</label>
                               <div class="col-md-10">
-                                 <form:input path="safeStock" class="form-control" placeholder="安全库存"/>
+                                 <form:input path="unitPrice" name="unitPrice" id="unitPrice" class="form-control" placeholder="单价" onchange="figure()"/>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">总价</label>
+                              <div class="col-md-10">
+                                 <form:input path="totalPrice" name="totalPrice" id="totalPrice" class="form-control" placeholder="总价"/>
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">备注</label>
                               <div class="col-md-10">
-                                 <form:input path="note" class="form-control" placeholder="备注"/>
+                                 <form:input path="note" name="note" class="form-control" placeholder="备注"/>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">状态</label>
+                              <div class="col-md-10">
+                                 <form:input path="status" name="status" class="form-control" placeholder="状态"/>
                               </div>
                            </div>                                      
                         </div>
                         <div class="form-actions fluid">
                            <div class="col-md-offset-6 col-md-6">
-                              <button type="submit" class="btn btn-success">保存</button>                             
+                              <button type="submit" class="btn btn-success">保存</button>
+                              <button type="button" class="btn btn-success" onclick="javascript:history.go(-1);">返回</button>                             
                            </div>
                         </div>
                      </form:form>
@@ -143,6 +162,13 @@
    	  $(function() {   
          App.init();
       });
+   	function figure(){
+ 	   var quantityDemand =parseInt(document.getElementById("quantityDemand").value);
+ 	   var unitPrice =parseFloat(document.getElementById("unitPrice").value);
+ 	   var tp = quantityDemand*unitPrice;
+ 	   document.getElementById("totalPrice").value = tp;
+ }
+   	  
    </script>
    <!-- END JAVASCRIPTS -->   
 </body>
