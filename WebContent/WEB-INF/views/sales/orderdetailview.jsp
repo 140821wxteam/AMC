@@ -187,13 +187,9 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "../orderdetailadd/"+document.getElementById("orderId").value},
-                 { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "../orderdetailedit/{0}", 
+                 { link: true, display: "查看", css: "icon-search", showIcon: true, url: "../orderdetailviewer/{0}", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                  
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "../orderdetaildelete/{0}", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+                 { splitter: true }                 
              ]
          });
       });

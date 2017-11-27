@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
+import com.amc.model.models.Product;
 import com.amc.model.models.Orderdetail.OrderdetailListForm;
 import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOrderdetailService;
@@ -37,8 +39,10 @@ import com.amc.web.models.OrderEditModel;
 import com.amc.web.models.OrderSearchModel;
 import com.amc.web.models.OrderdetailEditModel;
 import com.amc.web.models.OrderdetailSearchModel;
+import com.amc.web.models.ProductEditModel;
 import com.amc.web.models.extension.OrderModelExtension;
 import com.amc.web.models.extension.OrderdetailModelExtension;
+import com.amc.web.models.extension.ProductModelExtension;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
 import com.infrastructure.project.common.utilities.PageListUtil;
@@ -159,5 +163,74 @@ public class OrderController extends BaseController{
         	returnUrl="sales/order";
     	return "redirect:"+returnUrl; 
     
+	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/orderedit/{id}", method = {RequestMethod.GET})
+	public String orderedit(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException{	
+		if(!model.containsAttribute("contentModel")){
+			OrderEditModel orderEditModel=OrderModelExtension.toOrderEditModel(orderService.get(id));
+			model.addAttribute("contentModel", orderEditModel);
+		}
+
+        return "sales/orderedit";	
+	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/orderedit/{id}", method = {RequestMethod.POST})
+    public String orderedit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") OrderEditModel editModel, @PathVariable(value="id") Integer id,BindingResult result) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
+		if(result.hasErrors())
+            return orderedit(request, model, id);
+		//vendorService.updateVendor(VendorModelExtension.toVendor(editModel.setId(id)));
+        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+        //System.out.println("return_"+returnUrl);
+        List<Order> lists=orderService.listAll();
+		String orderId=null;
+		for(Order o:lists) {
+			if(o.getId()==id)
+			orderId=o.getorderId();
+		}
+		
+        double tp=0.0;
+		List<Orderdetail> details=orderdetailService.listAll();
+		
+		for(Orderdetail od:details) {
+			if(od.getorderId().equals(orderId))
+			tp+=od.gettotalPrice();
+		}
+		editModel.settotalPrice(tp);
+		editModel.setcreateTime(Calendar.getInstance());
+		editModel.setstatus("未完成");
+        Order order=OrderModelExtension.toOrder(editModel);
+        order.setId(id);
+        orderService.updateOrder(order);
+        
+    if(returnUrl==null)
+        returnUrl="sales/orderedit";
+    	return "redirect:"+returnUrl;    
+    }
+	
+	@AuthPassport
+	@RequestMapping(value = "orderdelete/{id}", method = {RequestMethod.GET})
+	public String orderdelete(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException{	
+		List<Order> lists=orderService.listAll();
+		String orderId=null;
+		for(Order o:lists) {
+			if(o.getId()==id)
+			orderId=o.getorderId();
+		}
+		
+		List<Orderdetail> details=orderdetailService.listAll();
+		
+		for(Orderdetail od:details) {
+			if(od.getorderId().equals(orderId))
+				orderdetailService.delete(od.getId());
+		}
+		orderService.delete(id);
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		if(returnUrl==null)
+        	returnUrl="sales/order";
+        return "redirect:"+returnUrl;	
+	
 	}
 }
