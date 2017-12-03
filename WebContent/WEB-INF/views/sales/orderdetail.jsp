@@ -137,6 +137,7 @@
 		                              <th>单价</th>
 		                              <th>总价</th>
 		                              <th>备注</th>
+		                              <th>订单明细状态</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -153,6 +154,7 @@
 							            <td>${item.unitPrice}</td>
 							            <td>${item.totalPrice}</td>							            
 							            <td>${item.note}</td>
+							            <td>${item.status}</td>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>

@@ -70,7 +70,7 @@ public class OrderController extends BaseController{
         model.addAttribute("searchModel", searchModel);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
-        model.addAttribute("contentModel", orderService.listPage(searchModel.getorderId(), searchModel.getcustomerId(), pageNo, pageSize));
+        model.addAttribute("contentModel", orderService.listPage(searchModel.getorderId(), searchModel.getcustomerId(), searchModel.getstatus(), pageNo, pageSize));
         return "sales/order";
     }
 	
@@ -227,6 +227,35 @@ public class OrderController extends BaseController{
 				orderdetailService.delete(od.getId());
 		}
 		orderService.delete(id);
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		if(returnUrl==null)
+        	returnUrl="sales/order";
+        return "redirect:"+returnUrl;	
+	
+	}
+	//订单退回操作
+	@AuthPassport
+	@RequestMapping(value = "orderback/{id}", method = {RequestMethod.GET})
+	public String orderback(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{	
+		List<Order> lists=orderService.listAll();
+		String orderId=null;
+		for(Order o:lists) {
+			if(o.getId()==id)
+			orderId=o.getorderId();
+			o.setstatus("退回");
+			orderService.updateOrder(o);
+		}
+		
+		List<Orderdetail> details=orderdetailService.listAll();
+		
+		for(Orderdetail od:details) {
+			if(od.getorderId().equals(orderId))
+			{
+				od.setstatus("退回");
+				orderdetailService.updateOrderdetail(od);
+			}
+				
+		}
 		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
 		if(returnUrl==null)
         	returnUrl="sales/order";

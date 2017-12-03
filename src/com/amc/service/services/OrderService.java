@@ -39,7 +39,7 @@ public class OrderService extends EnableEntityService<Integer, Order, IOrderDao>
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageList<Order> listPage(String orderId, String customerId, int pageNo, int pageSize) {		
+	public PageList<Order> listPage(String orderId, String customerId, String status, int pageNo, int pageSize) {		
 		Criteria countCriteria = entityDao.getCriteria();	
 		Criteria listCriteria = entityDao.getCriteria();
 		
@@ -50,6 +50,10 @@ public class OrderService extends EnableEntityService<Integer, Order, IOrderDao>
 		if(customerId!=null && !customerId.isEmpty()){
 			countCriteria.add(Restrictions.eq("customerId", customerId)); 
     		listCriteria.add(Restrictions.eq("customerId", customerId)); 
+		}
+		if(status!=null && !status.isEmpty()){
+			countCriteria.add(Restrictions.eq("status", status)); 
+    		listCriteria.add(Restrictions.eq("status", status)); 
 		}
 
         listCriteria.setFirstResult((pageNo-1)*pageSize);  

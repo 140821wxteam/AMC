@@ -35,7 +35,7 @@
               </li>
               <li class="divider"></li>
               </li>
-              <li><a href="login.html"><i class="icon-off"></i>注销登录</a>
+              <li><a href="../account/login.jsp"><i class="icon-off"></i>注销登录</a>
               </li>
            </ul>
         </li>

@@ -12,7 +12,7 @@ import com.infrastructure.project.common.utilities.PageList;
 
 public interface IOrderService extends IEnableEntityService<Integer, Order, IOrderDao> {
 
-	public PageList<Order> listPage(String orderId, String customerId, int pageNo, int pageSize);
+	public PageList<Order> listPage(String orderId, String customerId, String status, int pageNo, int pageSize);
 	
 	public void saveOrder(Order order) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	

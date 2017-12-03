@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
 import com.amc.model.models.Product;
+import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOrderdetailService;
 import com.amc.service.interfaces.IProductService;
 import com.amc.web.auth.AuthPassport;
@@ -43,6 +45,7 @@ public class OrderdetailController extends BaseController{
 	@Autowired
     @Qualifier("OrderdetailService")
 	private IOrderdetailService orderdetailService;
+	//private IOrderService orderService;
 	
 	@AuthPassport
 	@RequestMapping(value="/orderdetail/{orderId}", method = {RequestMethod.GET})
@@ -64,14 +67,14 @@ public class OrderdetailController extends BaseController{
     	model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 		//String orderId = request.getParameter("orderId");
-		List<Orderdetail> lists=orderdetailService.listAll();
+		List<Order> lists=orderService.listAll();
 		String orderId=null;
-		for(Orderdetail l:lists) {
+		for(Order l:lists) {
 			if(l.getId()==id) { 
-				
 				orderId=l.getorderId();
 			}
 		}
+		System.out.println(orderId);
 		searchModel.setorderId(orderId);
         model.addAttribute("searchModel", searchModel);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);

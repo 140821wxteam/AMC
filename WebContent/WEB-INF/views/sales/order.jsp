@@ -88,24 +88,32 @@
 					  <form:form modelAttribute="searchModel" class="form-horizontal" method="GET">
 						 <div class="form-body">
 							<div class="row">
-							   <div class="col-md-6">
+							   <div class="col-md-4">
 								  <div class="form-group">
 									 <label class="control-label col-md-3">订单编号</label>
-									 <div class="col-md-9">
+									 <div class="col-md-8">
 										<form:input path="orderId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单编号"/>
 									 </div>
 								  </div>
 							   </div>
 							   <!--/span-->
-							   <div class="col-md-6">
+							   <div class="col-md-4">
 								  <div class="form-group">
 									 <label class="control-label col-md-3">顾客编号</label>
-									 <div class="col-md-9">
+									 <div class="col-md-8">
 										<form:input path="customerId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="顾客编号"/>
 									 </div>
 								  </div>
 							   </div>
 							   <!--/span-->
+							   <div class="col-md-4">
+								  <div class="form-group">
+									 <label class="control-label col-md-3">订单状态</label>
+									 <div class="col-md-8">
+										<form:input path="status" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单状态"/>
+									 </div>
+								  </div>
+							   </div>
 							</div>
 						 </div>
 						 <div class="form-actions">
@@ -153,8 +161,16 @@
 							            <td>${item.customerId}</td>
 							            <td>${item.totalPrice}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
-							            <td>${item.note}</td>							            
-							            <td>${item.status}</td>
+							            <td>${item.note}</td>
+							            <c:if test="${item.status eq '退回'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '通过'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '未完成'}">
+							            		<td style="color:black;">${item.status}</td>
+							            </c:if>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -191,11 +207,15 @@
                  { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { splitter: true },
-                 { link: true, display: "查看", css: "icon-search", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdetailview/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdetailview/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                     	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                   { splitter: true },
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
+                 { link: true, display: "订单退回", css: "icon-arrow-left", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选订单吗？"},
+                 { link: true, display: "审核通过", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderconfirm/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认审核通过所选订单吗？"}
              ]
          });
       });

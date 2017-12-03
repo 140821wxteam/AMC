@@ -137,6 +137,7 @@
 		                              <th>单价</th>
 		                              <th>总价</th>
 		                              <th>备注</th>
+		                              <th>订单明细状态</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -153,6 +154,16 @@
 							            <td>${item.unitPrice}</td>
 							            <td>${item.totalPrice}</td>							            
 							            <td>${item.note}</td>
+							            <c:if test="${item.status eq '退回'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '通过'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '未完成'}">
+							            		<td style="color:black;">${item.status}</td>
+							            </c:if>
+							            
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -160,7 +171,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentdetailModel"/>
-	        				<c:param name="urlAddress" value="/sales/orderdetail"/>
+	        				<c:param name="urlAddress" value="/sales/orderdetailview"/>
 	       				 </c:import>
        				 </div>
                   </div>
@@ -187,7 +198,7 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-                 { link: true, display: "查看", css: "icon-search", showIcon: true, url: "../orderdetailviewer/{0}", 
+                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../orderdetailviewer/{0}", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { splitter: true }                 
              ]
