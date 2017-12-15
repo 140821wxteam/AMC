@@ -10,6 +10,8 @@ public class ProductModelExtension {
 		ret.setproductId(productEditModel.getproductId());
 		ret.setproductName(productEditModel.getproductName());
 		ret.setproductType(productEditModel.getproductType());
+		ret.setproductSpecification(productEditModel.getproductSpecification());
+		ret.setproductOrigin(productEditModel.getproductOrigin());
 		ret.setproductUnit(productEditModel.getproductUnit());
 		ret.setsafeStock(productEditModel.getsafeStock());
 		ret.setnote(productEditModel.getnote());
@@ -22,6 +24,8 @@ public class ProductModelExtension {
 		ret.setproductId(model.getproductId());
 		ret.setproductName(model.getproductName());
 		ret.setproductType(model.getproductType());
+		ret.setproductSpecification(model.getproductSpecification());
+		ret.setproductOrigin(model.getproductOrigin());
 		ret.setproductUnit(model.getproductUnit());
 		ret.setsafeStock(model.getsafeStock());		
 		ret.setnote(model.getnote());

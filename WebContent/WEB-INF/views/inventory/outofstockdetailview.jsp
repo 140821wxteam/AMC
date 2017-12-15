@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 销售订单信息</title>
+   <title>AMC | 订单缺货单信息</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>销售订单信息</small>
+                  AMC <small>订单缺货单信息</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -92,9 +92,9 @@
 							<div class="row">
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">订单编号</label>
+									 <label class="control-label col-md-3">订单缺货单编号</label>
 									 <div class="col-md-9">
-										<form:input readonly="readonly" UNSELECTABLE="on" path="orderId" id="orderId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单编号"/>
+										<form:input readonly="readonly" UNSELECTABLE="on" path="outofstockId" id="outofstockId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单缺货单编号"/>
 									 </div>
 								  </div>
 							   </div>
@@ -129,35 +129,35 @@
 		                        <thead>
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
-		                              <th>订单明细编号</th>
+		                              <th>订单缺货单明细编号</th>
 		                              <th>产品编号</th>
-		                              <th>产品名称</th>
 		                              <th>需求数量</th>
-		                              <th>已供数量</th>		                             
-		                              <th>单价</th>
-		                              <th>总价</th>
+		                              <th>已满足数量</th>
+		                              <th>尚缺数量</th>		                             
+		                              <th>操作员姓名</th>
+		                              <th>操作时间</th>
 		                              <th>备注</th>
-		                              <th>订单明细状态</th>
+		                              <th>订单缺货单明细状态</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
-		                        	<c:forEach items="${contentdetailModel.items}" var="item">
+		                        	<c:forEach items="${contentModel.items}" var="item">
 							        <tr class="odd gradeX">
 							        	<td class="check_cell">
-									        <input type="checkbox" class="checkboxes" name="id" value="${item.orderdetailId}" />
+									        <input type="checkbox" class="checkboxes" name="id" value="${item.outofstockdetailId}" />
 									    </td>
-							            <td id="orderdetailId">${item.orderdetailId}</td>
+							            <td id="outofstockdetailId">${item.outofstockdetailId}</td>
 							            <td>${item.productId}</td>
-							            <td>${item.productName}</td>
 							            <td>${item.quantityDemand}</td>
 							            <td>${item.quantitySupplied}</td>
-							            <td>${item.unitPrice}</td>
-							            <td>${item.totalPrice}</td>							            
+							            <td>${item.quantityNeeded}</td>
+							            <td>${item.operatorName}</td>
+							            <td>${item.operateTime.getTime().toLocaleString()}</td>							            
 							            <td>${item.note}</td>
-							            <c:if test="${item.status eq '退回'}">
+							            <c:if test="${item.status eq '待处理'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
-							            <c:if test="${item.status eq '审核通过'}">
+							            <c:if test="${item.status eq '已处理'}">
 							            		<td style="color:green;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '未完成'}">
@@ -170,8 +170,8 @@
 		                     </table>
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
-	        				<c:param name="pageModelName" value="contentdetailModel"/>
-	        				<c:param name="urlAddress" value="/sales/orderdetailview"/>
+	        				<c:param name="pageModelName" value="contentModel"/>
+	        				<c:param name="urlAddress" value="/inventory/outofstockdetail"/>
 	       				 </c:import>
        				 </div>
                   </div>

@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.amc.service.interfaces.IAccountService;
 import com.amc.service.interfaces.IAuthorityService;
+import com.amc.service.interfaces.IInventoryService;
 import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOrderdetailService;
 import com.amc.service.interfaces.IOrganizationService;
+import com.amc.service.interfaces.IOutofstockService;
+import com.amc.service.interfaces.IOutofstockdetailService;
+import com.amc.service.interfaces.IProductService;
 import com.amc.service.interfaces.IRoleService;
 import com.amc.service.interfaces.IVendorService;
 
@@ -47,6 +51,22 @@ public abstract class BaseController {
 	@Autowired
     @Qualifier("OrderService")
     protected IOrderService orderService;
+	
+	@Autowired
+    @Qualifier("ProductService")
+    protected IProductService productService;
+	
+	@Autowired
+    @Qualifier("InventoryService")
+    protected IInventoryService inventoryService;
+	
+	@Autowired
+    @Qualifier("OutofstockService")
+    protected IOutofstockService outofstockService;
+	
+	@Autowired
+    @Qualifier("OutofstockdetailService")
+    protected IOutofstockdetailService outofstockdetailService;
 	
 	@ExceptionHandler  
     public String exception(HttpServletRequest request, Exception e) {  

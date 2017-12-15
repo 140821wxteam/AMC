@@ -8,6 +8,8 @@ public class Product extends EnableEntity<Integer> implements ICUDEable{
 	private String productId;
 	private String productName;
 	private String productType;
+	private String productSpecification;
+	private String productOrigin;
 	private String productUnit;
 	private int safeStock;
 	private String note;
@@ -29,6 +31,18 @@ public class Product extends EnableEntity<Integer> implements ICUDEable{
 	}
 	public String getproductType(){
 		return this.productType;
+	}
+	public void setproductSpecification(String productSpecification){
+		this.productSpecification=productSpecification;
+	}
+	public String getproductSpecification(){
+		return this.productSpecification;
+	}
+	public void setproductOrigin(String productOrigin){
+		this.productOrigin=productOrigin;
+	}
+	public String getproductOrigin(){
+		return this.productOrigin;
 	}
 	public void setproductUnit(String productUnit){
 		this.productUnit=productUnit;

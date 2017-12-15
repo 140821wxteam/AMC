@@ -3,7 +3,7 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>  
-    <class name="com.amc.model.models.Product" table="t_product" lazy="false">  
+    <class name="com.amc.model.models.Inventory" table="t_inventory" lazy="false">  
 	    
 	   	<id name="id" column="id" type="integer" >
 			<generator class="native" />
@@ -13,11 +13,9 @@
 	    <property name="enable" column="enable" type="boolean" not-null="true"/>
 	    <property name="productId" column="productId" type="string" not-null="true"/>  
 	    <property name="productName" column="productName" type="string" not-null="true"/>
-	    <property name="productType" column="productType" type="string" not-null="true"/>
-	    <property name="productSpecification" column="productSpecification" type="string" not-null="false"/>
-	    <property name="productOrigin" column="productOrigin" type="string" not-null="true"/>
-	    <property name="productUnit" column="productUnit" type="string" not-null="true"/>
-	    <property name="safeStock" column="safeStock" type="integer" not-null="false"/>
+	    <property name="inventoryLevel" column="inventoryLevel" type="integer" not-null="true"/>
+	    	<property name="createTime" column="createTime" type="calendar" not-null="true"/>  
+	    <property name="status" column="status" type="string" not-null="true"/>
 	    <property name="note" column="note" type="string" not-null="false"/>
 		
     </class>  

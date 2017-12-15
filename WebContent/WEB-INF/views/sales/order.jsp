@@ -165,7 +165,7 @@
 							            <c:if test="${item.status eq '退回'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
-							            <c:if test="${item.status eq '通过'}">
+							            <c:if test="${item.status eq '审核通过'}">
 							            		<td style="color:green;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '未完成'}">
@@ -213,9 +213,11 @@
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
                  { link: true, display: "订单退回", css: "icon-arrow-left", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选订单吗？"},
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认退回所选订单吗？"},
                  { link: true, display: "审核通过", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderconfirm/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认审核通过所选订单吗？"}
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认审核通过所选订单吗？"},
+                 { link: true, display: "处理", css: "icon-wrench", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderinprocess/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认处理所选订单吗？"}
              ]
          });
       });
