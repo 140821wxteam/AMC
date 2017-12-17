@@ -18,6 +18,7 @@
 	    <property name="customerTele" column="customerTele" type="string" not-null="false"/>
 	    <property name="customerEmail" column="customerEmail" type="string" not-null="false"/>
 	    <property name="note" column="note" type="string" not-null="false"/>
+	    <property name="credit" column="credit" type="string" not-null="false"/>
 		
     </class>  
 </hibernate-mapping> 
