@@ -16,6 +16,8 @@ public class ProductEditModel {
 	private String productId;
 	private String productName;
 	private String productType;
+	private String productSpecification;
+	private String productOrigin;
 	private String productUnit;
 	private Integer safeStock;
 	private String note;
@@ -37,6 +39,18 @@ public class ProductEditModel {
 	}
 	public String getproductType(){
 		return this.productType;
+	}
+	public void setproductSpecification(String productSpecification){
+		this.productSpecification=productSpecification;
+	}
+	public String getproductSpecification(){
+		return this.productSpecification;
+	}
+	public void setproductOrigin(String productOrigin){
+		this.productOrigin=productOrigin;
+	}
+	public String getproductOrigin(){
+		return this.productOrigin;
 	}
 	public void setproductUnit(String productUnit){
 		this.productUnit=productUnit;

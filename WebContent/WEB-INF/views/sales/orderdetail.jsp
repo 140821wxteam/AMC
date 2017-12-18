@@ -137,15 +137,16 @@
 		                              <th>单价</th>
 		                              <th>总价</th>
 		                              <th>备注</th>
+		                              <th>订单明细状态</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
 		                        	<c:forEach items="${contentdetailModel.items}" var="item">
 							        <tr class="odd gradeX">
 							        	<td class="check_cell">
-									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
+									        <input type="checkbox" class="checkboxes" name="id" value="${item.orderdetailId}" />
 									    </td>
-							            <td>${item.orderdetailId}</td>
+							            <td id="orderdetailId">${item.orderdetailId}</td>
 							            <td>${item.productId}</td>
 							            <td>${item.productName}</td>
 							            <td>${item.quantityDemand}</td>
@@ -153,6 +154,7 @@
 							            <td>${item.unitPrice}</td>
 							            <td>${item.totalPrice}</td>							            
 							            <td>${item.note}</td>
+							            <td>${item.status}</td>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -189,10 +191,10 @@
              items: [
             	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "../orderdetailadd/"+document.getElementById("orderId").value},
                  { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "../orderdetailedit/{0}", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { splitter: true },                  
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "../orderdetaildelete/{0}", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
              ]
          });

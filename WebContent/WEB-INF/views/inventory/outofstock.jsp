@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 产品信息</title>
+   <title>AMC | 订单缺货单信息</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>产品信息</small>
+                  AMC <small>订单缺货单信息</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -90,22 +90,23 @@
 							<div class="row">
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">产品编号</label>
-									 <div class="col-md-9">
-										<form:input path="productId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品编号"/>
+									 <label class="control-label col-md-3">订单缺货单编号</label>
+									 <div class="col-md-8">
+										<form:input path="outofstockId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单缺货单编号"/>
 									 </div>
 								  </div>
 							   </div>
+							   <!--/span-->
+							   
 							   <!--/span-->
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">产品名称</label>
-									 <div class="col-md-9">
-										<form:input path="productName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品名称"/>
+									 <label class="control-label col-md-3">订单缺货单状态</label>
+									 <div class="col-md-8">
+										<form:input path="status" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单缺货单状态"/>
 									 </div>
 								  </div>
 							   </div>
-							   <!--/span-->
 							</div>
 						 </div>
 						 <div class="form-actions">
@@ -135,14 +136,16 @@
 		                        <thead>
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
-		                              <th>产品编号</th>
-		                              <th >产品名称</th>
-		                              <th >产品类型</th>
-		                              <th >产品规格</th>
-		                              <th >原厂编号</th>
-		                              <th >计量单位</th>
-		                              <th >安全库存</th>		                             
-		                              <th >备注</th>
+		                              <th>订单缺货单编号</th>
+		                              <th>订单编号</th>
+		                              <th>顾客编号</th>
+		                              <th>订单项目数</th>
+		                              <th>完全满足项目数</th>
+		                              <th>部分满足项目数</th>
+		                              <th>完全缺货项目数</th>
+		                              <th>创建时间</th>		                             
+		                              <th>订单状态</th>
+		                              <th>备注</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -151,13 +154,24 @@
 							        	<td class="check_cell">
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
-							            <td>${item.productId}</td>
-							            <td>${item.productName}</td>
-							            <td>${item.productType}</td>
-							            <td>${item.productSpecification}</td>
-							            <td>${item.productOrigin}</td>
-							            <td>${item.productUnit}</td>
-							            <td>${item.safeStock}</td>							            
+							            <td>${item.outofstockId}</td>
+							            <td>${item.orderId}</td>
+							            <td>${item.customerId}</td>
+							            <td>${item.orderNum}</td>
+							            <td>${item.fitNum}</td>
+							            <td>${item.partfitNum}</td>
+							            <td>${item.outofstockNum}</td>
+							            <td>${item.createTime.getTime().toLocaleString()}</td>
+							            
+							            <c:if test="${item.status eq '处理中'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已处理'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '未完成'}">
+							            		<td style="color:black;">${item.status}</td>
+							            </c:if>
 							            <td>${item.note}</td>
 							        </tr>
 							        </c:forEach>
@@ -166,7 +180,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/basedata/product"/>
+	        				<c:param name="urlAddress" value="/inventory/outofstock"/>
 	       				 </c:import>
        				 </div>
                   </div>
@@ -190,13 +204,20 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productadd", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
+            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderaddnew", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
                  { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                  
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+                 { splitter: true },
+                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/outofstockdetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                  { splitter: true },
+                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
+                 { link: true, display: "缺货单处理", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选订单吗？"},
+                 { link: true, display: "缺货单打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderconfirm/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认审核通过所选订单吗？"}
              ]
          });
       });

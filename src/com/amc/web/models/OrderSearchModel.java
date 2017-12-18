@@ -4,6 +4,7 @@ public class OrderSearchModel {
 
 	private String orderId;
 	private String customerId;
+	private String status;
 	public String getorderId() {
 		return this.orderId;
 	}
@@ -15,6 +16,12 @@ public class OrderSearchModel {
 	}
 	public void setcustomerId(String customerId) {
 		this.customerId = customerId;
+	}
+	public String getstatus() {
+		return this.status;
+	}
+	public void setstatus(String status) {
+		this.status = status;
 	}
 	
 }

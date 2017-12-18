@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 产品信息</title>
+   <title>AMC | 销售订单信息</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -138,8 +138,6 @@
 		                              <th>产品编号</th>
 		                              <th >产品名称</th>
 		                              <th >产品类型</th>
-		                              <th >产品规格</th>
-		                              <th >原厂编号</th>
 		                              <th >计量单位</th>
 		                              <th >安全库存</th>		                             
 		                              <th >备注</th>
@@ -154,8 +152,6 @@
 							            <td>${item.productId}</td>
 							            <td>${item.productName}</td>
 							            <td>${item.productType}</td>
-							            <td>${item.productSpecification}</td>
-							            <td>${item.productOrigin}</td>
 							            <td>${item.productUnit}</td>
 							            <td>${item.safeStock}</td>							            
 							            <td>${item.note}</td>

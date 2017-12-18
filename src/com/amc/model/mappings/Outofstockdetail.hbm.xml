@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>  
+    <class name="com.amc.model.models.Outofstockdetail" table="t_outofstockdetail" lazy="false">  
+	    
+	   	<id name="id" column="id" type="integer" >
+			<generator class="native" />
+		</id>
+		
+		<version name="version" column="version" type="integer"/>
+	    <property name="enable" column="enable" type="boolean" not-null="true"/>
+	    <property name="outofstockdetailId" column="outofstockdetailId" type="string" not-null="true"/>
+	    	<property name="outofstockId" column="outofstockId" type="string" not-null="true"/>
+	    <property name="productId" column="productId" type="string" not-null="true"/>
+	    <property name="quantityDemand" column="quantityDemand" type="integer" not-null="true"/>
+	    	<property name="quantitySupplied" column="quantitySupplied" type="integer" not-null="true"/>
+	    	<property name="quantityNeeded" column="quantityNeeded" type="integer" not-null="true"/>
+	    	<property name="operatorName" column="operatorName" type="string" not-null="false"/>    
+	    <property name="operateTime" column="operateTime" type="calendar" not-null="true"/>  
+	    <property name="status" column="status" type="string" not-null="true"/>
+	    <property name="note" column="note" type="string" not-null="false"/>
+		
+    </class>  
+</hibernate-mapping> 

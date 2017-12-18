@@ -103,6 +103,18 @@
                               </div>
                            </div>
                            <div class="form-group">
+                              <label  class="col-md-2 control-label">产品规格</label>
+                              <div class="col-md-10">
+                                 <form:input path="productSpecification" class="form-control" placeholder="产品规格"/>                               
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">原厂编号</label>
+                              <div class="col-md-10">
+                                 <form:input path="productOrigin" class="form-control" placeholder="原厂编号"/>                               
+                              </div>
+                           </div>
+                           <div class="form-group">
                               <label  class="col-md-2 control-label">计量单位</label>
                               <div class="col-md-10">
                                  <form:input path="productUnit" class="form-control" placeholder="计量单位"/>

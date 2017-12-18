@@ -114,8 +114,8 @@
                         <div class="form-actions fluid">
                            <div class="col-md-offset-4 col-md-6">
                               <!--<button type="button" class="btn btn-success" onclick="Orderfigure()">刷新总金额</button>-->
-                              <button type="button" class="btn btn-success" onclick="Orderdetail()">增加明细</button>
-                              <button type="button" class="btn btn-success" onclick="saveOrder()">保存</button>
+                              <button type="button" class="btn btn-success" onclick="Orderdetail()">修改明细</button>
+                              <button type="button" class="btn btn-success" onclick="saveOrder()">修改</button>
                               <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>                              
                            </div>
                         	</div>
@@ -144,7 +144,7 @@
       });
    	  function Orderdetail(){
    		  var orderId = document.getElementById("orderId").value;
-   		  window.location.href = '../sales/orderdetail/'+orderId;
+   		  window.location.href = '../orderdetail/'+orderId;
    	  }
    	function saveOrder(){
    		document.getElementById("orderinfo").submit();
