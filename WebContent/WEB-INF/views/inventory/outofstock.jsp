@@ -215,9 +215,9 @@
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
                  { link: true, display: "缺货单处理", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选订单吗？"},
-                 { link: true, display: "缺货单打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderconfirm/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认审核通过所选订单吗？"}
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选缺货单吗？"},
+                 { link: true, display: "缺货单打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/printoutofstock/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认打印所选缺货单吗？"}
              ]
          });
       });
