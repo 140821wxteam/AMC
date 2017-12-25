@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>  
+    <class name="com.amc.model.models.Prepare" table="t_prepare" lazy="false">  
+	    
+	   	<id name="id" column="id" type="integer" >
+			<generator class="native" />
+		</id>
+		
+		<version name="version" column="version" type="integer"/>
+	    <property name="enable" column="enable" type="boolean" not-null="true"/>
+	    <property name="prepareId" column="prepareId" type="string" not-null="true"/>
+	    <property name="orderId" column="orderId" type="string" not-null="true"/>
+	    <property name="createTime" column="createTime" type="calendar" not-null="true"/>  
+	    <property name="customerId" column="customerId" type="string" not-null="true"/>
+	    <property name="orderNum" column="orderNum" type="integer" not-null="true"/>
+	    <property name="fitNum" column="fitNum" type="integer" not-null="true"/>
+	    <property name="partfitNum" column="partfitNum" type="integer" not-null="true"/>
+	    <property name="outofstockNum" column="outofstockNum" type="integer" not-null="true"/>
+	    <property name="status" column="status" type="string" not-null="true"/>
+	    <property name="note" column="note" type="string" not-null="false"/>
+	    <property name="receivePers" column="receivePers" type="string" not-null="false"/>
+	    
+	    <property name="receiveAddr" column="receiveAddr" type="string" not-null="false"/>
+	    
+		
+    </class>  
+</hibernate-mapping> 

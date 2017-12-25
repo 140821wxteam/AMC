@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>  
+    <class name="com.amc.model.models.Preparedetail" table="t_preparedetail" lazy="false">  
+	    
+	   	<id name="id" column="id" type="integer" >
+			<generator class="native" />
+		</id>
+		
+		<version name="version" column="version" type="integer"/>
+	    <property name="enable" column="enable" type="boolean" not-null="true"/>
+	    <property name="preparedetailId" column="preparedetailId" type="string" not-null="true"/>
+	    <property name="prepareId" column="prepareId" type="string" not-null="true"/>
+	    <!--<many-to-one name ="prepareId" class="com.amc.model.models.Invoice" foreign-key="FK_invoice_prepareId" index="IDX_invoice_prepareId">
+		  <column name="prepareId" not-null="true"/>
+		</many-to-one>   外键还没有写-->
+	    <property name="productId" column="productId" type="string" not-null="true"/>
+	    <!--<many-to-one name ="productId" class="com.amc.model.models.Product" foreign-key="FK_product_productId" index="IDX_product_productId">
+		  <column name="productId" not-null="true"/>
+		</many-to-one>-->
+	    <property name="productName" column="productName" type="string" not-null="true"/>
+	    <property name="factoryId" column="factoryId" type="string" not-null="true"/>
+	    <property name="preparePers" column="preparePers" type="string" not-null="true"/>
+	    <property name="amount" column="amount" type="integer" not-null="true"/>
+	    <property name="size" column="size" type="string" not-null="false"/>
+	    <property name="status" column="status" type="string" not-null="false"/>
+	    <property name="note" column="note" type="string" not-null="false"/>
+		
+    </class>  
+</hibernate-mapping> 
