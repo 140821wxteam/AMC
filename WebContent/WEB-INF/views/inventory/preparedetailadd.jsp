@@ -79,15 +79,15 @@
                      <form:form modelAttribute="contentModel" class="form-horizontal" method="POST">
                         <div class="form-body">
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">备货单明细编号</label>
+                              <label  class="col-md-2 control-label">备货单编号</label>
                               <div class="col-md-10">
-                                 <form:input path="prepareId" name="prepareId" class="form-control" placeholder="备货单明细编号"/>                                 
+                                 <form:input path="prepareId" name="prepareId" class="form-control" placeholder="备货单编号"/>                                 
                               </div>
                            </div>
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">备货单明细明细编号</label>
+                              <label  class="col-md-2 control-label">备货单明细编号</label>
                               <div class="col-md-10">
-                                 <form:input path="preparedetailId" name="preparedetailId" class="form-control" placeholder="备货单明细明细编号"/>                               
+                                 <form:input path="preparedetailId" name="preparedetailId" class="form-control" placeholder="备货单明细编号"/>                               
                               </div>
                            </div>
                            <div class="form-group">
@@ -163,12 +163,7 @@
    	  $(function() {   
          App.init();
       });
-   	function figure(){
- 	   var amount =parseInt(document.getElementById("amount").value);
- 	   var size =parseFloat(document.getElementById("size").value);
- 	   var tp = amount*size;
- 	   document.getElementById("totalPrice").value = tp;
- }
+
    	  
    </script>
    <!-- END JAVASCRIPTS -->   
