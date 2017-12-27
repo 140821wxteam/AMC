@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>  
+    <class name="com.amc.model.models.Deliver" table="t_deliver" lazy="false">  
+	    
+	   	<id name="id" column="id" type="integer" >
+			<generator class="native" />
+		</id>
+		
+		<property name="deliverId" column="deliverId" type="string" not-null="true"/>
+	    <property name="prepareId" column="prepareId" type="string" not-null="true"/>
+	    <property name="deliverDetailId" column="deliverDetailId" type="string" not-null="true"/>
+	    <property name="createTime" column="createTime" type="calendar" not-null="true"/>  
+	    <property name="amountMoney" column="amountMoney" type="double" not-null="true"/>
+	    <property name="remark" column="remark" type="string" not-null="false"/>
+	    <property name="status" column="status" type="string" not-null="true"/>
+		
+    </class>  
+</hibernate-mapping> 
