@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.amc.service.interfaces.IAccountService;
 import com.amc.service.interfaces.IAuthorityService;
-
+import com.amc.service.interfaces.IDeliverService;
 import com.amc.service.interfaces.IInventoryService;
 import com.amc.service.interfaces.IOrderService;
 
@@ -75,6 +75,10 @@ public abstract class BaseController {
 	@Autowired
     @Qualifier("PrepareService")
     protected IPrepareService prepareService;
+	
+	@Autowired
+    @Qualifier("DeliverService")
+    protected IDeliverService deliverService;
 
 	
 	@ExceptionHandler  

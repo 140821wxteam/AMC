@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 	import="com.infrastructure.project.common.extension.UrlHelper"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 发货单信息</title>
+   <title>AMC | 发货单详细信息</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -58,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>发货单信息</small>
+                  AMC <small>发货单详细信息</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -76,11 +75,13 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
+         
+         
          <!-- BEGIN PAGE CONTENT-->
          <div class="row">
             <div class="col-md-12">
             
-				<div class="portlet box light-grey">
+				<div class="portlet box light-grey"  style="display:none">
 				   <div class="portlet-title">
 					  <div class="caption"><i class="icon-search"></i>数据检索</div>
 				   </div>
@@ -91,29 +92,21 @@
 							<div class="row">
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">发货单编号</label>
+									 <label class="control-label col-md-3">订单编号</label>
 									 <div class="col-md-9">
-										<form:input path="deliverId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="发货单编号"/>
+										<form:input readonly="readonly" UNSELECTABLE="on" path="orderId" id="orderId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="发货单编号"/>
 									 </div>
 								  </div>
 							   </div>
-							   <!--/span-->
-							   <div class="col-md-6">
-								  <div class="form-group">
-									 <label class="control-label col-md-3">顾客编号</label>
-									 <div class="col-md-9">
-										<form:input path="customerId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="顾客编号"/>
-									 </div>
-								  </div>
-							   </div>
-							   <!--/span-->
+							   
 							</div>
 						 </div>
 						 <div class="form-actions">
 							<div class="row">
 							   <div class="col-md-12">
 								  <div class="col-md-offset-5">
-									 <button type="submit" class="btn btn-success">搜索</button>                            
+									 <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>
+									                            
 								  </div>
 							   </div>
 							</div>
@@ -137,51 +130,45 @@
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>发货单编号</th>
-		                              <th>订单编号</th>
-		                              <th>顾客自编号</th>
-		                              <th>创建时间</th>
-		                              <th>收货人</th>
-		                              <th>收货地址</th>
-		                              <th>总金额</th>
-		                              <th>备注</th>		                             
-		                              <th>发货单状态</th>
+		                              <th>序号</th>
+		                              <th>配件编号</th>
+		                              <th>名称</th>
+		                              <th>原厂编号</th>		                             
+		                              <th>数量</th>
+		                              <th>尚缺数量</th>
+		                              <th>备注</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
-		                        	<c:forEach items="${contentModel.items}" var="item">
+		                        	<c:forEach items="${contentdetailModel.items}" var="item">
 							        <tr class="odd gradeX">
 							        	<td class="check_cell">
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
 							            <td>${item.deliverId}</td>
-							            <td>${item.orderId}</td>
-							            <td>${item.customerId}</td>
-							            <td>${item.createTime.getTime().toLocaleString()}</td>
-							            <td>${item.receivePers}</td>
-							            <td>${item.receiveAddr}</td>
-							            <td>${item.amountMoney}</td>
-							            <td>${item.remark}</td>							            
-							            <c:if test="${item.status eq '已到货'}">
-							            		<td style="color:red;">${item.status}</td>
-							            </c:if>
-							            <c:if test="${item.status eq '运送中'}">
-							            		<td style="color:green;">${item.status}</td>
-							            </c:if>
-							            <c:if test="${item.status eq '取消'}">
-							            		<td style="color:black;">${item.status}</td>
-							            </c:if>
+							            <td>${item.no}</td>
+							            <td>${item.productId}</td>
+							            <td>${item.productName}</td>
+							            <td>${item.factoryId}</td>
+							            <td>${item.num}</td>
+							            <td>${item.shortnum}</td>							            
+							            <td>${item.remark}</td>
+							            
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
 		                     </table>
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
-	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/inventory/deliver"/>
+	        				<c:param name="pageModelName" value="contentdetailModel"/>
+	        				<c:param name="urlAddress" value="/inventory/deliverdetailview"/>
 	       				 </c:import>
        				 </div>
                   </div>
                </div>
+               <div class="col-md-offset-5">
+				 <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>
+			   </div>
                <!-- END EXAMPLE TABLE PORTLET-->
                
             </div>
@@ -193,7 +180,7 @@
    <!-- END CONTAINER -->
    <%@ include file="../shared/pageFooter.jsp"%>
      
-  <script type="text/javascript">
+<!--   <script type="text/javascript">
    	  $(function() {   
          App.init();
          
@@ -201,18 +188,17 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-                  { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdetailview/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-	                selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-	              { splitter: true },
-	              { link: true, display: "查看详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/deliverdetailview/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-	                selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                  { splitter: true },
-                  { link: true, display: "修改状态", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}
+                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../orderdetailviewer/{0}", 
+                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                 { splitter: true }                 
              ]
          });
       });
-   </script>
+   	  function returntoorder(){
+   		  window.close();
+   	  }
+   	  
+   </script> -->
    <!-- END JAVASCRIPTS -->   
 </body>
 <!-- END BODY -->
