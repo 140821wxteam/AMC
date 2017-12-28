@@ -1,45 +1,31 @@
 package com.amc.web.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.amc.model.models.Inventory;
-import com.amc.model.models.Order;
 import com.amc.model.models.Product;
 import com.amc.service.interfaces.IInventoryService;
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.jsonmodels.InventoryJson;
 import com.amc.web.models.InventorySearchModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infrastructure.project.common.exception.EntityOperateException;
-import com.infrastructure.project.common.exception.ValidatException;
 import com.infrastructure.project.common.utilities.PageListUtil;
-
-import net.sf.json.JSON;
-import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "/inventory")
