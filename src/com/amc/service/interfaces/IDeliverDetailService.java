@@ -1,13 +1,8 @@
 package com.amc.service.interfaces;
 
-
-import java.security.NoSuchAlgorithmException;
-
 import com.amc.dao.IDeliverDetailDao;
 import com.amc.model.models.DeliverDetail;
 import com.infrastructure.project.base.service.interfaces.IEnableEntityService;
-import com.infrastructure.project.common.exception.EntityOperateException;
-import com.infrastructure.project.common.exception.ValidatException;
 import com.infrastructure.project.common.utilities.PageList;
 
 public interface IDeliverDetailService extends IEnableEntityService<Integer, DeliverDetail, IDeliverDetailDao> {

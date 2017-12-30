@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 发货单详细信息</title>
+   <title>AMC | 发货单信息</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>发货单详细信息</small>
+                  AMC <small>发货单信息</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -92,9 +92,9 @@
 							<div class="row">
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">订单编号</label>
+									 <label class="control-label col-md-3">发货单编号</label>
 									 <div class="col-md-9">
-										<form:input readonly="readonly" UNSELECTABLE="on" path="orderId" id="orderId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="发货单编号"/>
+										<form:input readonly="readonly" UNSELECTABLE="on" path="deliverId" id="deliverId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="发货单编号"/>
 									 </div>
 								  </div>
 							   </div>
@@ -137,10 +137,11 @@
 		                              <th>数量</th>
 		                              <th>尚缺数量</th>
 		                              <th>备注</th>
+		                        
 		                           </tr>
 		                        </thead>
 		                        <tbody>
-		                        	<c:forEach items="${contentdetailModel.items}" var="item">
+		                        	<c:forEach items="${contentModel.items}" var="item">
 							        <tr class="odd gradeX">
 							        	<td class="check_cell">
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
@@ -151,8 +152,9 @@
 							            <td>${item.productName}</td>
 							            <td>${item.factoryId}</td>
 							            <td>${item.num}</td>
-							            <td>${item.shortnum}</td>							            
+							            <td>${item.shortNum}</td>							            
 							            <td>${item.remark}</td>
+							            
 							            
 							        </tr>
 							        </c:forEach>
@@ -160,8 +162,8 @@
 		                     </table>
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
-	        				<c:param name="pageModelName" value="contentdetailModel"/>
-	        				<c:param name="urlAddress" value="/inventory/deliverdetailview"/>
+	        				<c:param name="pageModelName" value="contentModel"/>
+	        				<c:param name="urlAddress" value="/inventory/deliverdetail"/>
 	       				 </c:import>
        				 </div>
                   </div>
@@ -180,25 +182,15 @@
    <!-- END CONTAINER -->
    <%@ include file="../shared/pageFooter.jsp"%>
      
-<!--   <script type="text/javascript">
+  <script type="text/javascript">
    	  $(function() {   
          App.init();
          
-         $("#data-table").tableManaged();
          
-         $(".table-toolbar").toolbarLite({
-             items: [
-                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../orderdetailviewer/{0}", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true }                 
-             ]
-         });
       });
-   	  function returntoorder(){
-   		  window.close();
-   	  }
    	  
-   </script> -->
+   	  
+   </script>
    <!-- END JAVASCRIPTS -->   
 </body>
 <!-- END BODY -->

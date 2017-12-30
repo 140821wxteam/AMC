@@ -9,6 +9,8 @@
 			<generator class="native" />
 		</id>
 		
+		<version name="version" column="version" type="integer"/>
+	    <property name="enable" column="enable" type="boolean" not-null="true"/>
 		<property name="deliverId" column="deliverId" type="string" not-null="true"/>
 	    <property name="prepareId" column="prepareId" type="string" not-null="true"/>
 	    <property name="deliverDetailId" column="deliverDetailId" type="string" not-null="true"/>

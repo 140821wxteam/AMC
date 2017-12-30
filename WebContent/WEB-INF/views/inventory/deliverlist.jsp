@@ -177,7 +177,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/inventory/deliver"/>
+	        				<c:param name="urlAddress" value="/inventory/deliverlist"/>
 	       				 </c:import>
        				 </div>
                   </div>
@@ -188,7 +188,8 @@
          </div>
          <!-- END PAGE CONTENT-->    
       </div>
-      <!-- END PAGE -->  
+      <!-- END PAGE -->
+        
    </div>
    <!-- END CONTAINER -->
    <%@ include file="../shared/pageFooter.jsp"%>
@@ -201,10 +202,10 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-                  { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdetailview/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                  { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../inventory/deliverdetail", 
 	                selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
 	              { splitter: true },
-	              { link: true, display: "查看详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/deliverdetailview/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+	              { link: true, display: "查看详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/deliverdetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
 	                selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                   { splitter: true },
                   { link: true, display: "修改状态", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
@@ -212,6 +213,7 @@
              ]
          });
       });
+   	  
    </script>
    <!-- END JAVASCRIPTS -->   
 </body>

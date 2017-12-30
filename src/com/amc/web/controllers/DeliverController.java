@@ -25,12 +25,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.amc.model.models.Deliver;
 import com.amc.model.models.Preparedetail;
 import com.amc.service.interfaces.IDeliverService;
 import com.amc.service.interfaces.IPrepareService;
 import com.amc.service.interfaces.IPreparedetailService;
 import com.amc.service.services.PreparedetailService;
 import com.amc.web.auth.AuthPassport;
+import com.amc.web.models.DeliverDetailSearchModel;
 import com.amc.web.models.DeliverSearchModel;
 import com.amc.web.models.PrepareEditModel;
 import com.amc.web.models.PrepareSearchModel;
@@ -58,7 +60,7 @@ public class DeliverController extends BaseController{
 	
 	@AuthPassport
 	@RequestMapping(value="/deliverlist", method = {RequestMethod.GET})
-    public String deliver(HttpServletRequest request, Model model, DeliverSearchModel searchModel){
+    public String deliverlist(HttpServletRequest request, Model model, DeliverSearchModel searchModel){
     	model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
@@ -68,6 +70,7 @@ public class DeliverController extends BaseController{
         model.addAttribute("contentModel", deliverService.listPageByPrepare(searchModel.getDeliverId(), searchModel.getCustomerId(), pageNo, pageSize, prepareService));
         return "inventory/deliverlist";
     }
+	
 	
 	
 /*	@AuthPassport
