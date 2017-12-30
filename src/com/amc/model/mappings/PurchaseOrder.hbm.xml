@@ -3,7 +3,7 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>  
-    <class name="com.amc.model.models.PurchasingOrder" table="t_order" lazy="false">  
+    <class name="com.amc.model.models.PurchaseOrder" table="t_purchaseorder" lazy="false">  
 	    
 	   	<id name="id" column="id" type="integer" >
 			<generator class="native" />
@@ -12,8 +12,9 @@
 		<version name="version" column="version" type="integer"/>
 	    <property name="enable" column="enable" type="boolean" not-null="true"/>
 	    <property name="orderId" column="orderId" type="string" not-null="true"/>
-	    <property name="createTime" column="createTime" type="calendar" not-null="true"/>  
-	    <property name="customerId" column="customerId" type="string" not-null="true"/>
+	    <property name="orderDate" column="orderDate" type="date" not-null="true"/>  
+	    <property name="vendorId" column="vendorId" type="string" not-null="true"/>
+	    <property name="vendorName" column="vendorName" type="string" not-null="true"/>
 	    <property name="totalPrice" column="totalPrice" type="double" not-null="true"/>
 	    <property name="status" column="status" type="string" not-null="true"/>
 	    <property name="note" column="note" type="string" not-null="false"/>

@@ -1,5 +1,6 @@
 package com.amc.service.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
@@ -8,17 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.amc.dao.IOrderDao;
-import com.amc.model.models.Order;
-import com.amc.service.interfaces.IOrderService;
+import com.amc.dao.IPurchaseOrderDao;
+import com.amc.dao.IVendorDao;
+import com.amc.dao.impl.VendorDao;
+import com.amc.model.models.PurchaseOrder;
+import com.amc.model.models.Vendor;
+import com.amc.service.interfaces.IPurchaseOrderService;
 import com.infrastructure.project.base.service.services.EnableEntityService;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
 import com.infrastructure.project.common.utilities.PageList;
 import com.infrastructure.project.common.utilities.PageListUtil;;
 
-@Service("PurchasingOrderService")
-public class PurchasingOrderService extends EnableEntityService<Integer, Order, IOrderDao> implements IOrderService {
+@Service("PurchaseOrderService")
+public class PurchaseOrderService extends EnableEntityService<Integer, PurchaseOrder, IPurchaseOrderDao> implements IPurchaseOrderService {
 	
 	/*@Autowired
     @Qualifier("AuthorityService")
@@ -32,14 +36,20 @@ public class PurchasingOrderService extends EnableEntityService<Integer, Order, 
     @Qualifier("OrganizationService")
 	protected IOrganizationService organizationService;
 	*/
+	
 	@Autowired
-	public PurchasingOrderService(@Qualifier("OrderDao")IOrderDao orderDao){	
-		super(orderDao);
+	@Qualifier("VendorDao")
+	private IVendorDao vendorDao;
+	
+	@Autowired
+	public PurchaseOrderService(@Qualifier("PurchaseOrderDao")IPurchaseOrderDao purchaseOrderDao){	
+		super(purchaseOrderDao);
 	}
+	
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageList<Order> listPage(String orderId, String customerId, String status, int pageNo, int pageSize) {		
+	public PageList<PurchaseOrder> listPage(String orderId, String vendorName, String status, int pageNo, int pageSize) {		
 		Criteria countCriteria = entityDao.getCriteria();	
 		Criteria listCriteria = entityDao.getCriteria();
 		
@@ -47,9 +57,9 @@ public class PurchasingOrderService extends EnableEntityService<Integer, Order, 
 			countCriteria.add(Restrictions.eq("orderId", orderId)); 
     		listCriteria.add(Restrictions.eq("orderId", orderId)); 
 		}
-		if(customerId!=null && !customerId.isEmpty()){
-			countCriteria.add(Restrictions.eq("customerId", customerId)); 
-    		listCriteria.add(Restrictions.eq("customerId", customerId)); 
+		if(vendorName!=null && !vendorName.isEmpty()){
+			countCriteria.add(Restrictions.eq("vendorName", vendorName)); 
+    		listCriteria.add(Restrictions.eq("vendorName", vendorName)); 
 		}
 		if(status!=null && !status.isEmpty()){
 			countCriteria.add(Restrictions.eq("status", status)); 
@@ -58,7 +68,7 @@ public class PurchasingOrderService extends EnableEntityService<Integer, Order, 
 
         listCriteria.setFirstResult((pageNo-1)*pageSize);  
         listCriteria.setMaxResults(pageSize);
-        List<Order> items = listCriteria.list();
+        List<PurchaseOrder> items = listCriteria.list();
         countCriteria.setProjection(Projections.rowCount());
         Integer count=Integer.parseInt(countCriteria.uniqueResult().toString());
         
@@ -66,20 +76,43 @@ public class PurchasingOrderService extends EnableEntityService<Integer, Order, 
     }
 	
 	@Override
-	public void saveOrder(Order order) throws ValidatException, EntityOperateException{
-		super.save(order);
+	public List<String> listVendorNames() {
+		List<Vendor> items = vendorDao.listAll();
+		ArrayList<String> names = new ArrayList<>();
+		if (items == null) return names;
+		for (Vendor v: items) {
+			names.add(v.getvendorName());
+		}
+		return names;
 	}
 	
 	@Override
-	public void updateOrder(Order order) throws ValidatException, EntityOperateException{
-		Order dbModel=super.get(order.getId());
+	public String getVendorId(String vendorName){
+		List<Vendor> items = vendorDao.listAll();
+		String vendorId = null;
+		for (Vendor v: items){
+			if (v.getvendorName().equals(vendorName)) {
+				vendorId = v.getvendorId();
+			}
+		}
+		return vendorId;
+	}
+	
+	@Override
+	public void saveOrder(PurchaseOrder purchaseOrder) throws ValidatException, EntityOperateException{
+		super.save(purchaseOrder);
+	}
+	
+	@Override
+	public void updateOrder(PurchaseOrder purchaseOrder) throws ValidatException, EntityOperateException{
+		/*PurchasingOrder dbModel=super.get(order.getId());
 		dbModel.setorderId(order.getorderId());
 		dbModel.setcreateTime(order.getcreateTime());
 		dbModel.setcustomerId(order.getcustomerId());
 		dbModel.settotalPrice(order.gettotalPrice());
 		dbModel.setstatus(order.getstatus());
 		dbModel.setnote(order.getnote());
-		super.update(dbModel);
+		super.update(dbModel); */
 	}
 
 	
