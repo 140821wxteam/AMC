@@ -20,8 +20,14 @@
    <%@ include file="../shared/importCss.jsp"%>
    <%@ include file="../shared/importJs.jsp"%>
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-   <script type="text/javascript" src="<c:url value='/js/jquery.treeLite.js?ver=10'/>"></script>
+    <script type="text/javascript" src="<c:url value='/plugins/data-tables/jquery.dataTables.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/plugins/data-tables/DT_bootstrap.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/plugins/uniform/jquery.uniform.min.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/js/jquery.toolbarlite.js?ver=10'/>"></script> 
    <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script> 
+   <script type="text/javascript" src="<c:url value='/js/jquery.tableManaged.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/js/echarts.js'/>"></script>
+  
    <!-- END PAGE LEVEL SCRIPTS -->
 
    <link rel="shortcut icon" href="favicon.ico" />
@@ -81,7 +87,7 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">订单编号</label>
                               <div class="col-md-10">
-                                 <form:input path="orderId" name="orderId" class="form-control" placeholder="订单编号"/>                                 
+                                 <form:input path="orderId" name="orderId" id="orderId" class="form-control" placeholder="订单编号"/>                                 
                               </div>
                            </div>
                            <div class="form-group">
@@ -93,13 +99,17 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品编号</label>
                               <div class="col-md-10">
-                                 <form:input path="productId" name="productId" class="form-control" placeholder="产品编号"/>                               
+                                 <!--<form:input path="productId" name="productId" class="form-control" placeholder="产品编号"/>-->                        
+                                 <form:select path="productId" id="productId" class="form-control" onchange="getproductName()">
+									<form:option value="" disabled="disabled">请选择产品编号</form:option>
+									<form:options items="${productIds}"/> 
+                                 </form:select> 
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品名称</label>
                               <div class="col-md-10">
-                                 <form:input path="productName" name="productName" class="form-control" placeholder="产品名称"/>                               
+                                 <form:input path="productName" name="productName" id="productName" class="form-control" placeholder="产品名称"/>                               
                               </div>
                            </div>
                            <div class="form-group">
@@ -167,7 +177,26 @@
  	   var unitPrice =parseFloat(document.getElementById("unitPrice").value);
  	   var tp = quantityDemand*unitPrice;
  	   document.getElementById("totalPrice").value = tp;
- }
+ 	}
+   	function getproductName(){
+   		var productId =document.getElementById("productId").value;
+   		var orderId =document.getElementById("orderId").value;
+   		
+   		$.ajax({
+   			type : "post",
+            contentType: "application/json",  
+            url : "../orderdetailadd/"+orderId+"/getProductName/"+productId,  
+            dataType : "json",
+   	        success:function(result){
+   	        		for (var i = 0; i < result.length; i++) { 
+   	        		 { 	
+   	        			$("#productName").val(result[i].productName);
+   	        		 } 	
+   	        }},
+   	        error:function(){$("#productName").val("");}
+   		});
+   	}
+   	
    	  
    </script>
    <!-- END JAVASCRIPTS -->   

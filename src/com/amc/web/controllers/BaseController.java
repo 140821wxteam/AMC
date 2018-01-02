@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.amc.service.interfaces.IAccountService;
 import com.amc.service.interfaces.IAuthorityService;
+import com.amc.service.interfaces.ICustomersService;
 import com.amc.service.interfaces.IDeliverDetailService;
 import com.amc.service.interfaces.IDeliverService;
 import com.amc.service.interfaces.IInventoryService;
@@ -18,6 +19,7 @@ import com.amc.service.interfaces.IOrganizationService;
 import com.amc.service.interfaces.IOutofstockService;
 import com.amc.service.interfaces.IOutofstockdetailService;
 import com.amc.service.interfaces.IPrepareService;
+import com.amc.service.interfaces.IPreparedetailService;
 import com.amc.service.interfaces.IProductService;
 import com.amc.service.interfaces.IRoleService;
 import com.amc.service.interfaces.IVendorService;
@@ -43,6 +45,10 @@ public abstract class BaseController {
 	@Autowired
     @Qualifier("OrganizationService")
 	protected IOrganizationService organizationService;
+	
+	@Autowired
+    @Qualifier("CustomerService")
+    protected ICustomersService customerService;
 	
 	@Autowired
     @Qualifier("VendorService")
@@ -76,6 +82,10 @@ public abstract class BaseController {
 	@Autowired
     @Qualifier("PrepareService")
     protected IPrepareService prepareService;
+	
+	@Autowired
+    @Qualifier("PreparedetailService")
+    protected IPreparedetailService preparedetailService;
 	
 	@Autowired
     @Qualifier("DeliverService")

@@ -1,6 +1,5 @@
 package com.amc.web.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.amc.model.models.Outofstock;
-import com.amc.model.models.Outofstockdetail;
 import com.amc.service.interfaces.IOutofstockService;
-import com.amc.service.interfaces.IOutofstockdetailService;
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.models.OutofstockSearchModel;
 import com.infrastructure.project.common.utilities.PageListUtil;
@@ -62,20 +59,20 @@ public class OutofstockController extends BaseController{
 			}
 		}
        
-        if(!model.containsAttribute("outofstockModel")){
+      
         		model.addAttribute("outofstockModel",outofstockModel);
-        }
-        List<Outofstockdetail> outofstockdetaillist=outofstockdetailService.listAll();
-        List<Outofstockdetail> outofstockdetailModel = new ArrayList<>();
-        for(Outofstockdetail od:outofstockdetaillist) {
-			if(od.getoutofstockId()==outofstockId) {
-				outofstockdetailModel.add(od);
-			}
-		}
+       
+//        List<Outofstockdetail> outofstockdetaillist=outofstockdetailService.listAll();
+//        List<Outofstockdetail> outofstockdetailModel = new ArrayList<>();
+//        for(Outofstockdetail od:outofstockdetaillist) {
+//			if(od.getoutofstockId()==outofstockId) {
+//				outofstockdetailModel.add(od);
+//			}
+//		}
         
-        if(!model.containsAttribute("outofstockdetailModel")){
+        /*if(!model.containsAttribute("outofstockdetailModel")){
     			model.addAttribute("outofstockdetailModel",outofstockdetailModel);
-        }
+        }*/
 
         return "inventory/printoutofstock";
     }

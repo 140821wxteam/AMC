@@ -217,7 +217,7 @@
                  { link: true, display: "缺货单处理", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                      selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选缺货单吗？"},
                  { link: true, display: "缺货单打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/printoutofstock/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认打印所选缺货单吗？"}
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}
              ]
          });
       });

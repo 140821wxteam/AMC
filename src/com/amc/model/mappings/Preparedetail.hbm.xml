@@ -21,8 +21,8 @@
 		  <column name="productId" not-null="true"/>
 		</many-to-one>-->
 	    <property name="productName" column="productName" type="string" not-null="true"/>
-	    <property name="factoryId" column="factoryId" type="string" not-null="true"/>
-	    <property name="preparePers" column="preparePers" type="string" not-null="true"/>
+	    <property name="factoryId" column="factoryId" type="string" not-null="false"/>
+	    <property name="preparePers" column="preparePers" type="string" not-null="false"/>
 	    <property name="amount" column="amount" type="integer" not-null="true"/>
 	    <property name="size" column="size" type="string" not-null="false"/>
 	    <property name="status" column="status" type="string" not-null="false"/>

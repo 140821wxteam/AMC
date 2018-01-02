@@ -202,9 +202,6 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-                  { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../inventory/deliverdetail", 
-	                selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-	              { splitter: true },
 	              { link: true, display: "查看详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/deliverdetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
 	                selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                   { splitter: true },

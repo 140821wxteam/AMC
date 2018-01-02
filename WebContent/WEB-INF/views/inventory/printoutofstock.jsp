@@ -149,19 +149,9 @@
    	  $(function() {   
          App.init();
          
-         $("#data-table").tableManaged();
          
-         $(".table-toolbar").toolbarLite({
-             items: [
-                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../orderdetailviewer/{0}", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true }                 
-             ]
-         });
       });
-   	  function returntoorder(){
-   		  window.close();
-   	  }
+   	  
    	  
    </script>
    <!-- END JAVASCRIPTS -->   

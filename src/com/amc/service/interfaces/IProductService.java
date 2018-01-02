@@ -2,6 +2,7 @@ package com.amc.service.interfaces;
 
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.amc.dao.IProductDao;
 import com.amc.model.models.Product;
@@ -15,7 +16,8 @@ public interface IProductService extends IEnableEntityService<Integer, Product, 
 	/*public Page<Account> listPage(AccountSearch search, int pageNo, int pageSize);
 	public void saveAuthorize(Integer AccountId, Integer[] authorityIds) throws ValidatException, EntityOperateException;*/
 	public PageList<Product> listPage(String productId, String productName, int pageNo, int pageSize);
-	
+	public List<String> listproductId();//列出所有产品id
+	public List<Product> getproduct(String productId);//获取与某个id对应的产品信息
 	public void saveProduct(Product product) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	public void updateProduct(Product product) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	//public void updateBind(Integer id, Integer roleId, Integer organizationId) throws ValidatException, EntityOperateException;

@@ -91,8 +91,11 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">顾客编号</label>
                               <div class="col-md-10">
-                                 <form:input path="customerId" name="customerId" class="form-control" placeholder="顾客编号"/>
-                                                            
+                                 <!--<form:input path="customerId" name="customerId" class="form-control" placeholder="顾客编号"/>-->
+                                 <form:select path="customerId" class="form-control">
+									<form:option value="" disabled="disabled">请选择顾客</form:option>
+									<form:options items="${customerIds}"/> 
+                                 </form:select>                           
                               </div>
                            </div>
                            <!--<div class="form-group">

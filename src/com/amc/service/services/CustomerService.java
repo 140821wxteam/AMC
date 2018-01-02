@@ -1,6 +1,7 @@
 package com.amc.service.services;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -99,6 +100,19 @@ public class CustomerService extends EnableEntityService<Integer, Customers, ICu
 		dbModel.setcustomerEmail(customer.getcustomerEmail());
 		dbModel.setnote(customer.getnote());
 		super.update(dbModel);
+	}
+
+	@Override
+	public List<String> listcustomersId() {
+		List<Customers> customers = super.listAll();
+		List<String> customersId = new ArrayList<>();
+		for(Customers c:customers) {
+			if(!customersId.contains(c.getcustomerId())) {
+				customersId.add(c.getcustomerId());
+			}
+		}
+		
+		return customersId;
 	}
 
 }
