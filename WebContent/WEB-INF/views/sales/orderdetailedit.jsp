@@ -99,7 +99,10 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品编号</label>
                               <div class="col-md-10">
-                                 <form:input path="productId" name="productId" class="form-control" placeholder="产品编号"/>                               
+                                 <!--<form:input path="productId" name="productId" class="form-control" placeholder="产品编号"/>-->
+                                 <form:select path="productId" id="productId" class="form-control" onchange="getproductName()">
+									<form:options items="${productIds}"/> 
+                                 </form:select>                               
                               </div>
                            </div>
                            <div class="form-group">
@@ -148,7 +151,7 @@
                         <div class="form-actions fluid">
                            <div class="col-md-offset-6 col-md-6">
                               <button type="submit" class="btn btn-success">保存</button>
-                              <button type="button" class="btn btn-success" onclick="javascript:history.go(-1);">返回</button>                             
+                              <!--<button type="button" class="btn btn-success" onclick="javascript:history.go(-1);">返回</button>-->                            
                            </div>
                         </div>
                      </form:form>
@@ -173,7 +176,25 @@
  	   var unitPrice =parseFloat(document.getElementById("unitPrice").value);
  	   var tp = quantityDemand*unitPrice;
  	   document.getElementById("totalPrice").value = tp;
- }
+	 }
+   	function getproductName(){
+   		var productId =document.getElementById("productId").value;
+   		var orderdetailId =document.getElementById("orderdetailId").value;
+   		
+   		$.ajax({
+   			type : "post",
+            contentType: "application/json",  
+            url : "../orderdetailedit/"+orderdetailId+"/getProductName/"+productId,  
+            dataType : "json",
+   	        success:function(result){
+   	        		for (var i = 0; i < result.length; i++) { 
+   	        		 { 	
+   	        			$("#productName").val(result[i].productName);
+   	        		 } 	
+   	        }},
+   	        error:function(){$("#productName").val("");}
+   		});
+   	}
    	  
    </script>
    <!-- END JAVASCRIPTS -->   

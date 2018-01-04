@@ -147,9 +147,19 @@ public class OrderController extends BaseController{
 	
 	@AuthPassport
 	@RequestMapping(value = "/orderedit/{id}", method = {RequestMethod.GET})
-	public String orderedit(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException{	
+	public String orderedit(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, IOException{
+		if(orderService.get(id).getstatus().equals("审核通过")||orderService.get(id).getstatus().equals("已退回")||orderService.get(id).getstatus().equals("已处理")) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.flush();
+		    out.println("<script>");
+			out.println("alert('不能编辑！');");
+			out.println("history.back();");
+			out.println("</script>");
+		}
 		if(!model.containsAttribute("contentModel")){
 			OrderEditModel orderEditModel=OrderModelExtension.toOrderEditModel(orderService.get(id));
+			model.addAttribute("customerIds",customerService.listcustomersId());
 			model.addAttribute("contentModel", orderEditModel);
 		}
 
@@ -158,9 +168,9 @@ public class OrderController extends BaseController{
 	
 	@AuthPassport
 	@RequestMapping(value = "/orderedit/{id}", method = {RequestMethod.POST})
-    public String orderedit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") OrderEditModel editModel, @PathVariable(value="id") Integer id,BindingResult result) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
+    public String orderedit(HttpServletRequest request,HttpServletResponse response, Model model, @Valid @ModelAttribute("contentModel") OrderEditModel editModel, @PathVariable(value="id") Integer id,BindingResult result) throws EntityOperateException, ValidatException, NoSuchAlgorithmException, IOException {
 		if(result.hasErrors())
-            return orderedit(request, model, id);
+            return orderedit(request,response, model, id);
 		//vendorService.updateVendor(VendorModelExtension.toVendor(editModel.setId(id)));
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
         //System.out.println("return_"+returnUrl);
@@ -169,6 +179,7 @@ public class OrderController extends BaseController{
 		for(Order o:lists) {
 			if(o.getId()==id)
 			orderId=o.getorderId();
+			
 		}
 		
         double tp=0.0;

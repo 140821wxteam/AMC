@@ -21,6 +21,7 @@ public class ProductEditModel {
 	private String productUnit;
 	private Integer safeStock;
 	private String note;
+	private String images;
 	
 	public void setproductId(String productId){
 		this.productId=productId;
@@ -69,5 +70,11 @@ public class ProductEditModel {
 	}
 	public String getnote(){
 		return this.note;
+	}
+	public void setimages(String images){
+		this.images=images;
+	}
+	public String getimages(){
+		return this.images;
 	}
 }

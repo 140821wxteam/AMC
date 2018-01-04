@@ -94,7 +94,11 @@
 								  <div class="form-group">
 									 <label class="control-label col-md-3">产品编号</label>
 									 <div class="col-md-9">
-										<form:input path="productId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品编号"/>
+										<!--<form:input path="productId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品编号"/>-->
+										<form:select path="productId" id="productId" class="form-control">
+											<form:option value="" disabled="disabled">请选择产品编号</form:option>
+											<form:options items="${productIds}"/> 
+                                 		</form:select>
 									 </div>
 								  </div>
 							   </div>
@@ -197,18 +201,13 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productadd", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
+            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/inventoryadd", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
                  { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },
+                 
                  { link: true, display: "查看库存变化历史", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/listchanging/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                     	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                  { splitter: true },
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
-                 //{ link: true, display: "统计图", css: "icon-signal", showIcon: true},
-                 //{ splitter: true },
+                  { splitter: true }
+                 
              ]
          });
 

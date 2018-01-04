@@ -154,11 +154,14 @@
 							            <td>${item.unitPrice}</td>
 							            <td>${item.totalPrice}</td>							            
 							            <td>${item.note}</td>
-							            <c:if test="${item.status eq '退回'}">
+							            <c:if test="${item.status eq '已退回'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '审核通过'}">
 							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已处理'}">
+							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '未完成'}">
 							            		<td style="color:black;">${item.status}</td>

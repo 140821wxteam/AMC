@@ -15,6 +15,7 @@ public class ProductModelExtension {
 		ret.setproductUnit(productEditModel.getproductUnit());
 		ret.setsafeStock(productEditModel.getsafeStock());
 		ret.setnote(productEditModel.getnote());
+		ret.setimages(productEditModel.getimages());
 		return ret;
 	}
 	
@@ -29,6 +30,7 @@ public class ProductModelExtension {
 		ret.setproductUnit(model.getproductUnit());
 		ret.setsafeStock(model.getsafeStock());		
 		ret.setnote(model.getnote());
+		ret.setimages(model.getimages());
 		
 		return ret;
 	}

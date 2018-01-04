@@ -73,12 +73,16 @@ public class ProductService extends EnableEntityService<Integer, Product, IProdu
 	@Override
 	public void updateProduct(Product product) throws ValidatException, EntityOperateException{
 		Product dbModel=super.get(product.getId());
+		
 		dbModel.setproductId(product.getproductId());
 		dbModel.setproductName(product.getproductName());
 		dbModel.setproductType(product.getproductType());
+		dbModel.setproductSpecification(product.getproductSpecification());
+		dbModel.setproductOrigin(product.getproductOrigin());
 		dbModel.setproductUnit(product.getproductUnit());
 		dbModel.setsafeStock(product.getsafeStock());		
 		dbModel.setnote(product.getnote());
+		dbModel.setimages(product.getimages());
 		super.update(dbModel);
 	}
 

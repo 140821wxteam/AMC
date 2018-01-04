@@ -61,6 +61,7 @@ public class PrepareController extends BaseController{
 		model.addAttribute("requestQuery", request.getQueryString());
 
         model.addAttribute("searchModel", searchModel);
+        model.addAttribute("customerIds",customerService.listcustomersId());
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", prepareService.listPage(searchModel.getprepareId(), searchModel.getcustomerId(), pageNo, pageSize));

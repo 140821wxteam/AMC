@@ -19,6 +19,7 @@
 	    <property name="productUnit" column="productUnit" type="string" not-null="true"/>
 	    <property name="safeStock" column="safeStock" type="integer" not-null="false"/>
 	    <property name="note" column="note" type="string" not-null="false"/>
+	    <property name="images" column="images" type="string" not-null="false"/>
 		
     </class>  
 </hibernate-mapping> 

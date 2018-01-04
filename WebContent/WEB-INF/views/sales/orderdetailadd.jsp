@@ -145,14 +145,14 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">状态</label>
                               <div class="col-md-10">
-                                 <form:input path="status" name="status" class="form-control" placeholder="状态"/>
+                                 <form:input path="status" name="status" class="form-control" readonly="true" value="未完成" placeholder="状态"/>
                               </div>
                            </div>                                      
                         </div>
                         <div class="form-actions fluid">
                            <div class="col-md-offset-6 col-md-6">
                               <button type="submit" class="btn btn-success">保存</button>
-                              <button type="button" class="btn btn-success" onclick="javascript:history.go(-1);">返回</button>                             
+                              <!--<button type="button" class="btn btn-success" onclick="javascript:history.go(-1);">返回</button>-->                             
                            </div>
                         </div>
                      </form:form>

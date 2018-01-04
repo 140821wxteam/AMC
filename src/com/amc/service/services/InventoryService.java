@@ -145,7 +145,8 @@ public class InventoryService extends EnableEntityService<Integer, Inventory, II
 		Inventory dbModel=super.get(inventory.getId());
 		dbModel.setproductId(inventory.getproductId());
 		dbModel.setproductName(inventory.getproductName());
-		dbModel.setinventoryLevel(inventory.getinventoryLevel());		
+		dbModel.setinventoryLevel(inventory.getinventoryLevel());	
+		dbModel.setcreateTime(inventory.getcreateTime());		
 		dbModel.setstatus(inventory.getstatus());
 		dbModel.setnote(inventory.getnote());
 		super.update(dbModel);

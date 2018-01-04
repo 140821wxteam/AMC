@@ -173,11 +173,27 @@ public class OrderdetailController extends BaseController{
 				}
 			}
 			//OrderdetailEditModel orderdetailEditModel=OrderdetailModelExtension.toOrderdetailEditModel(orderdetailService.get(id));
+			model.addAttribute("productIds",productService.listproductId());
 			model.addAttribute("contentModel", orderdetailEditModel);
 		}
 
         return "sales/orderdetailedit";	
 	}
+	
+	//获取实时的产品信息1
+		@AuthPassport
+		@RequestMapping(value="/orderdetailedit/{orderdetailId}/getProductName/{productId}", method = {RequestMethod.POST})
+		@ResponseBody
+	    public void getProductName1(HttpServletRequest request,HttpServletResponse response, Model model,@PathVariable(value="orderdetailId") String orderdetailId,@PathVariable(value="productId") String productId) throws IOException{
+			
+			ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
+	        String json = mapper.writeValueAsString(productService.getproduct(productId));    //将list中的对象转换为Json格式的数组
+	        
+	        //将json数据返回给客户端
+	        response.setContentType("text/html; charset=utf-8");
+	        response.getWriter().write(json);
+			
+		}
 	
 	@RequestMapping(value="/orderdetailedit/{orderdetailId}", method = {RequestMethod.POST})
 	public String orderdetailedit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") OrderdetailEditModel orderdetailEditModel, BindingResult result,@PathVariable(value="orderdetailId") String orderdetailId) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{

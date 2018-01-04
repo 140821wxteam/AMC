@@ -102,7 +102,11 @@
 								  <div class="form-group">
 									 <label class="control-label col-md-3">顾客编号</label>
 									 <div class="col-md-9">
-										<form:input path="customerId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="顾客编号"/>
+										<!--<form:input path="customerId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="顾客编号"/>-->
+									    <form:select path="customerId" class="form-control">
+											  <form:option value="" disabled="disabled">请选择顾客</form:option>
+											  <form:options items="${customerIds}"/> 
+                                         </form:select>
 									 </div>
 								  </div>
 							   </div>

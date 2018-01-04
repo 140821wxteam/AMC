@@ -204,19 +204,15 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderaddnew", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
-                 { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },
+            	 
                  { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/outofstockdetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                     	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                   { splitter: true },
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
-                 { link: true, display: "缺货单处理", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选缺货单吗？"},
-                 { link: true, display: "缺货单打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/printoutofstock/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 { link: true, display: "生成采购订单", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认生成采购订单吗？"},
+                 { link: true, display: "缺件表打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/printoutofstock/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                      selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}
              ]
          });
