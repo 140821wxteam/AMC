@@ -195,10 +195,14 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-	              { link: true, display: "查看详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/deliverdetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-	                selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+            	 	{ link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/stockinadd", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
+                 { splitter: true },
+                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/stockinedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                   { splitter: true },
-                  { link: true, display: "修改状态", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/stockindelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
+                  { link: true, display: "确认入库", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/stockinconfirm/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                      	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}
              ]
          });

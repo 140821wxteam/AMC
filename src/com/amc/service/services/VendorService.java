@@ -1,6 +1,7 @@
 package com.amc.service.services;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -15,6 +16,7 @@ import com.amc.model.models.Vendor;
 import com.amc.model.models.Account;
 import com.amc.model.models.Authority;
 import com.amc.model.models.Organization;
+import com.amc.model.models.Product;
 import com.amc.model.models.Role;
 import com.amc.service.interfaces.IVendorService;
 import com.infrastructure.project.base.service.services.EnableEntityService;
@@ -84,6 +86,19 @@ public class VendorService extends EnableEntityService<Integer, Vendor, IVendorD
 		dbModel.setvendorEmail(vendor.getvendorEmail());
 		dbModel.setnote(vendor.getnote());
 		super.update(dbModel);
+	}
+	
+	@Override
+	public List<String> listvendorId() {
+		List<Vendor> vendors = super.listAll();
+		List<String> vendorsId = new ArrayList<>();
+		for(Vendor v:vendors) {
+			if(!vendorsId.contains(v.getvendorId())) {
+				vendorsId.add(v.getvendorId());
+			}
+		}
+		
+		return vendorsId;
 	}
 	/*@Override
 	public boolean vendorExist(String vendorId){

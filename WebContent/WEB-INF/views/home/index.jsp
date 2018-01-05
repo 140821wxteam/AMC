@@ -68,7 +68,9 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
+         <!-- BEGIN PAGE BODY -->
          
+         <!--END PAGE BODY -->                   
          <div class="clearfix"></div>
          <div class="row">
             
@@ -95,7 +97,7 @@
    <!-- BEGIN FOOTER -->
    <div class="footer">
       <div class="footer-inner">
-         2017 &copy; Conquer by fc.
+         2017 &copy; Conquer by AMC.
       </div>
       <div class="footer-tools">
          <span class="go-top">
