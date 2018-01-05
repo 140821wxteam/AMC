@@ -17,5 +17,6 @@ public interface IOrderdetailService extends IEnableEntityService<Integer, Order
 	//public List<Orderdetail> listEnable();
 	public void saveOrderdetail(Orderdetail orderdetail) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	public void updateOrderdetail(Orderdetail orderdetail) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
+	public PageList<Orderdetail> listAllPage(String productId, String productName, int pageNo, int pageSize);
 
 }

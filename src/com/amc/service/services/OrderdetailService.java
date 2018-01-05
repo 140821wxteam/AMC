@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.amc.dao.IOrderdetailDao;
+import com.amc.model.models.Inventory;
 import com.amc.model.models.Orderdetail;
 import com.amc.service.interfaces.IOrderdetailService;
 import com.infrastructure.project.base.service.services.EnableEntityService;
@@ -68,4 +69,32 @@ public class OrderdetailService extends EnableEntityService<Integer, Orderdetail
 		dbModel.setnote(orderdetail.getnote());
 		super.update(dbModel);
 	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public PageList<Orderdetail> listAllPage(String productId, String productName, int pageNo, int pageSize) {		
+		Criteria countCriteria = entityDao.getCriteria();	
+		Criteria listCriteria = entityDao.getCriteria();
+		
+		if(productId!=null && !productId.isEmpty()){
+			countCriteria.add(Restrictions.eq("productId", productId)); 
+    		listCriteria.add(Restrictions.eq("productId", productId)); 
+		}
+		if(productName!=null && !productName.isEmpty()){
+			countCriteria.add(Restrictions.eq("productName", productName)); 
+    		listCriteria.add(Restrictions.eq("productName", productName)); 
+		}
+
+        listCriteria.setFirstResult((pageNo-1)*pageSize);  
+        listCriteria.setMaxResults(pageSize);
+        List<Orderdetail> items = listCriteria.list();
+        
+        
+        countCriteria.setProjection(Projections.rowCount());
+        Integer count=Integer.parseInt(countCriteria.uniqueResult().toString());
+        
+        return PageListUtil.getPageList(count, pageNo, items, pageSize);
+    }
+	
+	
+	
 }

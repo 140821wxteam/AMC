@@ -1,13 +1,17 @@
 package com.amc.web.controllers;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +24,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.amc.model.models.Orderdetail;
 import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
 import com.amc.model.models.Outofstock;
 import com.amc.model.models.Outofstockdetail;
-import com.amc.service.interfaces.IInventoryService;
+import com.amc.model.models.Product;
+import com.amc.service.interfaces.IOrderdetailService;
 import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOutofstockService;
 import com.amc.service.interfaces.IOutofstockdetailService;
+import com.amc.service.services.OrderService;
 import com.amc.web.auth.AuthPassport;
+import com.amc.web.jsonmodels.OrderdetailJson;
+import com.amc.web.jsonmodels.OrderdetailJson;
+import com.amc.web.models.DeliverSearchModel;
+import com.amc.web.models.InventorySearchModel;
+import com.amc.web.models.OrderdetailSearchModel;
 import com.amc.web.models.OrderEditModel;
 import com.amc.web.models.OrderSearchModel;
+import com.amc.web.models.OrderdetailSearchModel;
 import com.amc.web.models.extension.OrderModelExtension;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
 import com.infrastructure.project.common.utilities.PageListUtil;
@@ -375,4 +391,199 @@ public class OrderController extends BaseController{
         return "redirect:"+returnUrl;	
 	
 	}
+	
+	
+//	@AuthPassport
+//	@RequestMapping(value="/salepredict", method = {RequestMethod.GET})
+//    public void getsalepredict(HttpServletRequest request,HttpServletResponse response, Model model,OrderdetailSearchModel searchModel, String productId,String productName) throws IOException{
+//    	model.addAttribute("requestUrl", request.getServletPath());
+//		model.addAttribute("requestQuery", request.getQueryString());
+//
+//        model.addAttribute("searchModel", searchModel);
+//        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
+//        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
+//        model.addAttribute("contentModel", orderService.listsalebyOrderdetail(productId, productName, pageNo, pageSize, orderdetailService));
+//        //(searchModel.getDeliverId(), searchModel.getCustomerId(), pageNo, pageSize, prepareService));
+//		List<OrderdetailJson> i=new ArrayList<>();
+//		i=orderService.listsalebyOrderdetail(productId, productName, pageNo, pageSize, orderdetailService);
+//		ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
+//        
+//        String json = mapper.writeValueAsString(i);    //将list中的对象转换为Json格式的数组
+//        
+//        //将json数据返回给客户端
+//        response.setContentType("text/html; charset=utf-8");
+//        response.getWriter().write(json);
+//		
+//    }
+	
+	@AuthPassport
+	@RequestMapping(value="/listchanging/{id}", method = {RequestMethod.GET})
+    public String salechanging(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel,@PathVariable(value="id") Integer id){
+    	model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		List<Orderdetail> sales=orderdetailService.listAll();
+		String productId="";
+		for(Orderdetail sale:sales) {
+			if(sale.getId()==id) productId=sale.getproductId();
+		}
+		searchModel.setproductId(productId);
+        model.addAttribute("searchModel", searchModel);
+        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
+        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
+        model.addAttribute("contentModel", orderdetailService.listAllPage(searchModel.getproductId(), searchModel.getproductName(), pageNo, pageSize));
+        return "sales/listchanging";
+    }
+	
+	@AuthPassport
+	@RequestMapping(value="/listchanging/{productId}", method = {RequestMethod.POST})
+	@ResponseBody
+    public void getlistchangedata(HttpServletRequest request,HttpServletResponse response, Model model, OrderdetailSearchModel searchModel,@PathVariable(value="productId") String productId) throws IOException{
+		System.out.println("test");
+		//这个并没有打印出来
+		//response.setContentType("application/json;charset=utf-8");
+		//String productId=request.getParameter("productId");
+//		List<Orderdetail> orderdetail=orderdetailService.listAll();
+//		List<Product> product=productService.listAll();
+//		List<OrderdetailJson> i=new ArrayList<>();
+//		int safestock=0;
+//		for(Product p:product) {
+//			if(p.getproductId().equals(productId)) safestock=p.getsafeStock();
+//		}
+//		
+//		for(Orderdetail iv:inventory) {
+//			if(iv.getproductId().equals(productId)) {
+//				OrderdetailJson inventoryjson=new OrderdetailJson();
+//				inventoryjson.setproductId(productId);
+//				inventoryjson.setproductName(iv.getproductName());
+//				inventoryjson.setinventoryLevel(iv.getinventoryLevel());
+//				inventoryjson.setsafestock(safestock);
+//				String time = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS")).format(iv.getcreateTime().getTime());
+//				inventoryjson.setcreateTime(time);
+//				i.add(inventoryjson);
+//			}
+//		}
+		
+        Calendar now=Calendar.getInstance();
+		int year=now.YEAR;
+		int month=now.MONTH;
+		int day=now.DATE;
+		int time=year*10000+month*100+day;
+        
+        List<Orderdetail> itemsPre = orderdetailService.listAll();
+        
+        List<OrderdetailJson> result=new ArrayList<>();
+        //我决定还是一个月一个月推荐,有一个简单的方法是由于orderdetailId的格式中前几位为时间，因此可以直接根据id来计算
+        int allamount=0;
+//        HashMap<String,Integer> sales=new HashMap<String,Integer>();
+        TreeMap<String, Integer> sales = new TreeMap<String, Integer>();
+//                new Comparator<String>() {
+//                    public int compare(String obj1, String obj2) {
+//                        // 降序排序
+//                        return obj2.compareTo(obj1);
+//                    }
+//                });
+        
+        ArrayList<Integer> chalist=new ArrayList<>();
+        for(Orderdetail item:itemsPre){
+        	if(item.getproductId()==productId){
+        		
+        	
+        	int thistime=Integer.parseInt(item.getorderdetailId().substring(1,9));
+        	int thisyear=thistime/10000;
+        	int thismonth=(thistime-thisyear*10000)/100;
+        	int thisday=thistime%100;
+//        	int yue=(time-thistime)/100;
+        	//计算与当前时间隔了多少个月
+        	int chayear=year-thisyear;
+        	int cha=chayear*12+thismonth-month;
+   	
+        	if(cha<12 && cha>=0){
+        		chalist.add(cha);
+        		if(sales.containsKey(String.valueOf(thistime/100))){
+        			sales.put(String.valueOf(thistime/100), sales.get(String.valueOf(thistime/100))+item.getquantitySupplied());
+        		}
+        		else{
+        			sales.put(String.valueOf(thistime/100), item.getquantitySupplied());
+        		}
+        	}
+        	}
+        }
+//可能有的月份销量是0，因此要对其进行填充
+        for(int m=0;m<12;m++){
+        	if(!chalist.contains(m)){
+        		int a=(month+1+m)/12;
+        		int b=(month+1+m)%12;
+        		if(a==1){
+        			sales.put(String.valueOf(year*100+b),0);
+        		}else if(a==0){
+        			sales.put(String.valueOf((year-1)*100+b),0);
+        		}
+        	}
+        }
+        for(Entry map:sales.entrySet()){
+            OrderdetailJson orderdetailjson=new OrderdetailJson();
+            orderdetailjson.setProductId(productId);
+//            orderdetailjson.setProductName(productName);
+            orderdetailjson.setCreateTime(map.getKey().toString());
+            orderdetailjson.setSaleLevel(Integer.parseInt(map.getValue().toString()));
+            result.add(orderdetailjson);
+        }
+        int m=1;
+        for(int presale:this.predict(sales)){
+        	 OrderdetailJson orderdetailjson=new OrderdetailJson();
+             orderdetailjson.setProductId(productId);
+//             orderdetailjson.setProductName(productName);
+             orderdetailjson.setCreateTime(String.valueOf((year+(month+m)/12)*100+(month+m)%12));
+             orderdetailjson.setSaleLevel(presale);
+             result.add(orderdetailjson);
+             m++;
+        }
+		
+		
+		ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
+        
+        String json = mapper.writeValueAsString(result);    //将list中的对象转换为Json格式的数组
+        
+        //将json数据返回给客户端
+        response.setContentType("text/html; charset=utf-8");
+        response.getWriter().write(json);
+		
+		}
+	
+	public static int[] predict(TreeMap<String, Integer> yearsale){
+		int[] predictlist = null;
+		//3个销售周期的加权移动个平均，加权数分别为3,2,1
+		int[] input = null;
+		int i=0;
+		for(Entry entry:yearsale.entrySet()){
+			input[i]=(int) entry.getValue();
+			i++;
+		}
+		if(input.length>2){
+			int a=input[input.length-1];
+			int b=input[input.length-2];
+			int c=input[input.length-3];
+			int pre1=(a*3+b*2+c*1)/6;
+			predictlist[0]=pre1;
+			int pre2=(pre1*3+a*2+b*1)/6;
+			predictlist[1]=pre2;
+		}
+		else{
+			predictlist[0]=input[input.length-1];
+		}
+		return predictlist;
+	}
+	
+	@AuthPassport
+	@RequestMapping(value="/list", method = {RequestMethod.GET})
+    public String sales(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel){
+    	model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+        model.addAttribute("searchModel", searchModel);
+        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
+        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
+        model.addAttribute("contentModel", orderdetailService.listAllPage(searchModel.getproductId(), searchModel.getproductName(), pageNo, pageSize));
+        return "sales/list";
+    }
 }

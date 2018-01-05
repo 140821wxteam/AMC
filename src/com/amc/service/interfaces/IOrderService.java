@@ -2,9 +2,13 @@ package com.amc.service.interfaces;
 
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.amc.dao.IOrderDao;
+import com.amc.model.models.Inventory;
 import com.amc.model.models.Order;
+import com.amc.model.models.Orderdetail;
+import com.amc.web.jsonmodels.OrderdetailJson;
 import com.infrastructure.project.base.service.interfaces.IEnableEntityService;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
@@ -14,10 +18,14 @@ public interface IOrderService extends IEnableEntityService<Integer, Order, IOrd
 
 	public PageList<Order> listPage(String orderId, String customerId, String status, int pageNo, int pageSize);
 	
+	public PageList<Orderdetail> listAllPage(String productId, String productName, int pageNo, int pageSize);//显示所有的库存状况
+
 	public void saveOrder(Order order) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	
 	public void updateOrder(Order order) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	
 	//public double Orderfigure(String orderId) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
+	public Orderdetail listsale(String productId);//返回某一产品的最新库存状况
+	public List<OrderdetailJson> listsalebyOrderdetail(String productId,String productName,int pageNo, int pageSize, IOrderdetailService orderdetailService);
 
 }
