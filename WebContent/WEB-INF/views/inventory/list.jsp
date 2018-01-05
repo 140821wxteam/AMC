@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 库存信息</title>
+   <title>AMC | 库存管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -59,7 +59,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>库存信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>

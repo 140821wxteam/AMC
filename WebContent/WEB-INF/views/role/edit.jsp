@@ -49,7 +49,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Form Controls <small>form controls and more</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>

@@ -12,7 +12,7 @@
 <!-- BEGIN HEAD -->
 <head>
 	<meta charset="utf-8" />
-	<title>Conquer | 登录</title>
+	<title>AMC | 登录</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -93,7 +93,7 @@
 	<!-- END LOGIN -->
 	<!-- BEGIN COPYRIGHT -->
 	<div class="copyright">
-		2013 &copy; Conquer. Admin Dashboard Template.
+		2017 &copy; AMC.
 	</div>
 	<!-- END COPYRIGHT -->
 	 
