@@ -59,7 +59,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>销售信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -199,18 +199,11 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productadd", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
-                 { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },
+            	 
                  { link: true, display: "查看销售变化历史", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/listchanging/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                     	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                  { splitter: true },
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
-                 //{ link: true, display: "统计图", css: "icon-signal", showIcon: true},
-                 //{ splitter: true },
+                  { splitter: true }
+                 
              ]
          });
 
