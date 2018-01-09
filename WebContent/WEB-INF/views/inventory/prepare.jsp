@@ -142,10 +142,10 @@
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>备货单编号</th>
 		                              <th>订单编号</th>
-		                              <th>顾客自编号</th>
+		                              <th>顾客编号</th>
 		                              <th>创建时间</th>
-		                              <th>收货人</th>
-		                              <th>收货地址</th>
+		                              <!--<th>收货人</th>
+		                              <th>收货地址</th>  -->
 		                              <th>订单项目数</th>
 		                              <th>完全满足项目数</th>
 		                              <th>部分满足项目数</th>
@@ -164,14 +164,22 @@
 							            <td>${item.orderId}</td>
 							            <td>${item.customerId}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
-							            <td>${item.receivePers}</td>
-							            <td>${item.receiveAddr}</td>
+							            <!--<td>${item.receivePers}</td>
+							            <td>${item.receiveAddr}</td>  -->
 							            <td>${item.orderNum}</td>
 							            <td>${item.fitNum}</td>
 							            <td>${item.partfitNum}</td>
 							            <td>${item.outofstockNum}</td>
 							            <td>${item.note}</td>							            
-							            <td>${item.status}</td>
+							            <c:if test="${item.status eq '待备货'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已备货'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已发货'}">
+							            		<td style="color:blue;">${item.status}</td>
+							            </c:if>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -203,19 +211,15 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "从销售单导入", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/prepareaddnew", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
-                 { splitter: true }, 
-                 { link: true, display: "更改备货单信息", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/prepareedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },  
-                 { link: true, display: "出库单填写", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/outstockadd/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },
-                 { link: true, display: "入库单填写", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/instockadd/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/preparedelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+            	 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/preparedetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+               { splitter: true },
+              { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/preparedetaildelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
+              { link: true, display: "确认备货", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/prepareconfirm/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                  selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！", confirm: "确认备货吗？"},
+              { link: true, display: "发货", css: "icon-arrow-right", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/todeliver/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                  selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！", confirm: "确认发货吗？"}
              ]
          });
       });

@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 库存管理</title>
+   <title>AMC | 备货单管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -78,43 +78,78 @@
                   <div class="portlet-body form">
                      <form:form modelAttribute="contentModel" class="form-horizontal" method="POST">
                         <div class="form-body">
+                        <div class="form-group" style="display:none">
+                              <label  class="col-md-2 control-label">id</label>
+                              <div class="col-md-10">
+                                 <form:input path="id" name="id" class="form-control" placeholder="id"/>                                 
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">备货单编号</label>
+                              <div class="col-md-10">
+                                 <form:input path="prepareId" name="prepareId" class="form-control" readonly="true" placeholder="备货单编号"/>                                 
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">备货单明细编号</label>
+                              <div class="col-md-10">
+                                 <form:input path="preparedetailId" name="preparedetailId" class="form-control" readonly="true" placeholder="备货单明细编号"/>                               
+                              </div>
+                           </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品编号</label>
                               <div class="col-md-10">
-                                 <form:select path="productId" id="productId" class="form-control" onchange="getproductName()">
-									<form:option value="" disabled="disabled">请选择产品编号</form:option>
-									<form:options items="${productIds}"/> 
-                                 </form:select>
+                                 <form:input path="productId" name="productId" class="form-control" readonly="true" placeholder="产品编号"/>                               
                               </div>
                            </div>
+                           
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品名称</label>
                               <div class="col-md-10">
-                                 <form:input path="productName" name="productName" id="productName" class="form-control" placeholder="产品名称"/>                               
+                                 <form:input path="productName" name="productName" class="form-control" readonly="true" placeholder="产品名称"/>
                               </div>
                            </div>
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">库存水平</label>
+                              <label  class="col-md-2 control-label">原厂编号</label>
                               <div class="col-md-10">
-                                 <form:input path="inventoryLevel" class="form-control" placeholder="库存水平"/>
+                                 <form:input path="factoryId" name="factoryId" class="form-control" readonly="true" placeholder="原厂编号"/>
                               </div>
                            </div>
-                           <!--<div class="form-group">
-                              <label  class="col-md-2 control-label">库存状态</label>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">规格</label>
                               <div class="col-md-10">
-                                 <form:input path="status" class="form-control" placeholder="库存状态"/>
+                                 <form:input path="size" name="size" class="form-control" readonly="true" placeholder="规格"/>
                               </div>
-                           </div>-->
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">数量</label>
+                              <div class="col-md-10">
+                                 <form:input path="amount" name="amount" class="form-control" readonly="true" placeholder="数量"/>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">备货员</label>
+                              <div class="col-md-10">
+                                 <form:input path="preparePers" name="preparePers" class="form-control" readonly="true" placeholder="备货员"/>
+                              </div>
+                           </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">备注</label>
                               <div class="col-md-10">
-                                 <form:input path="note" class="form-control" placeholder="备注"/>
+                                 <form:input path="note" name="note" class="form-control" readonly="true" placeholder="备注"/>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">状态</label>
+                              <div class="col-md-10">
+                                 <form:input path="status" name="status" class="form-control" readonly="true" placeholder="状态"/>
                               </div>
                            </div>                                      
                         </div>
                         <div class="form-actions fluid">
                            <div class="col-md-offset-6 col-md-6">
-                              <button type="submit" class="btn btn-success">保存</button>                             
+                              
+                              <button type="button" class="btn btn-success" onclick="javascript:history.go(-1);">返回</button>                             
                            </div>
                         </div>
                      </form:form>
@@ -134,24 +169,8 @@
    	  $(function() {   
          App.init();
       });
-   	function getproductName(){
-   		var productId =document.getElementById("productId").value;
-   		
-   		
-   		$.ajax({
-   			type : "post",
-            contentType: "application/json",  
-            url : "../inventory/inventoryadd/getProductName/"+productId,  
-            dataType : "json",
-   	        success:function(result){
-   	        		for (var i = 0; i < result.length; i++) { 
-   	        		 { 	
-   	        			$("#productName").val(result[i].productName);
-   	        		 } 	
-   	        }},
-   	        error:function(){$("#productName").val("");}
-   		});
-   	}
+   	
+   	  
    </script>
    <!-- END JAVASCRIPTS -->   
 </body>

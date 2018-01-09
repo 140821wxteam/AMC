@@ -21,6 +21,7 @@ import com.amc.service.interfaces.IOutofstockdetailService;
 import com.amc.service.interfaces.IPrepareService;
 import com.amc.service.interfaces.IPreparedetailService;
 import com.amc.service.interfaces.IProductService;
+import com.amc.service.interfaces.IPurchaseAdviceService;
 import com.amc.service.interfaces.IRoleService;
 import com.amc.service.interfaces.IVendorService;
 
@@ -95,6 +96,9 @@ public abstract class BaseController {
     @Qualifier("DeliverDetailService")
     protected IDeliverDetailService deliverDetailService;
 
+	@Autowired
+    @Qualifier("PurchaseAdviceService")
+    protected IPurchaseAdviceService purchaseadviceService;
 	
 	@ExceptionHandler  
     public String exception(HttpServletRequest request, Exception e) {  

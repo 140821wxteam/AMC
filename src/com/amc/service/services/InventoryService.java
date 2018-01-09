@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.amc.dao.IInventoryDao;
 import com.amc.model.models.Inventory;
 import com.amc.service.interfaces.IInventoryService;
+import com.amc.service.interfaces.IProductService;
 import com.infrastructure.project.base.service.services.EnableEntityService;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
@@ -23,16 +24,16 @@ import com.infrastructure.project.common.utilities.PageListUtil;;
 @Service("InventoryService")
 public class InventoryService extends EnableEntityService<Integer, Inventory, IInventoryDao> implements IInventoryService {
 	
-	/*@Autowired
-    @Qualifier("AuthorityService")
-	protected IAuthorityService authorityService;*/
+	@Autowired
+    @Qualifier("ProductService")
+	protected IProductService productService;
 	
 	/*@Autowired
     @Qualifier("RoleService")
 	protected IRoleService roleService;
 	
 	@Autowired
-    @Qualifier("OrganizationService")
+    @Qualifier("ProductService")
 	protected IOrganizationService organizationService;
 	*/
 	@Autowired
@@ -58,12 +59,14 @@ public class InventoryService extends EnableEntityService<Integer, Inventory, II
         listCriteria.setFirstResult((pageNo-1)*pageSize);  
         listCriteria.setMaxResults(pageSize);
         List<Inventory> items = listCriteria.list();
+        System.out.println(items.size());
         List<Inventory> items_final = new ArrayList<>();
         //日期比较,取出库存记录中每一个产品的最新库存状况
         List<String>	productIds=new ArrayList<>();
         for(Inventory i:items) {
         		if(!productIds.contains(i.getproductId())) productIds.add(i.getproductId());
         }
+        //productIds = productService.listproductId();
         System.out.println(productIds);
         for(String pi:productIds) {
         		Calendar c = Calendar.getInstance();
@@ -94,7 +97,7 @@ public class InventoryService extends EnableEntityService<Integer, Inventory, II
 			}
 	
 	        List<Inventory> items = listCriteria.list();
-	        System.out.println("库存记录条数："+items.size());
+	        //System.out.println("库存记录条数："+items.size());
 	        //日期比较,取出库存记录中产品的最新库存状况
 	        		Calendar c = Calendar.getInstance();
 	        		c.set(Calendar.YEAR, -1000);

@@ -120,6 +120,7 @@
 										  <form:option value="已退回">已退回</form:option>
 										  <form:option value="审核通过">审核通过</form:option>
 										  <form:option value="已处理">已处理</form:option>
+										  <form:option value="仍有缺货">仍有缺货</form:option>
                                            </form:select>
 									 </div>
 								  </div>
@@ -173,6 +174,9 @@
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
 							            <td>${item.note}</td>
 							            <c:if test="${item.status eq '已退回'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '仍有缺货'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '审核通过'}">

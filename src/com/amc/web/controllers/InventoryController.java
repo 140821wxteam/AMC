@@ -122,7 +122,7 @@ public class InventoryController extends BaseController{
 	@RequestMapping(value="/inventoryadd", method = {RequestMethod.POST})
 	public String inventoryadd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") InventoryEditModel inventoryEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
 		inventoryEditModel.setcreateTime(Calendar.getInstance());
-		
+		inventoryEditModel.setstatus("未知");
 		inventoryService.saveInventory(InventoryModelExtension.toInventory(inventoryEditModel));
         
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
@@ -145,43 +145,34 @@ public class InventoryController extends BaseController{
 	        response.getWriter().write(json);
 			
 		}
-/*	
-	@AuthPassport
-	@RequestMapping(value = "/productedit/{id}", method = {RequestMethod.GET})
-	public String productedit(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException{	
-		if(!model.containsAttribute("contentModel")){
-			ProductEditModel productEditModel=ProductModelExtension.toProductEditModel(productService.get(id));
-			model.addAttribute("contentModel", productEditModel);
-		}
 
-        return "basedata/productedit";	
-	}
-	
-	@AuthPassport
-	@RequestMapping(value = "/productedit/{id}", method = {RequestMethod.POST})
-    public String productedit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") ProductEditModel editModel, @PathVariable(value="id") Integer id,BindingResult result) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
-		if(result.hasErrors())
-            return productedit(request, model, id);
-		//vendorService.updateVendor(VendorModelExtension.toVendor(editModel.setId(id)));
-        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-        //System.out.println("return_"+returnUrl);
-        Product product=ProductModelExtension.toProduct(editModel);
-        product.setId(id);
-        productService.updateProduct(product);
-        
-    if(returnUrl==null)
-        returnUrl="basedata/product";
-    	return "redirect:"+returnUrl;    
-    }
-	
-	@AuthPassport
-	@RequestMapping(value = "/productdelete/{id}", method = {RequestMethod.GET})
-	public String delete(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException{	
-		productService.delete(id);
-		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-		if(returnUrl==null)
-        	returnUrl="basedata/product";
-        return "redirect:"+returnUrl;	
-	}
-	*/
+		//刷新库存状态
+		@AuthPassport
+		@RequestMapping(value="/inventoryrefresh")
+	    public String inventoryrefresh(HttpServletRequest request,HttpServletResponse response) throws IOException, NoSuchAlgorithmException, EntityOperateException, ValidatException{
+			
+			//如果库存量在产品安全库存量之下，即为“不足”
+			//如果库存量在产品安全库存量之上，即为“充足”
+			List<Inventory> inventorys=inventoryService.listAll();
+			//System.out.println("list1");
+			List<Product> product=productService.listAll();
+			//System.out.println("list2");
+			for(Inventory i:inventorys) {
+				String productId = i.getproductId();
+				
+				int safestock=0;
+				for(Product p:product) {
+					if(p.getproductId().equals(productId)) safestock=p.getsafeStock();
+					System.out.println(safestock);
+				}
+				if(i.getinventoryLevel()>=safestock) 
+					i.setstatus("充足");
+				else i.setstatus("不充足");
+				inventoryService.updateInventory(i);
+			}
+			String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+	        if(returnUrl==null)
+	        	returnUrl="inventory/list";
+	        return "redirect:"+returnUrl; 	
+		}
 }

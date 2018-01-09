@@ -59,7 +59,7 @@ public class OutofstockdetailController extends BaseController{
         model.addAttribute("contentModel", outofstockdetailService.listPage(searchModel.getoutofstockId(),searchModel.getstatus(), pageNo, pageSize));
         return "inventory/outofstockdetailview";
     }
-	//查看订单详情的页面
+	//查看缺货单详情的页面
 		@AuthPassport
 		@RequestMapping(value = "/outofstockdetailviewer/{outofstockdetailId}", method = {RequestMethod.GET})
 		public String outofstockdetailviewer(HttpServletRequest request, Model model, @PathVariable(value="outofstockdetailId") String outofstockdetailId) throws ValidatException{	

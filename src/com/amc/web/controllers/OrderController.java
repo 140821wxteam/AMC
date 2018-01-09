@@ -315,7 +315,7 @@ public class OrderController extends BaseController{
 	
 	//订单审核通过后进行处理，与库存状况比较，生成备货单，缺货单等
 	@AuthPassport
-	@RequestMapping(value = "orderinprocess/{id}", method = {RequestMethod.GET})
+	@RequestMapping(value = "/orderinprocess/{id}", method = {RequestMethod.GET})
 	public String orderinprocess(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{	
 		AccountAuth user=(AccountAuth)request.getSession().getAttribute("accountAuth");
 		String username=user.getUsername();
@@ -338,27 +338,29 @@ public class OrderController extends BaseController{
 					orderId=o.getorderId();
 					customerId=o.getcustomerId();
 					order=o;
-					order.setstatus("已处理");
-					orderService.updateOrder(order);
+					//order.setstatus("已处理");
+					//orderService.updateOrder(order);
 				}
 			}
 		}
 		//System.out.println(orderId+" "+customerId);
+		String date = new SimpleDateFormat("yyyyMMdd").format(new Date());  
+        String seconds = new SimpleDateFormat("HHmmss").format(new Date());
 		//新建缺件表
 		Outofstock  outofstock = new Outofstock();//用于新建订单缺货单
 		//String date = new SimpleDateFormat("yyyyMMdd").format(new Date());  
         //String seconds = new SimpleDateFormat("HHmmss").format(new Date());
-        String outofstockId=orderId+"OOS";
+        String outofstockId=orderId+"OOS"+date+seconds;
         //System.out.println(outofstockId);
         outofstock.setoutofstockId(outofstockId);//随机生成订单缺货单编号
         outofstock.setorderId(orderId);
         outofstock.setcustomerId(customerId);
         outofstock.setcreateTime(Calendar.getInstance());
-        outofstock.setstatus("处理中");
+        outofstock.setstatus("待处理");
         
       //新建备货单
         Prepare  prepare = new Prepare();//用于新建备货单
-        String prepareId=orderId+"P";
+        String prepareId=orderId+"P"+date+seconds;
         prepare.setprepareId(prepareId);
         prepare.setorderId(orderId);
         prepare.setcustomerId(customerId);
@@ -374,13 +376,13 @@ public class OrderController extends BaseController{
 		int outofstockNum=0;//订单完全缺货项目数
 		for(Orderdetail od:details) {
 			if(od.getorderId().equals(orderId)) {
-				if(od.getstatus().equals("未完成")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")) {
-					break;
-				}else
-				orderdetail_used.add(od);
+				if(od.getstatus().equals("已处理")) fitNum++;
+				if(od.getstatus().equals("审核通过")||od.getstatus().equals("仍有缺货")) {
+					orderdetail_used.add(od);
+				}
 			}
 		}
-		orderNum = orderdetail_used.size();
+		orderNum = details.size();
 		//System.out.println("orderNum "+orderNum);
 		outofstock.setorderNum(orderNum);
 		prepare.setorderNum(orderNum);
@@ -391,8 +393,8 @@ public class OrderController extends BaseController{
 			//System.out.println(inventoryService.listinventory(productId));
 			int current_inventoryLevel = inventoryService.listinventory(productId).getinventoryLevel();
 			System.out.println(od_used.getquantityDemand()+" "+current_inventoryLevel);
-			//如果该订单明细的产品需求量小于当前产品库存，则证明订单完全满足项目数应该+1
-			if(od_used.getquantityDemand()<current_inventoryLevel) {
+			//如果该订单明细的产品需求量减去已供数量小于当前产品库存，则证明订单完全满足项目数应该+1
+			if((od_used.getquantityDemand()-od_used.getquantitySupplied())<current_inventoryLevel) {
 				fitNum++;
 				//生成备货单，同时修改库存
 				Preparedetail preparedetail = new Preparedetail();
@@ -402,21 +404,25 @@ public class OrderController extends BaseController{
 				preparedetail.setproductName(productName);
 				preparedetail.setfactoryId("");//要修改
 				preparedetail.setpreparePers("");//要修改
-				preparedetail.setamount(od_used.getquantityDemand());
+				preparedetail.setamount(od_used.getquantityDemand()-od_used.getquantitySupplied());
 				preparedetail.setstatus("待备货");
 				preparedetailService.savePreparedetail(preparedetail);//存储备货单
 				//修改库存
 				Inventory inventory =new Inventory();
 				inventory.setproductId(productId);
 				inventory.setproductName(productName);
-				inventory.setinventoryLevel(current_inventoryLevel-od_used.getquantityDemand());
+				inventory.setinventoryLevel(current_inventoryLevel-(od_used.getquantityDemand()-od_used.getquantitySupplied()));
 				inventory.setcreateTime(Calendar.getInstance());
 				inventory.setstatus("未知");//修改
 				inventoryService.saveInventory(inventory);
+				//修改订单明细中已供数量
+				od_used.setquantitySupplied(od_used.getquantityDemand());
+				od_used.setstatus("已处理");
+				orderdetailService.updateOrderdetail(od_used);
 			}
 				
-			//如果该订单明细的产品需求量大于当前产品库存，而且当前产品库存不为0，则证明订单部分满足项目数应该+1；并且应该在缺货单明细中添加信息
-			if(od_used.getquantityDemand()>current_inventoryLevel && current_inventoryLevel>0) {
+			//如果该订单明细的产品需求量减去已供数量大于当前产品库存，而且当前产品库存不为0，则证明订单部分满足项目数应该+1；并且应该在缺货单明细中添加信息
+			if((od_used.getquantityDemand()-od_used.getquantitySupplied())>current_inventoryLevel && current_inventoryLevel>0) {
 				partfitNum++;
 				Outofstockdetail outofstockdetail = new Outofstockdetail();
 				outofstockdetail.setoutofstockId(outofstockId);
@@ -424,7 +430,7 @@ public class OrderController extends BaseController{
 				outofstockdetail.setproductId(productId);
 				outofstockdetail.setquantityDemand(od_used.getquantityDemand());
 				outofstockdetail.setquantitySupplied(current_inventoryLevel);
-				outofstockdetail.setquantityNeeded(od_used.getquantityDemand()-current_inventoryLevel);
+				outofstockdetail.setquantityNeeded((od_used.getquantityDemand()-od_used.getquantitySupplied())-current_inventoryLevel);
 				outofstockdetail.setoperateTime(Calendar.getInstance());
 				outofstockdetail.setstatus("待处理");
 				outofstockdetail.setoperatorName(username);
@@ -449,9 +455,13 @@ public class OrderController extends BaseController{
 				inventory.setstatus("未知");//修改
 				inventory.setcreateTime(Calendar.getInstance());
 				inventoryService.saveInventory(inventory);
+				//修改订单明细中已供数量
+				od_used.setquantitySupplied(current_inventoryLevel);
+				od_used.setstatus("仍有缺货");
+				orderdetailService.updateOrderdetail(od_used);
 			}
-			//如果该订单明细的产品需求量大于当前产品库存，而且当前产品库存0，则证明订单完全缺货项目数应该+1
-			if(od_used.getquantityDemand()>current_inventoryLevel && current_inventoryLevel==0) {
+			//如果该订单明细的产品需求量减去已供数量大于当前产品库存，而且当前产品库存0，则证明订单完全缺货项目数应该+1
+			if((od_used.getquantityDemand()-od_used.getquantitySupplied())>current_inventoryLevel && current_inventoryLevel==0) {
 				outofstockNum++;	
 				Outofstockdetail outofstockdetail = new Outofstockdetail();
 				outofstockdetail.setoutofstockId(outofstockId);
@@ -464,6 +474,10 @@ public class OrderController extends BaseController{
 				outofstockdetail.setstatus("待处理");
 				outofstockdetail.setoperatorName(username);
 				outofstockdetailService.saveOutofstockdetail(outofstockdetail);
+				//修改订单明细中已供数量
+				od_used.setquantitySupplied(0);
+				od_used.setstatus("仍有缺货");
+				orderdetailService.updateOrderdetail(od_used);
 			}
 				
 		}
@@ -480,6 +494,11 @@ public class OrderController extends BaseController{
 		prepare.setoutofstockNum(outofstockNum);
 		if(partfitNum!=0 || fitNum!=0) prepareService.savePrepare(prepare);
 		
+		if(partfitNum!=0 || outofstockNum!=0) {
+			order.setstatus("仍有缺货"); 
+		}
+		else order.setstatus("已处理");
+		orderService.updateOrder(order);
 		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
 		if(returnUrl==null)
         	returnUrl="sales/order";

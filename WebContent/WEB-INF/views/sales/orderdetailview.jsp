@@ -157,6 +157,9 @@
 							            <c:if test="${item.status eq '已退回'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
+							            <c:if test="${item.status eq '仍有缺货'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
 							            <c:if test="${item.status eq '审核通过'}">
 							            		<td style="color:green;">${item.status}</td>
 							            </c:if>

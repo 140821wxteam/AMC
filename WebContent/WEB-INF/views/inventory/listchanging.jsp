@@ -156,7 +156,15 @@
 							            <td>${item.productName}</td>
 							            <td>${item.inventoryLevel}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>							            
-							            <td>${item.status}</td>							            
+							            <c:if test="${item.status eq '不充足'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '充足'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '未知'}">
+							            		<td style="color:black;">${item.status}</td>
+							            </c:if>							            
 							            <td>${item.note}</td>
 							        </tr>
 							        </c:forEach>
