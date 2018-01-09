@@ -5,7 +5,7 @@
   <div class="header-inner">
      <!-- BEGIN LOGO -->  
      <a class="navbar-brand" href="index.html">
-     <img src="assets/img/logo.png" alt="logo" class="img-responsive" />
+     <img src="/images/logo.png" alt="logo" class="img-responsive" />
      </a>
      <!-- <form class="search-form search-form-header" role="form" action="index.html" >
         <div class="input-icon right">
