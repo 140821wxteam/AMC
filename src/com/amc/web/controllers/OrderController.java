@@ -513,16 +513,11 @@ public class OrderController extends BaseController{
 	}
 	
 	@AuthPassport
-	@RequestMapping(value="/listchanging/{id}", method = {RequestMethod.GET})
-    public String salechanging(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel,@PathVariable(value="id") Integer id){
+	@RequestMapping(value="/listchanging", method = {RequestMethod.GET})
+    public String salechanging(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel){
     	model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
-		List<Orderdetail> sales=orderdetailService.listAll();
-		String productId="";
-		for(Orderdetail sale:sales) {
-			if(sale.getId()==id) productId=sale.getproductId();
-		}
-		searchModel.setproductId(productId);
+		model.addAttribute("productIds", productService.listproductId());
         model.addAttribute("searchModel", searchModel);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
@@ -687,7 +682,7 @@ public class OrderController extends BaseController{
 		return predictlist;
 	}
 	
-	@AuthPassport
+/*	@AuthPassport
 	@RequestMapping(value="/list", method = {RequestMethod.GET})
     public String sales(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel){
     	model.addAttribute("requestUrl", request.getServletPath());
@@ -699,4 +694,5 @@ public class OrderController extends BaseController{
         model.addAttribute("contentModel", orderdetailService.listAllPage(searchModel.getproductId(), searchModel.getproductName(), pageNo, pageSize));
         return "sales/list";
     }
+    */
 }

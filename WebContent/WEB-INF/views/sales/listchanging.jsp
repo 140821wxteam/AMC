@@ -59,7 +59,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>销售预测</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -81,21 +81,24 @@
          <div class="row">
             <div class="col-md-12">
             
-				<div class="portlet box light-grey" style="display:none">
+				<div class="portlet box light-grey">
 				   <div class="portlet-title">
 					  <div class="caption"><i class="icon-search"></i>数据检索</div>
 				   </div>
 				   <div class="portlet-body form">
 					  <!-- BEGIN FORM-->
-					  <form:form modelAttribute="searchModel" class="form-horizontal" method="GET">
+					  <form:form modelAttribute="searchModel" id="searchhistory" class="form-horizontal" method="GET">
 						 <div class="form-body">
 							<div class="row">
 							   <div class="col-md-6">
 								  <div class="form-group">
 									 <label class="control-label col-md-3">产品编号</label>
 									 <div class="col-md-9">
-										<form:input id="productId" name="productId" path="productId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品编号"/>
-									 </div>
+										  <form:select path="productId" class="form-control">
+											  <form:option value="" disabled="disabled">请选择产品</form:option>
+											  <form:options items="${productIds}"/> 
+                                           </form:select>									 
+                                       </div>
 								  </div>
 							   </div>
 							   <!--/span-->
@@ -114,8 +117,7 @@
 							<div class="row">
 							   <div class="col-md-12">
 								  <div class="col-md-offset-5">
-									 <button type="submit" class="btn btn-success">搜索</button> 
-									 <button id="chartview" type="button" class="btn btn-success">统计图</button>                           
+									 <button type="button" class="btn btn-success" onclick="resultdisplay()">搜索</button> 
 								  </div>
 							   </div>
 							</div>
@@ -126,9 +128,9 @@
 				</div>
                
                <!-- BEGIN EXAMPLE TABLE PORTLET-->
-               <div class="portlet box light-grey">
+               <div id ="searchresult" class="portlet box light-grey">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-table"></i>${requestScope.permissionMenu.curName}</div>
+                     <div class="caption"><i class="icon-table"></i>销售历史</div>
                   </div>
                   <div class="portlet-body">
                      <div class="table-toolbar"></div>
@@ -195,7 +197,8 @@
          App.init();
          
          $("#data-table").tableManaged();
-         
+         var productId=document.getElementById("productId").value;
+         if(productId.length>0)
          $(".table-toolbar").toolbarLite({
              items: [
             	 { link: true, display: "显示统计图", css: "icon-signal", showIcon: true, click:function(){
@@ -251,7 +254,7 @@
 			            type : "post",
 			            contentType: "application/json",
 			            async : false, //异步执行  
-			            url : "../listchanging/"+productId,  
+			            url : "../sales/listchanging/"+productId,  
 			            dataType : "json", //返回数据形式为json  
 			            success : function(result) {
 			                //请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -298,6 +301,11 @@
          });
 
       });
+   	  
+   	  function resultdisplay(){
+   		document.getElementById("searchhistory").submit();
+   		//$("#searchresult").css('display','block');
+   	  }
 
    </script>
    <!-- END JAVASCRIPTS -->   
