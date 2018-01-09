@@ -438,8 +438,8 @@ public class OrderController extends BaseController{
 	@RequestMapping(value="/listchanging/{productId}", method = {RequestMethod.POST})
 	@ResponseBody
     public void getlistchangedata(HttpServletRequest request,HttpServletResponse response, Model model, OrderdetailSearchModel searchModel,@PathVariable(value="productId") String productId) throws IOException{
-		System.out.println("test");
-		//这个并没有打印出来
+		System.out.println("test-----------------------------");
+		//这个打印出来了
 		//response.setContentType("application/json;charset=utf-8");
 		//String productId=request.getParameter("productId");
 //		List<Orderdetail> orderdetail=orderdetailService.listAll();
@@ -464,13 +464,13 @@ public class OrderController extends BaseController{
 //		}
 		
         Calendar now=Calendar.getInstance();
-		int year=now.YEAR;
-		int month=now.MONTH;
-		int day=now.DATE;
+        int year=now.get(Calendar.YEAR);
+		int month=now.get(Calendar.MONTH)+1;//month是从0开始的
+		int day=now.get(Calendar.DATE);
 		int time=year*10000+month*100+day;
-        
+        System.out.println("time  "+time);
         List<Orderdetail> itemsPre = orderdetailService.listAll();
-        
+       
         List<OrderdetailJson> result=new ArrayList<>();
         //我决定还是一个月一个月推荐,有一个简单的方法是由于orderdetailId的格式中前几位为时间，因此可以直接根据id来计算
         int allamount=0;
@@ -484,26 +484,35 @@ public class OrderController extends BaseController{
 //                });
         
         ArrayList<Integer> chalist=new ArrayList<>();
+        
         for(Orderdetail item:itemsPre){
-        	if(item.getproductId()==productId){
-        		
-        	
+        	System.out.println("item-----------------------------");
+ 	        System.out.println(item.getproductId());
+ 	        System.out.println("item-----------------------------");	
+        	if(item.getproductId().equals(productId)){
+      	
         	int thistime=Integer.parseInt(item.getorderdetailId().substring(1,9));
         	int thisyear=thistime/10000;
+//        	System.out.println("thisyear   "+thisyear);
         	int thismonth=(thistime-thisyear*10000)/100;
+//        	System.out.println("thismonth   "+thismonth);
         	int thisday=thistime%100;
+//        	System.out.println("thisday   "+thisday);
+
 //        	int yue=(time-thistime)/100;
         	//计算与当前时间隔了多少个月
         	int chayear=year-thisyear;
-        	int cha=chayear*12+thismonth-month;
+        	int cha=chayear*12+month-thismonth;
    	
         	if(cha<12 && cha>=0){
         		chalist.add(cha);
         		if(sales.containsKey(String.valueOf(thistime/100))){
-        			sales.put(String.valueOf(thistime/100), sales.get(String.valueOf(thistime/100))+item.getquantitySupplied());
+        			sales.put(String.valueOf(thistime/100), sales.get(String.valueOf(thistime/100))+item.getquantityDemand());
+        			System.out.println(thistime/100+"  "+item.getquantityDemand());
         		}
         		else{
-        			sales.put(String.valueOf(thistime/100), item.getquantitySupplied());
+        			sales.put(String.valueOf(thistime/100), item.getquantityDemand());
+        			System.out.println(thistime/100+"  "+item.getquantityDemand());
         		}
         	}
         	}
@@ -511,8 +520,8 @@ public class OrderController extends BaseController{
 //可能有的月份销量是0，因此要对其进行填充
         for(int m=0;m<12;m++){
         	if(!chalist.contains(m)){
-        		int a=(month+1+m)/12;
-        		int b=(month+1+m)%12;
+        		int a=(month+12-m)/12;
+        		int b=(month+12-m)%12;
         		if(a==1){
         			sales.put(String.valueOf(year*100+b),0);
         		}else if(a==0){
@@ -526,10 +535,14 @@ public class OrderController extends BaseController{
 //            orderdetailjson.setProductName(productName);
             orderdetailjson.setCreateTime(map.getKey().toString());
             orderdetailjson.setSaleLevel(Integer.parseInt(map.getValue().toString()));
+            System.out.println(orderdetailjson.getProductId()+"  "+orderdetailjson.getCreateTime()
+            +"  "+orderdetailjson.getSaleLevel());
             result.add(orderdetailjson);
         }
         int m=1;
+        
         for(int presale:this.predict(sales)){
+        	System.out.println("presale  "+presale);
         	 OrderdetailJson orderdetailjson=new OrderdetailJson();
              orderdetailjson.setProductId(productId);
 //             orderdetailjson.setProductName(productName);
@@ -551,12 +564,14 @@ public class OrderController extends BaseController{
 		}
 	
 	public static int[] predict(TreeMap<String, Integer> yearsale){
-		int[] predictlist = null;
+		System.out.println("predict begin");
+		int[] predictlist = new int[2];
 		//3个销售周期的加权移动个平均，加权数分别为3,2,1
-		int[] input = null;
+		int[] input=new int[12];
 		int i=0;
 		for(Entry entry:yearsale.entrySet()){
 			input[i]=(int) entry.getValue();
+//			System.out.println("pre i  "+input[i]);
 			i++;
 		}
 		if(input.length>2){
@@ -564,9 +579,11 @@ public class OrderController extends BaseController{
 			int b=input[input.length-2];
 			int c=input[input.length-3];
 			int pre1=(a*3+b*2+c*1)/6;
+			System.out.println(pre1);
 			predictlist[0]=pre1;
 			int pre2=(pre1*3+a*2+b*1)/6;
 			predictlist[1]=pre2;
+			System.out.println(pre2);
 		}
 		else{
 			predictlist[0]=input[input.length-1];

@@ -267,7 +267,7 @@
 			                        }
 			                       
 			                       for(var i=0;i<result.length;i++){       
-			                    	   saleslevel_y.push(result[i].salesLevel);    
+			                    	   saleslevel_y.push(result[i].saleLevel);    
 			                    	   //销售变化，每一个saleslevel字段的值放到数组里
 			                         }
 			                      
