@@ -155,6 +155,15 @@
 							            <td>${item.preparePers}</td>
 							            <td>${item.status}</td>							            
 							            <td>${item.note}</td>
+							            <c:if test="${item.status eq '完全缺货'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '完全供货'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '部分供货'}">
+							            		<td style="color:black;">${item.status}</td>
+							            </c:if>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>

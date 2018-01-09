@@ -209,7 +209,10 @@
                  { splitter: true },
                  { link: true, display: "入库单填写", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/instockadd/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                     	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                
+                 { splitter: true },  
+                 { link: true, display: "生成发货单", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/deliverlist/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                  { splitter: true },                
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/preparedelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
              ]

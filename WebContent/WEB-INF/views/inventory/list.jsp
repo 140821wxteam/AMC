@@ -172,7 +172,7 @@
                   
                </div>
                
-               <div id="chart" class="portlet box light-grey" style="display:none">
+                <div id="chart" class="portlet box light-grey" style="display:none">
                	<div class="portlet-title">
                		<div class="caption"><i class="icon-signal"></i>统计图</div>
                	</div>
