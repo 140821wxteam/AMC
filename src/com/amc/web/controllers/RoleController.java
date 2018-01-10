@@ -175,7 +175,7 @@ public class RoleController extends BaseController {
     	return "redirect:"+returnUrl;    
     }
 	
-	@AuthPassport
+	//@AuthPassport
 	@RequestMapping(value = "/roledisable/{id}", method = {RequestMethod.GET})
     public String roledisable(HttpServletRequest request, @PathVariable(value="id") Integer id) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
 		
@@ -188,7 +188,7 @@ public class RoleController extends BaseController {
     	return "redirect:"+returnUrl;    
     }
 	
-	@AuthPassport
+	//@AuthPassport
 	@RequestMapping(value = "/roleenable/{id}", method = {RequestMethod.GET})
     public String roleenable(HttpServletRequest request, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException {
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
