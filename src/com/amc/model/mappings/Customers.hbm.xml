@@ -13,6 +13,7 @@
 	    <property name="enable" column="enable" type="boolean" not-null="true"/>
 	    <property name="customerId" column="customerId" type="string" not-null="true"/>  
 	    <property name="customerName" column="customerName" type="string" not-null="true"/>
+	    <property name="province" column="province" type="string" not-null="true"/>
 	    <property name="customerAddr" column="customerAddr" type="string" not-null="false"/>
 	    <property name="contactPerson" column="contactPerson" type="string" not-null="false"/>
 	    <property name="customerTele" column="customerTele" type="string" not-null="false"/>

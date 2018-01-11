@@ -244,7 +244,7 @@
 			    series: [
 			        {
 			            name:'库存量',
-			            type:'line',
+			            type:'line',//折线图，柱状图是bar
 			            data:[]
 			          
 			        },
@@ -276,10 +276,12 @@
 			                		   
 			                       for(var i=0;i<result.length;i++){       
 			                    	   calendar_x.push(result[i].createTime);    
+			                    	   //x轴的数，result返回的是json，把他的createTime的值放到这个数组里
 			                        }
 			                       
 			                       for(var i=0;i<result.length;i++){       
 			                    	   inventorylevel_y.push(result[i].inventoryLevel);    
+			                    	   //库存变化，每一个inventorylevel字段的值放到数组里
 			                         }
 			                       for(var i=0;i<result.length;i++){       
 			                    	   safestock_y.push(result[i].safestock);    

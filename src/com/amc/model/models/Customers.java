@@ -6,6 +6,7 @@ import com.infrastructure.project.base.model.impl.EnableEntity;
 public class Customers  extends EnableEntity<Integer> implements ICUDEable{
 	private String customerId;
 	private String customerName;
+	private String province;
 	private String customerAddr;
 	private String contactPerson;
 	private String customerTele;
@@ -24,6 +25,12 @@ public class Customers  extends EnableEntity<Integer> implements ICUDEable{
 	}
 	public String getcustomerName(){
 		return this.customerName;
+	}
+	public void setprovince(String province){
+		this.province=province;
+	}
+	public String getprovince(){
+		return this.province;
 	}
 	public void setcustomerAddr(String customerAddr){
 		this.customerAddr=customerAddr;

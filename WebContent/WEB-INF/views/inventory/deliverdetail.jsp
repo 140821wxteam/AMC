@@ -28,7 +28,8 @@
    <script type="text/javascript" src="<c:url value='/plugins/data-tables/DT_bootstrap.js'/>"></script>
    <script type="text/javascript" src="<c:url value='/plugins/uniform/jquery.uniform.min.js'/>"></script>
    <script type="text/javascript" src="<c:url value='/js/jquery.toolbarlite.js?ver=10'/>"></script> 
-   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script> 
+   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/js/jquery-1.11.0.min.js'/>"></script> 
    <script type="text/javascript" src="<c:url value='/js/jquery.tableManaged.js'/>"></script>
    <!-- END PAGE LEVEL SCRIPTS -->
 

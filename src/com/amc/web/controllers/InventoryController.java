@@ -100,6 +100,7 @@ public class InventoryController extends BaseController{
 				i.add(inventoryjson);
 			}
 		}
+		
 		ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
         
         String json = mapper.writeValueAsString(i);    //将list中的对象转换为Json格式的数组

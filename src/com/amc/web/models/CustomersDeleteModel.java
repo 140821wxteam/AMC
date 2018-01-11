@@ -15,6 +15,7 @@ public class CustomersDeleteModel {
 	@NotEmpty(message="{name.not.empty}")
 	private String customerId;
 	private String customerName;
+	private String province;
 	private String customerAddr;
 	private String contactPerson;
 	private String customerTele;
@@ -32,6 +33,12 @@ public class CustomersDeleteModel {
 	}
 	public String getcustomerName(){
 		return this.customerName;
+	}
+	public void setprovince(String province){
+		this.province=province;
+	}
+	public String getprovincer(){
+		return this.province;
 	}
 	public void setcustomerAddr(String customerAddr){
 		this.customerAddr=customerAddr;

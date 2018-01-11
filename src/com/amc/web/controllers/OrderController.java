@@ -3,6 +3,7 @@ package com.amc.web.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.amc.model.models.Inventory;
@@ -41,10 +43,12 @@ import com.amc.service.interfaces.IOutofstockdetailService;
 import com.amc.web.auth.AccountAuth;
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.jsonmodels.OrderdetailJson;
+import com.amc.web.jsonmodels.RegionsalesJson;
 import com.amc.web.models.OrderEditModel;
 import com.amc.web.models.OrderSearchModel;
 import com.amc.web.models.OrderdetailSearchModel;
 import com.amc.web.models.extension.OrderModelExtension;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
@@ -682,17 +686,20 @@ public class OrderController extends BaseController{
 		return predictlist;
 	}
 	
-/*	@AuthPassport
-	@RequestMapping(value="/list", method = {RequestMethod.GET})
-    public String sales(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel){
-    	model.addAttribute("requestUrl", request.getServletPath());
-		model.addAttribute("requestQuery", request.getQueryString());
 
-        model.addAttribute("searchModel", searchModel);
-        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
-        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
-        model.addAttribute("contentModel", orderdetailService.listAllPage(searchModel.getproductId(), searchModel.getproductName(), pageNo, pageSize));
-        return "sales/list";
+	@RequestMapping(value="/regioncollect/{start}/{end}", method = {RequestMethod.GET})
+	@ResponseBody
+    public void regioncollect(HttpServletRequest request,HttpServletResponse response,@PathVariable("start") Date startTime,@PathVariable("end") Date endTime) throws ParseException, IOException{
+    
+        List<RegionsalesJson> rsjl=orderService.listbyregion(startTime, endTime);
+        System.out.println(rsjl.get(1).getSalesamount());
+        ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
+        
+        String json = mapper.writeValueAsString(rsjl);    //将list中的对象转换为Json格式的数组
+        
+        //将json数据返回给客户端
+        response.setContentType("text/html; charset=utf-8");
+        response.getWriter().write(json);
     }
-    */
+    
 }

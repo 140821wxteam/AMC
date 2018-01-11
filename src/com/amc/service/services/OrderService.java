@@ -1,8 +1,12 @@
 package com.amc.service.services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -17,14 +21,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.amc.dao.IOrderDao;
+import com.amc.model.models.Customers;
 import com.amc.model.models.Deliver;
 import com.amc.model.models.Inventory;
 import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
 import com.amc.model.models.Prepare;
+import com.amc.service.interfaces.ICustomersService;
 import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOrderdetailService;
 import com.amc.web.jsonmodels.OrderdetailJson;
+import com.amc.web.jsonmodels.RegionsalesJson;
+import com.amc.web.jsonmodels.RegionsalesdetailJson;
 import com.infrastructure.project.base.service.services.EnableEntityService;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
@@ -35,14 +43,14 @@ import com.infrastructure.project.common.utilities.PageListUtil;;
 public class OrderService extends EnableEntityService<Integer, Order, IOrderDao> implements IOrderService {
 	
 	/*@Autowired
-    @Qualifier("AuthorityService")
-	protected IAuthorityService authorityService;*/
-	
-	/*@Autowired
-    @Qualifier("RoleService")
-	protected IRoleService roleService;
+    @Qualifier("OrderService")
+	protected IOrderService orderService;*/
 	
 	@Autowired
+    @Qualifier("CustomerService")
+	protected ICustomersService customerService;
+	
+	/*@Autowired
     @Qualifier("OrganizationService")
 	protected IOrganizationService organizationService;
 	*/
@@ -349,6 +357,51 @@ public class OrderService extends EnableEntityService<Integer, Order, IOrderDao>
         
 //        return PageListUtil.getPageList(count, pageNo, items, pageSize);
         return result;
+	}
+
+	@Override
+	public List<RegionsalesJson> listbyregion(Date startTime, Date endTime) throws ParseException {
+		// TODO Auto-generated method stub
+		//顾客基本信息：顾客编号，省份
+		//销售信息：顾客编号，时间，销售额
+		//rsdj格式为：province;salesamount;customerId;orderTime;
+		//rsj:province;amount
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		List<RegionsalesJson> result = new ArrayList<>();
+		List<RegionsalesdetailJson> rsdjlist = new ArrayList<>();
+		
+		List<Order> orderlist= super.listAll();
+		for(Order o:orderlist) {
+			String province=customerService.listprovince(o.getcustomerId());
+			RegionsalesdetailJson rsdj = new RegionsalesdetailJson();
+			rsdj.setCustomerId(o.getcustomerId());
+			rsdj.setSalesamount(o.gettotalPrice());
+			rsdj.setProvince(province);
+			rsdj.setOrderTime(o.getcreateTime());
+			rsdjlist.add(rsdj);
+		}
+		List<String> provincelist = customerService.listAllprovince();
+		for(String p:provincelist) {
+			RegionsalesJson rsj = new RegionsalesJson();
+			rsj.setProvince(p);
+			double amount = 0;
+			for(RegionsalesdetailJson r:rsdjlist) {
+				
+				Date dateTime = r.getOrderTime().getTime();
+				
+				if(r.getProvince().equals(p)&&startTime.compareTo(dateTime)<0&&endTime.compareTo(dateTime)>0) {
+					//System.out.println("amount:"+r.getSalesamount());
+					amount+=r.getSalesamount();
+				}
+			
+			}
+			rsj.setSalesamount(amount);
+			result.add(rsj);
+		}
+		
+		return result;
 	}
 	
 	

@@ -91,6 +91,16 @@
                               </div>
                            </div>
                            <div class="form-group">
+                              <label  class="col-md-2 control-label">所属省份</label>
+                              <div class="col-md-10">
+                                 <!--<form:input path="province" class="form-control" placeholder="所属省份"/>-->
+                                 <form:select path="province" class="form-control">
+									 <form:option value="" disabled="disabled">请选择所属省份</form:option>
+									 <form:options items="${provinces}"/> 
+                                 </form:select>
+                              </div>
+                           </div>
+                           <div class="form-group">
                               <label  class="col-md-2 control-label">顾客地址</label>
                               <div class="col-md-10">
                                  <form:input path="customerAddr" class="form-control" placeholder="顾客地址"/>

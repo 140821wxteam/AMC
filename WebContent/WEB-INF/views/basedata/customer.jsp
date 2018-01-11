@@ -137,6 +137,7 @@
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>顾客编号</th>
 		                              <th >顾客名称</th>
+		                              <th >所属省份</th>
 		                              <th >顾客地址</th>
 		                              <th >顾客联系人</th>
 		                              <th >顾客联系电话</th>
@@ -152,6 +153,7 @@
 									    </td>
 							            <td>${item.customerId}</td>
 							            <td>${item.customerName}</td>
+							            <td>${item.province}</td>
 							            <td>${item.customerAddr}</td>
 							            <td>${item.contactPerson}</td>
 							            <td>${item.customerTele}</td>
