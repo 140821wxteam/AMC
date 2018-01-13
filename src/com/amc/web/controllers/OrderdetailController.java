@@ -1,11 +1,15 @@
 package com.amc.web.controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +22,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.portlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.amc.model.models.Inventory;
 import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
 import com.amc.model.models.Product;
-import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOrderdetailService;
-import com.amc.service.interfaces.IProductService;
 import com.amc.web.auth.AuthPassport;
+import com.amc.web.jsonmodels.InventoryJson;
+import com.amc.web.models.InventorySearchModel;
 import com.amc.web.models.OrderdetailEditModel;
 import com.amc.web.models.OrderdetailSearchModel;
-import com.amc.web.models.ProductEditModel;
-import com.amc.web.models.ProductSearchModel;
 import com.amc.web.models.extension.OrderdetailModelExtension;
-import com.amc.web.models.extension.ProductModelExtension;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
 import com.infrastructure.project.common.utilities.PageListUtil;
@@ -115,10 +116,29 @@ public class OrderdetailController extends BaseController{
 	        
 			orderdetailEditModel.setorderdetailId(orderId+"D"+seconds);
 			orderdetailEditModel.setorderId(orderId);
+			model.addAttribute("productIds",productService.listproductId());
+			
+			//System.out.println(productService.getproduct("C001").getproductName());
 			model.addAttribute("contentModel", orderdetailEditModel);
 		}
         return "sales/orderdetailadd";	
 	}
+	
+	//获取实时的产品信息
+	@AuthPassport
+	@RequestMapping(value="/orderdetailadd/{orderId}/getProductName/{productId}", method = {RequestMethod.POST})
+	@ResponseBody
+    public void getProductName(HttpServletRequest request,HttpServletResponse response, Model model,@PathVariable(value="orderId") String orderId,@PathVariable(value="productId") String productId) throws IOException{
+		
+		ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
+        String json = mapper.writeValueAsString(productService.getproduct(productId));    //将list中的对象转换为Json格式的数组
+        
+        //将json数据返回给客户端
+        response.setContentType("text/html; charset=utf-8");
+        response.getWriter().write(json);
+		
+	}
+	
 	@RequestMapping(value="/orderdetailadd/{orderId}", method = {RequestMethod.POST})
 	public String saveorderdetailadd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") OrderdetailEditModel orderdetailEditModel, BindingResult result,@PathVariable(value="orderId") String orderId) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
 		orderdetailEditModel.setstatus("未完成");
@@ -153,11 +173,27 @@ public class OrderdetailController extends BaseController{
 				}
 			}
 			//OrderdetailEditModel orderdetailEditModel=OrderdetailModelExtension.toOrderdetailEditModel(orderdetailService.get(id));
+			model.addAttribute("productIds",productService.listproductId());
 			model.addAttribute("contentModel", orderdetailEditModel);
 		}
 
         return "sales/orderdetailedit";	
 	}
+	
+	//获取实时的产品信息1
+		@AuthPassport
+		@RequestMapping(value="/orderdetailedit/{orderdetailId}/getProductName/{productId}", method = {RequestMethod.POST})
+		@ResponseBody
+	    public void getProductName1(HttpServletRequest request,HttpServletResponse response, Model model,@PathVariable(value="orderdetailId") String orderdetailId,@PathVariable(value="productId") String productId) throws IOException{
+			
+			ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
+	        String json = mapper.writeValueAsString(productService.getproduct(productId));    //将list中的对象转换为Json格式的数组
+	        
+	        //将json数据返回给客户端
+	        response.setContentType("text/html; charset=utf-8");
+	        response.getWriter().write(json);
+			
+		}
 	
 	@RequestMapping(value="/orderdetailedit/{orderdetailId}", method = {RequestMethod.POST})
 	public String orderdetailedit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") OrderdetailEditModel orderdetailEditModel, BindingResult result,@PathVariable(value="orderdetailId") String orderdetailId) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{

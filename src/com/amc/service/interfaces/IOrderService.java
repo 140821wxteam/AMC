@@ -1,6 +1,7 @@
 package com.amc.service.interfaces;
 
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
@@ -27,5 +28,7 @@ public interface IOrderService extends IEnableEntityService<Integer, Order, IOrd
 	//public double Orderfigure(String orderId) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	public Orderdetail listsale(String productId);//返回某一产品的最新库存状况
 	public List<OrderdetailJson> listsalebyOrderdetail(String productId,String productName,int pageNo, int pageSize, IOrderdetailService orderdetailService);
+
+	public int getpredict(String productId) throws IOException;
 
 }

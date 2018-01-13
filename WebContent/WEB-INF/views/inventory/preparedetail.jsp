@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 备货单信息</title>
+   <title>AMC | 备货单管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>备货单信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -124,28 +124,28 @@
                   <div class="portlet-body">
                      <div class="table-toolbar"></div>
                      <div class="dataTables_wrapper form-inline" role="grid">
-	                     <div class="table-scrollable">
-		                     <table class="table table-striped table-bprepareed table-hover" id="data-table">
+                     <div class="table-scrollable">
+		                     <table class="table table-striped table-bordered table-hover" id="data-table">
 		                        <thead>
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>备货单明细编号</th>
-		                              <th>配件编号</th>
-		                              <th>名称</th>
+		                              <th>产品编号</th>
+		                              <th>产品名称</th>
 		                              <th>原厂编号</th>
 		                              <th>规格</th>
 		                              <th>数量</th>	                             
 		                              <th>备货人</th>
-		                              <th>状态</th>
 		                              <th>备注</th>
+		                              <th>状态</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
-		                        	<c:forEach items="${contentdetailModel.items}" var="item">
+		                        	<c:forEach items="${contentModel.items}" var="item">
 							        <tr class="odd gradeX">
 							        	<td class="check_cell">
-									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
-									    </td>
+									        <input type="checkbox" class="checkboxes" name="id" value="${item.preparedetailId}" />
+									    </td>							    
 							            <td>${item.preparedetailId}</td>
 							            <td>${item.productId}</td>
 							            <td>${item.productName}</td>
@@ -153,8 +153,8 @@
 							            <td>${item.size}</td>
 							            <td>${item.amount}</td>
 							            <td>${item.preparePers}</td>
-							            <td>${item.status}</td>							            
 							            <td>${item.note}</td>
+<<<<<<< HEAD
 							            <c:if test="${item.status eq '完全缺货'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
@@ -164,14 +164,27 @@
 							            <c:if test="${item.status eq '部分供货'}">
 							            		<td style="color:black;">${item.status}</td>
 							            </c:if>
+=======
+							            <c:if test="${item.status eq '待备货'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已备货'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已发货'}">
+							            		<td style="color:blue;">${item.status}</td>
+							            </c:if>
+							            
+>>>>>>> 7d8be3018e13daf00452edfae47097df2531461f
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
 		                     </table>
 	                     </div>
+	                     
 	                     <c:import url = "../shared/paging.jsp">
-	        				<c:param name="pageModelName" value="contentdetailModel"/>
-	        				<c:param name="urlAddress" value="/financial/preparedetail"/>
+	        				<c:param name="pageModelName" value="contentModel"/>
+	        				<c:param name="urlAddress" value="/inventory/preparedetail"/>
 	       				 </c:import>
        				 </div>
                   </div>
@@ -198,19 +211,13 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "../preparedetailadd/"+document.getElementById("prepareId").value},
-                 { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                  
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+            	 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../preparedetailviewer/{0}", 
+                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                  { splitter: true }
              ]
          });
       });
-   	  function returntoprepare(){
-   		  window.close();
-   	  }
+   	  
    	  
    </script>
    <!-- END JAVASCRIPTS -->   
