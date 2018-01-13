@@ -36,6 +36,7 @@ import com.amc.model.models.Outofstock;
 import com.amc.model.models.Outofstockdetail;
 import com.amc.model.models.Prepare;
 import com.amc.model.models.Preparedetail;
+import com.amc.model.models.Product;
 import com.amc.service.interfaces.IInventoryService;
 import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOutofstockService;
@@ -392,7 +393,7 @@ public class OrderController extends BaseController{
 				}
 			}
 		}
-		orderNum = details.size();
+		orderNum = orderdetail_used.size()+fitNum;
 		//System.out.println("orderNum "+orderNum);
 		outofstock.setorderNum(orderNum);
 		prepare.setorderNum(orderNum);
@@ -408,11 +409,14 @@ public class OrderController extends BaseController{
 				fitNum++;
 				//生成备货单，同时修改库存
 				Preparedetail preparedetail = new Preparedetail();
+				List<Product> pl=productService.getproduct(productId);
+				Product p=pl.get(0);
 				preparedetail.setprepareId(prepareId);
 				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
 				preparedetail.setproductId(productId);
 				preparedetail.setproductName(productName);
-				preparedetail.setfactoryId("");//要修改
+				preparedetail.setfactoryId(p.getproductOrigin());//要修改
+				preparedetail.setsize(p.getproductSpecification());
 				preparedetail.setpreparePers("");//要修改
 				preparedetail.setamount(od_used.getquantityDemand()-od_used.getquantitySupplied());
 				preparedetail.setstatus("待备货");
@@ -448,11 +452,14 @@ public class OrderController extends BaseController{
 				
 				//生成备货单，同时修改库存
 				Preparedetail preparedetail = new Preparedetail();
+				List<Product> pl=productService.getproduct(productId);
+				Product p=pl.get(0);
 				preparedetail.setprepareId(prepareId);
 				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
 				preparedetail.setproductId(productId);
 				preparedetail.setproductName(productName);
-				preparedetail.setfactoryId("");//要修改
+				preparedetail.setfactoryId(p.getproductOrigin());//要修改
+				preparedetail.setsize(p.getproductSpecification());
 				preparedetail.setpreparePers("");//要修改
 				preparedetail.setamount(current_inventoryLevel);//ss的关系？
 				preparedetail.setstatus("待备货");

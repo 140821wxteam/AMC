@@ -39,7 +39,7 @@
 <body class="login">
 	<!-- BEGIN LOGO -->
 	<div class="logo">
-		<img src="assets/img/logo.png" alt="" /> 
+		<img src="<c:url value='/images/amc_white.png'/>" style="height:80px;width:130px" alt="" /> 
 	</div>
 	<!-- END LOGO -->
 	<!-- BEGIN LOGIN -->
@@ -100,7 +100,7 @@
 				<form:errors path="agreement" class="field-has-error"></form:errors>
 			</div>
 			<div class="form-actions">
-				<button id="register-back-btn" type="button" class="btn btn-default">
+				<button id="register-back-btn" type="button" class="btn btn-default" onclick="javascript:history.back(-1);">
 				<i class="m-icon-swapleft"></i>  返回
 				</button>
 				<button type="submit" id="register-submit-btn" class="btn btn-info pull-right">

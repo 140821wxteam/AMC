@@ -5,7 +5,7 @@
   <div class="header-inner">
      <!-- BEGIN LOGO -->  
      <a class="navbar-brand" href="index.html">
-     <img src="<c:url value='/images/amc_small.png'/>" alt="logo" class="img-responsive" style="width:50px;length:100px"/>
+     <img src="<c:url value='/images/amc_white.png'/>" alt="logo" class="img-responsive" style="width:90px;length:150px"/>
      </a>
      <!-- <form class="search-form search-form-header" role="form" action="index.html" >
         <div class="input-icon right">

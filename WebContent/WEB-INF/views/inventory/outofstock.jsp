@@ -145,7 +145,7 @@
 		                              <th>完全缺货项目数</th>
 		                              <th>创建时间</th>		                             
 		                              <th>状态</th>
-		                              <th>备注</th>
+		                              <!--<th>备注</th>-->
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -172,7 +172,7 @@
 							            <c:if test="${item.status eq '未完成'}">
 							            		<td style="color:black;">${item.status}</td>
 							            </c:if>
-							            <td>${item.note}</td>
+							            <!--<td>${item.note}</td>  -->
 							        </tr>
 							        </c:forEach>
 		                        </tbody>

@@ -40,7 +40,7 @@
 <body class="login">
 	<!-- BEGIN LOGO -->
 	<div class="logo">
-		<img src="assets/img/logo.png" alt="" /> 
+		<img src="<c:url value='/images/amc_white.png'/>" style="height:80px;width:130px" alt="" /> 
 	</div>
 	<!-- END LOGO -->
 	<!-- BEGIN LOGIN -->
