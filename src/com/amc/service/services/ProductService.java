@@ -110,4 +110,17 @@ public class ProductService extends EnableEntityService<Integer, Product, IProdu
 		}
 		return product;
 	}
+	
+	@Override
+	public int getsafestock(String productId) {
+		List<Product> products = super.listAll();
+		int safestock = 0;
+		for(Product p:products) {
+			if(p.getproductId().equals(productId)) {
+				safestock = p.getsafeStock();
+				break;
+			}
+		}
+		return safestock;
+	}
 }

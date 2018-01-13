@@ -138,7 +138,7 @@
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>发货单编号</th>
 		                              <th>订单编号</th>
-		                              <th>顾客自编号</th>
+		                              <th>顾客编号</th>
 		                              <th>创建时间</th>
 		                              <th>收货人</th>
 		                              <th>收货地址</th>
@@ -161,13 +161,11 @@
 							            <td>${item.receiveAddr}</td>
 							            <td>${item.amountMoney}</td>
 							            <td>${item.remark}</td>							            
-							            <c:if test="${item.status eq '已到货'}">
-							            		<td style="color:red;">${item.status}</td>
+							            
+							            <c:if test="${item.status eq '已记应收账'}">
+							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
-							            <c:if test="${item.status eq '运送中'}">
-							            		<td style="color:green;">${item.status}</td>
-							            </c:if>
-							            <c:if test="${item.status eq '取消'}">
+							            <c:if test="${item.status eq '未处理'}">
 							            		<td style="color:black;">${item.status}</td>
 							            </c:if>
 							        </tr>

@@ -118,7 +118,7 @@
                               <!--<button type="button" class="btn btn-success" onclick="Orderfigure()">刷新总金额</button>-->
                               <button type="button" class="btn btn-success" onclick="Orderdetail()">修改明细</button>
                               <button type="button" class="btn btn-success" onclick="saveOrder()">修改</button>
-                              <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>                              
+                              <!--<button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>-->                             
                            </div>
                         	</div>
                      

@@ -102,7 +102,12 @@
 								  <div class="form-group">
 									 <label class="control-label col-md-3">状态</label>
 									 <div class="col-md-9">
-										<form:input path="status" class="form-control placeholder-no-fix" autocomplete="off" placeholder="状态"/>
+										<!--<form:input path="status" class="form-control placeholder-no-fix" autocomplete="off" placeholder="状态"/>-->
+										<form:select path="status" class="form-control">
+										  <form:option value="" disabled="disabled">请选择进货单状态</form:option>
+										  <form:option value="未处理">未处理</form:option>
+										  <form:option value="确认入库">确认入库</form:option>
+                                           </form:select>
 									 </div>
 								  </div>
 							   </div>

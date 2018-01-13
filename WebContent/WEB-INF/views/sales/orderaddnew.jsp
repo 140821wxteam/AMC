@@ -52,7 +52,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>${requestScope.permissionMenu.subName}</small>
+                  AMC <small><c:if test="${empty requestScope.permissionMenu.subName}">销售订单管理</c:if>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -61,10 +61,10 @@
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>
-                     <span>${requestScope.permissionMenu.rootName}</span>
+                     <span><c:if test="${empty requestScope.permissionMenu.rootName}">销售子系统</c:if>${requestScope.permissionMenu.rootName}</span>
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><span>${requestScope.permissionMenu.subName}</span></li>
+                  <li><span><c:if test="${empty requestScope.permissionMenu.subName}">销售订单管理</c:if>${requestScope.permissionMenu.subName}</span></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
@@ -77,7 +77,7 @@
                <!-- BEGIN SAMPLE FORM PORTLET-->
                <div class="portlet ">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-edit"></i>${requestScope.permissionMenu.curName}</div>
+                     <div class="caption"><i class="icon-edit"></i><c:if test="${empty requestScope.permissionMenu.curName}">增加订单</c:if>${requestScope.permissionMenu.curName}</div>
                   </div>
                   <div class="portlet-body form">
 				  <form:form modelAttribute="contentModel" id="orderinfo" name="orderinfo" class="form-horizontal" method="POST">
@@ -150,6 +150,7 @@
    		  window.location.href = '../sales/orderdetail/'+orderId;
    	  }
    	function saveOrder(){
+   		//alert(document.getElementById("orderId").value);
    		document.getElementById("orderinfo").submit();
  	  }
    	  //function Orderfigure(){

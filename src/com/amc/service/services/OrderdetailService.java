@@ -94,6 +94,19 @@ public class OrderdetailService extends EnableEntityService<Integer, Orderdetail
         
         return PageListUtil.getPageList(count, pageNo, items, pageSize);
     }
+
+	@Override
+	public Orderdetail getorderdetailByoIdpId(String orderId, String productId) {
+		List<Orderdetail> list = super.listAll();
+		Orderdetail orderdetail = new Orderdetail();
+		for(Orderdetail od:list) {
+			if(od.getorderId().equals(orderId)&&od.getproductId().equals(productId)) {
+				orderdetail =od;
+				break;
+			}
+		}
+		return orderdetail;
+	}
 	
 	
 	

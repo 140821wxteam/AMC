@@ -144,4 +144,18 @@ public class CustomerService extends EnableEntityService<Integer, Customers, ICu
 		return provincelist;
 	}
 
+	@Override
+	public Customers getCustomer(String customerId) {
+		List<Customers> list = super.listAll();
+		Customers customer =new Customers();
+		for(Customers c:list) {
+			if(c.getcustomerId().equals(customerId)) {
+				customer = c;
+				break;
+			}
+				
+		}
+		return customer;
+	}
+
 }

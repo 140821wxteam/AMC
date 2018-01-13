@@ -13,7 +13,6 @@
 	    <property name="enable" column="enable" type="boolean" not-null="true"/>
 		<property name="deliverId" column="deliverId" type="string" not-null="true"/>
 	    <property name="prepareId" column="prepareId" type="string" not-null="true"/>
-	    <property name="deliverDetailId" column="deliverDetailId" type="string" not-null="true"/>
 	    <property name="createTime" column="createTime" type="calendar" not-null="true"/>  
 	    <property name="amountMoney" column="amountMoney" type="double" not-null="true"/>
 	    <property name="remark" column="remark" type="string" not-null="false"/>

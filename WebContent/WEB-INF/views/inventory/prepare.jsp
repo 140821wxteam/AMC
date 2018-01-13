@@ -150,7 +150,7 @@
 		                              <th>完全满足项目数</th>
 		                              <th>部分满足项目数</th>
 		                              <th>完全缺货项目数</th>
-		                              <th>备注</th>		                             
+		                              <!--<th>备注</th>  -->		                             
 		                              <th>备货单状态</th>
 		                           </tr>
 		                        </thead>
@@ -170,14 +170,14 @@
 							            <td>${item.fitNum}</td>
 							            <td>${item.partfitNum}</td>
 							            <td>${item.outofstockNum}</td>
-							            <td>${item.note}</td>							            
+							            <!--<td>${item.note}</td>-->							            
 							            <c:if test="${item.status eq '待备货'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '已备货'}">
 							            		<td style="color:green;">${item.status}</td>
 							            </c:if>
-							            <c:if test="${item.status eq '已发货'}">
+							            <c:if test="${item.status eq '已生成发货单'}">
 							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
 							        </tr>

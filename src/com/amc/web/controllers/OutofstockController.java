@@ -108,10 +108,21 @@ public class OutofstockController extends BaseController{
 					PurchaseAdvice pa=new PurchaseAdvice();
 					
 					Inventory inventory = inventoryService.listinventory(o.getproductId());
+					String productId = inventory.getproductId();
+					int safestock = productService.getsafestock(productId);
+					int predict = orderService.getpredict(productId);
 					pa.setproductId(inventory.getproductId());
 					pa.setproductName(inventory.getproductName());
 					pa.setinventoryLevel(inventory.getinventoryLevel());
 					pa.setdemand(o.getquantityNeeded());
+					//System.out.println(safestock+o.getquantityNeeded()+predict);
+					//建议订货量的确定，判断库存水平能否满足安全库存+预测+需求量
+					if((safestock+o.getquantityNeeded()+predict)<=inventory.getinventoryLevel()) {
+						pa.setadvice(0);
+					}
+					else {
+						pa.setadvice(safestock+o.getquantityNeeded()+predict-inventory.getinventoryLevel());
+					}
 					
 					List<PurchaseAdvice> lists = purchaseadviceService.listAll();
 					int flag=0;//初始状态，表示建议表中是否有本产品的建议

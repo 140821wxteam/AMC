@@ -28,10 +28,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.amc.model.models.Customers;
+import com.amc.model.models.Deliver;
+import com.amc.model.models.DeliverDetail;
 import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
 import com.amc.model.models.Prepare;
 import com.amc.model.models.Preparedetail;
+import com.amc.model.models.Product;
 import com.amc.service.interfaces.IPrepareService;
 import com.amc.service.interfaces.IPreparedetailService;
 import com.amc.service.services.PreparedetailService;
@@ -159,11 +163,90 @@ public class PrepareController extends BaseController{
 	        return "redirect:"+returnUrl;	
 		
 		}
+
 		//发货操作
 		@AuthPassport
 		@RequestMapping(value = "/todeliver/{id}", method = {RequestMethod.GET})
 		public String todeliver(HttpServletRequest request, HttpServletResponse response,Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{
-			return searchModelName;	
-					
-		}		
+			Prepare prepare = prepareService.get(id);
+			if(prepare.getstatus().equals("已生成发货单")) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.flush();
+			    out.println("<script>");
+				out.println("alert('已发货！');");
+				out.println("history.back();");
+				out.println("</script>");
+			}else
+			if(prepare.getstatus().equals("待备货")) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.flush();
+			    out.println("<script>");
+				out.println("alert('尚未备货！');");
+				out.println("history.back();");
+				out.println("</script>");
+			}else 
+			if(prepare.getstatus().equals("已备货")){
+				prepare.setstatus("已生成发货单");
+				prepareService.updatePrepare(prepare);
+				
+				List<Preparedetail> pdlist =preparedetailService.getpreparedetaillist(prepare.getprepareId());
+				for(Preparedetail pdl:pdlist) {
+					pdl.setstatus("已生成发货单");
+					preparedetailService.updatePreparedetail(pdl);
+				}
+				//生成发货单
+				Deliver deliver = new Deliver();
+				deliver.setDeliverId(prepare.getprepareId()+"DE");
+				deliver.setOrderId(prepare.getorderId());
+				deliver.setPrepareId(prepare.getprepareId());
+				deliver.setCustomerId(prepare.getcustomerId());
+				//Customers customer = customerService.getCustomer(prepare.getcustomerId());
+				//deliver.setReceiveAddr(customer.getcustomerAddr());
+				//deliver.setReceivePers(customer.getcontactPerson());
+				deliver.setCreateTime(Calendar.getInstance());
+				deliver.setStatus("未处理");
+				
+				//生成发货单明细
+				String prepareId = prepare.getprepareId();
+				List<Preparedetail> preparedetaillist = preparedetailService.getpreparedetaillist(prepareId);
+				int no = 0;
+				double totalPrice = 0;
+				for(Preparedetail pd:preparedetaillist) {
+					no++;
+					DeliverDetail deliverdetail = new DeliverDetail();
+					deliverdetail.setDeliverId(prepare.getprepareId()+"DE");
+					deliverdetail.setDeliverdetailId(prepare.getprepareId()+"DE"+no);
+					deliverdetail.setProductId(pd.getproductId());
+					Product product = productService.getproduct(pd.getproductId()).get(0);
+					deliverdetail.setProductName(product.getproductName());
+					deliverdetail.setFactoryId(product.getproductOrigin());
+					deliverdetail.setNum(pd.getamount());
+					String orderId = prepare.getorderId();//订单号
+					String productId = pd.getproductId();
+					Orderdetail orderdetail = orderdetailService.getorderdetailByoIdpId(orderId, productId);
+					double unitPrice = orderdetail.getunitPrice();
+					int demand = orderdetail.getquantityDemand()-orderdetail.getquantitySupplied();
+					if(demand-pd.getamount()<0) deliverdetail.setShortNum(0);
+					else deliverdetail.setShortNum(demand-pd.getamount());
+					deliverDetailService.save(deliverdetail);
+					totalPrice+=unitPrice*pd.getamount();
+				}
+				
+				deliver.setAmountMoney(totalPrice);
+				deliverService.save(deliver);
+			}
+			String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+			
+			if(returnUrl==null)
+	        	returnUrl="inventory/prepare";
+	        return "redirect:"+returnUrl;	
+				
+		}	
+
+
+
+
+	
 }
