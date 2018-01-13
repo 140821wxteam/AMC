@@ -32,4 +32,6 @@ public interface IOrderService extends IEnableEntityService<Integer, Order, IOrd
 	public List<OrderdetailJson> listsalebyOrderdetail(String productId,String productName,int pageNo, int pageSize, IOrderdetailService orderdetailService);
 	//首页的地图所需数据
 	public List<RegionsalesJson> listbyregion(Date startTime,Date endTime) throws ParseException;
+	
+	public int getpredict(String productId);
 }
