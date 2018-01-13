@@ -13,6 +13,7 @@ public class Customers  extends EnableEntity<Integer> implements ICUDEable{
 	private String customerEmail;
 	private String note;
 	private String credit;
+	private int reputation;
 	
 	public void setcustomerId(String customerId){
 		this.customerId=customerId;
@@ -67,5 +68,11 @@ public class Customers  extends EnableEntity<Integer> implements ICUDEable{
 	}
 	public String getcredit(){
 		return this.credit;
+	}
+	public void setreputation(int reputation){
+		this.reputation=reputation;
+	}
+	public int getreputation(){
+		return this.reputation;
 	}
 }

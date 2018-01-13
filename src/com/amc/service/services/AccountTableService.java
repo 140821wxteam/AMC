@@ -1,5 +1,6 @@
 package com.amc.service.services;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.amc.dao.IAccountTableDao;
 import com.amc.model.models.AccountTable;
+import com.amc.model.models.Order;
 import com.amc.service.interfaces.IAccountTableService;
 import com.infrastructure.project.base.service.services.EnableEntityService;
 import com.infrastructure.project.common.exception.EntityOperateException;
@@ -52,5 +54,23 @@ public class AccountTableService extends EnableEntityService<Integer, AccountTab
         
         return PageListUtil.getPageList(count, pageNo, items, pageSize);
     }
+
+	@Override
+	public void updateAccountTable(AccountTable accountTable)
+			throws NoSuchAlgorithmException, EntityOperateException, ValidatException {
+		AccountTable dbModel=super.get(accountTable.getId());
+		dbModel.setAccounttableId(accountTable.getAccounttableId());
+		dbModel.setOrderId(accountTable.getOrderId());
+		dbModel.setDeliverId(accountTable.getDeliverId());
+		dbModel.setCuikuanId(accountTable.getCuikuanId());
+		dbModel.setCustomerId(accountTable.getCustomerId());
+		dbModel.setObjection(accountTable.getObjection());
+		dbModel.setReceivable(accountTable.getReceivable());
+		dbModel.setSalesBusiness(accountTable.getSalesBusiness());
+		dbModel.setPayable(accountTable.getPayable());
+		dbModel.setPurchaseBusiness(accountTable.getPurchaseBusiness());
+		super.update(dbModel);
+		
+	}
 
 }

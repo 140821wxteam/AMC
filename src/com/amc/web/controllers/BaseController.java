@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.amc.service.interfaces.IAccountService;
+import com.amc.service.interfaces.IAccountTableService;
 import com.amc.service.interfaces.IAuthorityService;
+import com.amc.service.interfaces.ICuikuanService;
 import com.amc.service.interfaces.ICustomersService;
 import com.amc.service.interfaces.IDeliverDetailService;
 import com.amc.service.interfaces.IDeliverService;
@@ -95,6 +97,14 @@ public abstract class BaseController {
 	@Autowired
     @Qualifier("DeliverDetailService")
     protected IDeliverDetailService deliverDetailService;
+	
+	@Autowired
+    @Qualifier("CuikuanService")
+    protected ICuikuanService cuikuanService;
+
+	@Autowired
+    @Qualifier("AccountTableService")
+    protected IAccountTableService accountTableService;
 
 	@Autowired
     @Qualifier("PurchaseAdviceService")

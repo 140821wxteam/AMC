@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.amc.dao.ICuikuanDao;
+import com.amc.model.models.AccountTable;
 import com.amc.model.models.Cuikuan;
+import com.amc.service.interfaces.IAccountTableService;
 import com.amc.service.interfaces.ICuikuanService;
 import com.infrastructure.project.base.service.services.EnableEntityService;
 import com.infrastructure.project.common.exception.EntityOperateException;
@@ -49,22 +51,30 @@ public class CuikuanService extends EnableEntityService<Integer, Cuikuan, ICuiku
         return PageListUtil.getPageList(count, pageNo, items, pageSize);
     }
 	
-/*	@Override
-	public void saveInvoice(Invoice invoice) throws ValidatException, EntityOperateException{
-		super.save(invoice);
+
+	@Override
+	public void saveCuikuan(Cuikuan cuikuan) throws ValidatException, EntityOperateException{
+		super.save(cuikuan);
 	}
 	
 	@Override
-	public void updateInvoice(Invoice invoice) throws ValidatException, EntityOperateException{
-		Invoice dbModel=super.get(invoice.getId());
-		dbModel.setinvoiceId(invoice.getinvoiceId());
-		dbModel.setcreateTime(invoice.getcreateTime());
-		dbModel.setfactoryId(invoice.getfactoryId());
-		dbModel.setsumPrice(invoice.getsumPrice());
-		dbModel.setstatus(invoice.getstatus());
-		dbModel.setnote(invoice.getnote());
+	public void updateCuikuan(Cuikuan cuikuan) throws ValidatException, EntityOperateException{
+		Cuikuan dbModel=super.get(cuikuan.getId());
+		dbModel.setInvoiceId(cuikuan.getInvoiceId());
+		dbModel.setCuikuanId(cuikuan.getCuikuanId());
+		dbModel.setDeliverId(cuikuan.getDeliverId());
+		dbModel.setCuikuanObjection(cuikuan.getCuikuanObjection());
+		dbModel.setCustomerId(cuikuan.getCustomerId());
+		dbModel.setOrderId(cuikuan.getOrderId());
+		dbModel.setOrderReceiveDate(cuikuan.getOrderReceiveDate());
+		dbModel.setAmountMoney(cuikuan.getAmountMoney());
+		dbModel.setOrderdetailid(cuikuan.getOrderdetailid());
+		dbModel.setCreateTime(cuikuan.getCreateTime());
+		dbModel.setReceiveDate(cuikuan.getReceiveDate());
+		dbModel.setRemark(cuikuan.getRemark());
+		dbModel.setStatus(cuikuan.getStatus());
 		super.update(dbModel);
-	}*/
+	}
 
 	
 }

@@ -13,8 +13,8 @@ import com.infrastructure.project.common.utilities.PageList;
 public interface ICuikuanService extends IEnableEntityService<Integer, Cuikuan, ICuikuanDao> {
 
 	public PageList<Cuikuan> listPage(String cuikuanId, String customerId, int pageNo, int pageSize);
-	
-	//public void saveInvoice(Invoice invoice) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
+	public void saveCuikuan(Cuikuan cuikuan) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
+	public void updateCuikuan(Cuikuan cuikuan) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	
 	//public void updateInvoice(Invoice invoice) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	

@@ -184,7 +184,7 @@
    <!-- END CONTAINER -->
    <%@ include file="../shared/pageFooter.jsp"%>
      
-  <script type="text/javascript">
+<%--   <script type="text/javascript">
    	  $(function() {   
          App.init();
          
@@ -199,7 +199,7 @@
          });
       });
    	  
-   </script>
+   </script> --%>
    <!-- END JAVASCRIPTS -->   
 </body>
 <!-- END BODY -->

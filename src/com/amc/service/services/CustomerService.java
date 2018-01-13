@@ -100,6 +100,7 @@ public class CustomerService extends EnableEntityService<Integer, Customers, ICu
 		dbModel.setcustomerTele(customer.getcustomerTele());
 		dbModel.setcustomerEmail(customer.getcustomerEmail());
 		dbModel.setnote(customer.getnote());
+		dbModel.setreputation(customer.getreputation());
 		super.update(dbModel);
 	}
 

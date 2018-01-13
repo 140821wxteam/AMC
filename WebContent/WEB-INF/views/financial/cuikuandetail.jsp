@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 	import="com.infrastructure.project.common.extension.UrlHelper"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,7 +28,8 @@
    <script type="text/javascript" src="<c:url value='/plugins/data-tables/DT_bootstrap.js'/>"></script>
    <script type="text/javascript" src="<c:url value='/plugins/uniform/jquery.uniform.min.js'/>"></script>
    <script type="text/javascript" src="<c:url value='/js/jquery.toolbarlite.js?ver=10'/>"></script> 
-   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script> 
+   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/js/jquery-1.11.0.min.js'/>"></script> 
    <script type="text/javascript" src="<c:url value='/js/jquery.tableManaged.js'/>"></script>
    <!-- END PAGE LEVEL SCRIPTS -->
 
@@ -76,11 +76,13 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
+         
+         
          <!-- BEGIN PAGE CONTENT-->
          <div class="row">
             <div class="col-md-12">
             
-				<div class="portlet box light-grey">
+				<div class="portlet box light-grey"  style="display:none">
 				   <div class="portlet-title">
 					  <div class="caption"><i class="icon-search"></i>数据检索</div>
 				   </div>
@@ -93,27 +95,19 @@
 								  <div class="form-group">
 									 <label class="control-label col-md-3">催款单编号</label>
 									 <div class="col-md-9">
-										<form:input path="cuikuanId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="催款单编号"/>
+										<form:input readonly="readonly" UNSELECTABLE="on" path="cuikuanId" id="cuikuanId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="发货单编号"/>
 									 </div>
 								  </div>
 							   </div>
-							   <!--/span-->
-							   <div class="col-md-6">
-								  <div class="form-group">
-									 <label class="control-label col-md-3">顾客编号</label>
-									 <div class="col-md-9">
-										<form:input path="customerId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="顾客编号"/>
-									 </div>
-								  </div>
-							   </div>
-							   <!--/span-->
+							   
 							</div>
 						 </div>
 						 <div class="form-actions">
 							<div class="row">
 							   <div class="col-md-12">
 								  <div class="col-md-offset-5">
-									 <button type="submit" class="btn btn-success">搜索</button>                            
+									 <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>
+									                            
 								  </div>
 							   </div>
 							</div>
@@ -137,16 +131,13 @@
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>催款单编号</th>
-		                              <th>发货单编号</th>
-		                              <th>催款单对象</th>
-		                              <th>顾客编号</th>
-		                              <th>订单编号</th>
-		                              <th>订单收到日期</th>
-		                              <th>订单总金额</th>
-		                              <th>创建日期</th>
-		                              <th>催款单收到日期</th>
-		                              <th>备注</th>		                             
-		                              <th>是否支付状态</th>
+		                              <th>配件编号</th>
+		                              <th>名称</th>
+		                              <th>原厂编号</th>		                             
+		                              <th>数量</th>
+		                              <th>单价</th>
+		                              <th>金额</th>
+		                        
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -156,21 +147,14 @@
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
 							            <td>${item.cuikuanId}</td>
-							            <td>${item.deliverId}</td>
-							            <td>${item.cuikuanObjection}</td>
-							            <td>${item.customerId}</td>
-							            <td>${item.orderId}</td>
-							            <td>${item.orderReceiveDate.getTime().toLocaleString()}</td>
-							            <td>${item.amountMoney}</td>
-							            <td>${item.createTime.getTime().toLocaleString()}</td>
-							            <td>${item.receiveDate.getTime().toLocaleString()}</td>
-							            <td>${item.remark}</td>	
-							            <c:if test="${item.status eq '未支付'}">
-							            		<td style="color:red;">${item.status}</td>
-							            </c:if>
-							            <c:if test="${item.status eq '已支付'}">
-							            		<td style="color:green;">${item.status}</td>
-							            </c:if>
+							            <td>${item.productId}</td>
+							            <td>${item.productName}</td>
+							            <td>${item.factoryId}</td>
+							            <td>${item.num}</td>
+							            <td>${item.price}</td>							            
+							            <td>${item.money}</td>
+							            
+							            
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -178,11 +162,14 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/financial/cuikuan"/>
+	        				<c:param name="urlAddress" value="/financial/cuikuandetail"/>
 	       				 </c:import>
        				 </div>
                   </div>
                </div>
+               <div class="col-md-offset-5">
+				 <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>
+			   </div>
                <!-- END EXAMPLE TABLE PORTLET-->
                
             </div>
@@ -198,25 +185,10 @@
    	  $(function() {   
          App.init();
          
-         $("#data-table").tableManaged();
          
-         $(".table-toolbar").toolbarLite({
-             items: [
-                 { link: true, display: "查看详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/cuikuandetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-	               selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },
-                 { link: true, display: "记应付账", css: "icon-wrench", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/changereceivable/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认对该订单记应付账吗？"},
-                 { splitter: true }, 
-                 { link: true, display: "失信处理", css: "icon-wrench", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/editreputation/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认对顾客进行失信处理吗？"},
-                 { splitter: true }, 
-                 { link: true, display: "修改支付状态", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/changestatus/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认修改支付状态吗？"},
-                 { splitter: true }, 
-             ]
-         });
       });
+   	  
+   	  
    </script>
    <!-- END JAVASCRIPTS -->   
 </body>
