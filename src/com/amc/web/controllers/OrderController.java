@@ -117,23 +117,42 @@ public class OrderController extends BaseController{
 	
 	
 	//返回按钮
-	/*@AuthPassport
-	@RequestMapping(value = "/orderaddnew/{orderId}", method = RequestMethod.GET)
-	public String orderaddreturn(HttpServletRequest request, Model model,@PathVariable(value="orderId") String orderId){	
+	//@AuthPassport
+/*	@RequestMapping(value = "/returnorderaddnew", method = RequestMethod.GET)
+	public String orderaddreturn(HttpServletRequest request, Model model,@RequestParam(value="getorderId") String orderId){	
 		if(!model.containsAttribute("contentModel")){
-			OrderEditModel orderEditModel = new OrderEditModel();
-			
-	        
+			OrderEditModel orderEditModel = new OrderEditModel();	        
 			orderEditModel.setorderId(orderId);
 			model.addAttribute("contentModel", orderEditModel);
-		}
-		if(!model.containsAttribute("contentdetailModel")){
-			OrderdetailEditModel orderdetailEditModel = new OrderdetailEditModel();
-			model.addAttribute("contentdetailModel", orderdetailEditModel);
+			model.addAttribute("customerIds",customerService.listcustomersId());
 		}
 		
         return "sales/orderaddnew";	
+	}
+	
+	@RequestMapping(value="/returnorderaddnew", method = {RequestMethod.POST})	
+	public String orderaddreturnadd(HttpServletRequest request, Model model,@Valid @ModelAttribute("contentModel") OrderEditModel orderEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
+		orderEditModel.setcreateTime(Calendar.getInstance());
+		orderEditModel.setstatus("未完成");
+		System.out.println("orderId"+orderEditModel.getorderId());
+		//String orderId=orderEditModel.getorderId().split(",")[0];
+		String orderId=orderEditModel.getorderId();
+		double tp=0.0;
+		List<Orderdetail> lists=orderdetailService.listAll();
+		
+		for(Orderdetail od:lists) {
+			if(od.getorderId().equals(orderId))
+			tp+=od.gettotalPrice();
+		}
+		orderEditModel.settotalPrice(tp);
+		orderEditModel.setorderId(orderId);
+		orderService.saveOrder(OrderModelExtension.toOrder(orderEditModel));
+		
+		return "redirect:order";	
+    
 	}*/
+	
+	
 	@RequestMapping(value="/orderaddnew", method = {RequestMethod.POST})	
 	public String orderadd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") OrderEditModel orderEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
 		orderEditModel.setcreateTime(Calendar.getInstance());
@@ -375,6 +394,8 @@ public class OrderController extends BaseController{
         prepare.setprepareId(prepareId);
         prepare.setorderId(orderId);
         prepare.setcustomerId(customerId);
+        prepare.setreceivePers(customerService.getCustomer(customerId).getcontactPerson());
+        prepare.setreceiveAddr(customerService.getCustomer(customerId).getcustomerAddr());
         prepare.setcreateTime(Calendar.getInstance());
         prepare.setstatus("待备货");
         
@@ -412,7 +433,7 @@ public class OrderController extends BaseController{
 				List<Product> pl=productService.getproduct(productId);
 				Product p=pl.get(0);
 				preparedetail.setprepareId(prepareId);
-				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
+				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date())+fitNum);
 				preparedetail.setproductId(productId);
 				preparedetail.setproductName(productName);
 				preparedetail.setfactoryId(p.getproductOrigin());//要修改
@@ -440,7 +461,7 @@ public class OrderController extends BaseController{
 				partfitNum++;
 				Outofstockdetail outofstockdetail = new Outofstockdetail();
 				outofstockdetail.setoutofstockId(outofstockId);
-				outofstockdetail.setoutofstockdetailId(outofstockId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
+				outofstockdetail.setoutofstockdetailId(outofstockId+"D"+new SimpleDateFormat("HHmmss").format(new Date())+partfitNum);
 				outofstockdetail.setproductId(productId);
 				outofstockdetail.setquantityDemand(od_used.getquantityDemand());
 				outofstockdetail.setquantitySupplied(current_inventoryLevel);
@@ -455,7 +476,7 @@ public class OrderController extends BaseController{
 				List<Product> pl=productService.getproduct(productId);
 				Product p=pl.get(0);
 				preparedetail.setprepareId(prepareId);
-				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
+				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date())+partfitNum);
 				preparedetail.setproductId(productId);
 				preparedetail.setproductName(productName);
 				preparedetail.setfactoryId(p.getproductOrigin());//要修改
@@ -482,7 +503,7 @@ public class OrderController extends BaseController{
 				outofstockNum++;	
 				Outofstockdetail outofstockdetail = new Outofstockdetail();
 				outofstockdetail.setoutofstockId(outofstockId);
-				outofstockdetail.setoutofstockdetailId(outofstockId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
+				outofstockdetail.setoutofstockdetailId(outofstockId+"D"+new SimpleDateFormat("HHmmss").format(new Date())+outofstockNum);
 				outofstockdetail.setproductId(productId);
 				outofstockdetail.setquantityDemand(od_used.getquantityDemand());
 				outofstockdetail.setquantitySupplied(current_inventoryLevel);

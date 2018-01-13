@@ -90,9 +90,9 @@
 							<div class="row">
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">订单缺货单编号</label>
+									 <label class="control-label col-md-3">订单缺件表编号</label>
 									 <div class="col-md-8">
-										<form:input path="outofstockId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单缺货单编号"/>
+										<form:input path="outofstockId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单缺件表编号"/>
 									 </div>
 								  </div>
 							   </div>
@@ -101,9 +101,14 @@
 							   <!--/span-->
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">订单缺货单状态</label>
+									 <label class="control-label col-md-3">订单缺件表状态</label>
 									 <div class="col-md-8">
-										<form:input path="status" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单缺货单状态"/>
+										<!--<form:input path="status" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单缺件表状态"/>-->
+										<form:select path="status" class="form-control">
+										  <form:option value="" disabled="disabled">请选择订单缺件表状态</form:option>
+										  <form:option value="待处理">待处理</form:option>
+										  <form:option value="已处理">已处理</form:option>
+                                          </form:select>
 									 </div>
 								  </div>
 							   </div>
@@ -211,9 +216,8 @@
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/outofstockdetaildelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
                  { link: true, display: "生成采购建议", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/advice/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认生成采购建议吗？"},
-                 { link: true, display: "缺件表打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/printoutofstock/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认生成采购建议吗？"}
+                 
              ]
          });
       });

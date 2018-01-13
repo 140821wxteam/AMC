@@ -18,6 +18,7 @@ public interface IProductService extends IEnableEntityService<Integer, Product, 
 	public PageList<Product> listPage(String productId, String productName, int pageNo, int pageSize);
 	public List<String> listproductId();//列出所有产品id
 	public List<Product> getproduct(String productId);//获取与某个productid对应的产品信息
+	public int getsafestock(String productId);
 	public void saveProduct(Product product) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	public void updateProduct(Product product) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	//public void updateBind(Integer id, Integer roleId, Integer organizationId) throws ValidatException, EntityOperateException;

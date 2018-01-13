@@ -6,7 +6,7 @@ import com.infrastructure.project.base.model.impl.EnableEntity;
 public class DeliverDetail extends EnableEntity<Integer> implements ICUDEable{
 //发货单详细
 	private String deliverId;
-	private int no;
+	private String deliverdetailId;
 	private String productId;
 	private String productName;
 	private String factoryId;
@@ -19,11 +19,11 @@ public class DeliverDetail extends EnableEntity<Integer> implements ICUDEable{
 	public void setDeliverId(String deliverId) {
 		this.deliverId = deliverId;
 	}
-	public int getNo() {
-		return no;
+	public String getDeliverdetailId() {
+		return deliverdetailId;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setDeliverdetailId(String deliverdetailId) {
+		this.deliverdetailId = deliverdetailId;
 	}
 	public String getProductId() {
 		return productId;

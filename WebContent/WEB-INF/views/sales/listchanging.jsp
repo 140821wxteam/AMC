@@ -145,7 +145,7 @@
 		                              <th>订单号</th>
 		                              <th>订单明细号</th>
 		                              <th >需求数量</th>
-		                              <th >已供给数量</th>
+		                              <!--<th >已供给数量</th>  -->
 		  
 		                           </tr>
 		                        </thead>
@@ -160,7 +160,7 @@
 							            <td>${item.orderId}</td>
 							            <td>${item.orderdetailId}</td>
 							            <td>${item.quantityDemand}</td>
-							            <td>${item.quantitySupplied}</td>							            
+							            <!--<td>${item.quantitySupplied}</td>  -->							            
 							        </tr>
 							        </c:forEach>
 		                        </tbody>

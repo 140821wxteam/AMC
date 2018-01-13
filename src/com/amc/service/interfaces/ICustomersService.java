@@ -24,4 +24,5 @@ public interface ICustomersService extends IEnableEntityService<Integer, Custome
 	//public void updateBind(Integer id, Integer roleId, Integer organizationId) throws ValidatException, EntityOperateException;
 	public String listprovince(String customerId);
 	public List<String> listAllprovince();
+	public Customers getCustomer(String customerId);
 }

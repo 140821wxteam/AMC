@@ -169,6 +169,8 @@
                </div>
                <div class="col-md-offset-5">
 				 <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>
+				 <!--<button type="button" class="btn btn-success" onclick="returntoorder()">返回</button>  -->
+				 
 			   </div>
                <!-- END EXAMPLE TABLE PORTLET-->
                
@@ -200,7 +202,8 @@
          });
       });
    	  function returntoorder(){
-   		  window.close();
+   		  var orderId=document.getElementById("orderId").value;
+   		  window.location.href="../returnorderaddnew?getorderId="+orderId;
    	  }
    	  
    </script>

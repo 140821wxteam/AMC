@@ -61,6 +61,20 @@ public class OrderdetailController extends BaseController{
         model.addAttribute("contentdetailModel", orderdetailService.listPage(searchModel.getorderId(), pageNo, pageSize));
         return "sales/orderdetail";
     }
+	//订单编辑的订单明细list
+	/*@AuthPassport
+	@RequestMapping(value="/orderdetaileditlist/{orderId}", method = {RequestMethod.GET})
+    public String orderdetaileditlist(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel,@PathVariable(value="orderId") String orderId){
+    	model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		//String orderId = request.getParameter("orderId");
+		searchModel.setorderId(orderId);
+        model.addAttribute("searchModel", searchModel);
+        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
+        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
+        model.addAttribute("contentdetailModel", orderdetailService.listPage(searchModel.getorderId(), pageNo, pageSize));
+        return "sales/orderdetaileditlist";
+    }*/
 	//查看订单详情
 	@AuthPassport
 	@RequestMapping(value="/orderdetailview/{id}", method = {RequestMethod.GET})

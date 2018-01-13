@@ -31,9 +31,9 @@
            <i class="icon-angle-down"></i>
            </a>
            <ul class="dropdown-menu">
-              <li><a href="extra_profile.html"><i class="icon-user"></i>我的账户</a>
+              <!--<li><a href="extra_profile.html"><i class="icon-user"></i>我的账户</a>
               </li>
-              <li class="divider"></li>
+              <li class="divider"></li>  -->
               </li>
               <li><a href="../account/login"><i class="icon-off"></i>注销登录</a>
               </li>
