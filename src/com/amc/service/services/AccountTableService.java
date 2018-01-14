@@ -63,6 +63,7 @@ public class AccountTableService extends EnableEntityService<Integer, AccountTab
 		dbModel.setOrderId(accountTable.getOrderId());
 		dbModel.setDeliverId(accountTable.getDeliverId());
 		dbModel.setCuikuanId(accountTable.getCuikuanId());
+		dbModel.setInvoiceId(accountTable.getInvoiceId());
 		dbModel.setCustomerId(accountTable.getCustomerId());
 		dbModel.setObjection(accountTable.getObjection());
 		dbModel.setReceivable(accountTable.getReceivable());

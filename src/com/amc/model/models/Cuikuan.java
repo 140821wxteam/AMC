@@ -18,7 +18,6 @@ public class Cuikuan extends EnableEntity<Integer> implements ICUDEable{
 	private double amountMoney;
 	private String orderdetailid;
 	private Calendar createTime;
-	private Calendar receiveDate;
 	private String remark;
 	private String status;
 	public String getCuikuanId() {
@@ -74,12 +73,6 @@ public class Cuikuan extends EnableEntity<Integer> implements ICUDEable{
 	}
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
-	}
-	public Calendar getReceiveDate() {
-		return receiveDate;
-	}
-	public void setReceiveDate(Calendar receiveDate) {
-		this.receiveDate = receiveDate;
 	}
 	public String getRemark() {
 		return remark;

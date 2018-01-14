@@ -70,7 +70,6 @@ public class CuikuanService extends EnableEntityService<Integer, Cuikuan, ICuiku
 		dbModel.setAmountMoney(cuikuan.getAmountMoney());
 		dbModel.setOrderdetailid(cuikuan.getOrderdetailid());
 		dbModel.setCreateTime(cuikuan.getCreateTime());
-		dbModel.setReceiveDate(cuikuan.getReceiveDate());
 		dbModel.setRemark(cuikuan.getRemark());
 		dbModel.setStatus(cuikuan.getStatus());
 		super.update(dbModel);

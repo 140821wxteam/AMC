@@ -14,6 +14,7 @@ import com.amc.service.interfaces.ICustomersService;
 import com.amc.service.interfaces.IDeliverDetailService;
 import com.amc.service.interfaces.IDeliverService;
 import com.amc.service.interfaces.IInventoryService;
+import com.amc.service.interfaces.IInvoiceService;
 import com.amc.service.interfaces.IOrderService;
 
 import com.amc.service.interfaces.IOrderdetailService;
@@ -26,6 +27,7 @@ import com.amc.service.interfaces.IProductService;
 import com.amc.service.interfaces.IPurchaseAdviceService;
 import com.amc.service.interfaces.IRoleService;
 import com.amc.service.interfaces.IVendorService;
+import com.amc.service.services.InvoiceService;
 
 public abstract class BaseController {  
 
@@ -109,6 +111,10 @@ public abstract class BaseController {
 	@Autowired
     @Qualifier("PurchaseAdviceService")
     protected IPurchaseAdviceService purchaseadviceService;
+	
+	@Autowired
+    @Qualifier("InvoiceService")
+    protected IInvoiceService invoiceService;
 	
 	@ExceptionHandler  
     public String exception(HttpServletRequest request, Exception e) {  

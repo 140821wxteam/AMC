@@ -144,7 +144,6 @@
 		                              <th>订单收到日期</th>
 		                              <th>订单总金额</th>
 		                              <th>创建日期</th>
-		                              <th>催款单收到日期</th>
 		                              <th>备注</th>		                             
 		                              <th>是否支付状态</th>
 		                           </tr>
@@ -163,7 +162,6 @@
 							            <td>${item.orderReceiveDate.getTime().toLocaleString()}</td>
 							            <td>${item.amountMoney}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
-							            <td>${item.receiveDate.getTime().toLocaleString()}</td>
 							            <td>${item.remark}</td>	
 							            <c:if test="${item.status eq '未支付'}">
 							            		<td style="color:red;">${item.status}</td>
@@ -213,6 +211,9 @@
                  { splitter: true }, 
                  { link: true, display: "修改支付状态", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/changestatus/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                      selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认修改支付状态吗？"},
+                 { splitter: true }, 
+                 { link: true, display: "开发票", css: "icon-arrow-right", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/toinvoice/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认开发票吗？"},
                  { splitter: true }, 
              ]
          });

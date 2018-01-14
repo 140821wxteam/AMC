@@ -19,7 +19,6 @@
 	    <property name="amountMoney" column="amountMoney" type="double" not-null="false"/>
 	    <property name="orderdetailid" column="orderdetailid" type="string" not-null="false"/>
 	    <property name="createTime" column="createTime" type="calendar" not-null="false"/>
-	    <property name="receiveDate" column="receiveDate" type="calendar" not-null="false"/>    
 	    <property name="remark" column="remark" type="string" not-null="false"/>
 	    <property name="status" column="status" type="string" not-null="false"/>
 	    

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.amc.dao.IDeliverDao;
 import com.amc.dao.IInvoiceDao;
 import com.amc.model.models.Invoice;
 import com.amc.service.interfaces.IInvoiceService;
@@ -39,7 +40,7 @@ public class InvoiceService extends EnableEntityService<Integer, Invoice, IInvoi
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageList<Invoice> listPage(String invoiceId, String factoryId, int pageNo, int pageSize) {		
+	public PageList<Invoice> listPage(String invoiceId, String orderId, int pageNo, int pageSize) {		
 		Criteria countCriteria = entityDao.getCriteria();	
 		Criteria listCriteria = entityDao.getCriteria();
 		
@@ -47,9 +48,9 @@ public class InvoiceService extends EnableEntityService<Integer, Invoice, IInvoi
 			countCriteria.add(Restrictions.eq("invoiceId", invoiceId)); 
     		listCriteria.add(Restrictions.eq("invoiceId", invoiceId)); 
 		}
-		if(factoryId!=null && !factoryId.isEmpty()){
-			countCriteria.add(Restrictions.eq("factoryId", factoryId)); 
-    		listCriteria.add(Restrictions.eq("factoryId", factoryId)); 
+		if(orderId!=null && !orderId.isEmpty()){
+			countCriteria.add(Restrictions.eq("orderId", orderId)); 
+    		listCriteria.add(Restrictions.eq("orderId", orderId)); 
 		}
 
         listCriteria.setFirstResult((pageNo-1)*pageSize);  
@@ -62,35 +63,18 @@ public class InvoiceService extends EnableEntityService<Integer, Invoice, IInvoi
     }
 	
 	@Override
-	public void saveInvoice(Invoice invoice) throws ValidatException, EntityOperateException{
-		super.save(invoice);
-	}
-	
-	@Override
 	public void updateInvoice(Invoice invoice) throws ValidatException, EntityOperateException{
 		Invoice dbModel=super.get(invoice.getId());
-		dbModel.setinvoiceId(invoice.getinvoiceId());
-		dbModel.setcreateTime(invoice.getcreateTime());
-		dbModel.setfactoryId(invoice.getfactoryId());
-		dbModel.setsumPrice(invoice.getsumPrice());
-		dbModel.setstatus(invoice.getstatus());
-		dbModel.setnote(invoice.getnote());
+		dbModel.setInvoiceId(invoice.getInvoiceId());
+		dbModel.setObjection(invoice.getObjection());
+		dbModel.setOrderId(invoice.getOrderId());
+		dbModel.setOrderReceiveDate(invoice.getOrderReceiveDate());
+		dbModel.setAmountMoney(invoice.getAmountMoney());
+		dbModel.setCreateTime(invoice.getCreateTime());
+		dbModel.setRemark(invoice.getRemark());
+		dbModel.setStatus(invoice.getStatus());
+		
 		super.update(dbModel);
 	}
 
-	
-	/*@SuppressWarnings("null")
-	@Override
-	public double Invoicefigure(String invoiceId) throws NoSuchAlgorithmException, EntityOperateException, ValidatException {
-		IInvoicedetailService invoicedetailservice = null;
-		List<Invoicedetail> list = new ArrayList<>();
-		list = invoicedetailservice.listAll();
-		double totalPrice=0;
-		for(Invoicedetail od:list) {
-			if(od.getinvoiceId().equals(invoiceId)) totalPrice+=od.gettotalPrice();
-		}
-		return totalPrice;
-		
-		
-	}*/
 }

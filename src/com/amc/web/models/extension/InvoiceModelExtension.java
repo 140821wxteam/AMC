@@ -4,7 +4,7 @@ import com.amc.model.models.Invoice;
 import com.amc.web.models.InvoiceEditModel;
 
 public class InvoiceModelExtension {
-	public static Invoice toInvoice(InvoiceEditModel invoiceEditModel){
+	/*public static Invoice toInvoice(InvoiceEditModel invoiceEditModel){
 		Invoice ret=new Invoice();
 		//ret.setId(vendorEditModel.getId());
 		ret.setinvoiceId(invoiceEditModel.getinvoiceId());
@@ -27,5 +27,5 @@ public class InvoiceModelExtension {
 		ret.setnote(model.getnote());
 		
 		return ret;
-	}
+	}*/
 }

@@ -15,6 +15,7 @@
 		<property name="orderId" column="orderId" type="string" not-null="false"/>
 	    <property name="deliverId" column="deliverId" type="string" not-null="false"/>
 	    <property name="cuikuanId" column="cuikuanId" type="string" not-null="false"/>
+	    <property name="invoiceId" column="invoiceId" type="string" not-null="false"/>
 	    <property name="customerId" column="customerId" type="string" not-null="false"/>
 	    <property name="objection" column="objection" type="integer" not-null="false"/>
 	    <property name="receivable" column="receivable" type="double" not-null="false"/>

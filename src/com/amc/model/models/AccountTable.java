@@ -9,6 +9,7 @@ public class AccountTable extends EnableEntity<Integer> implements ICUDEable{
 	private String orderId;
 	private String deliverId;
 	private String cuikuanId;
+	private String invoiceId;
 	private String customerId;
 	private int objection;
 	private double receivable;
@@ -74,6 +75,12 @@ public class AccountTable extends EnableEntity<Integer> implements ICUDEable{
 	}
 	public void setPurchaseBusiness(double purchaseBusiness) {
 		this.purchaseBusiness = purchaseBusiness;
+	}
+	public String getInvoiceId() {
+		return invoiceId;
+	}
+	public void setInvoiceId(String invoiceId) {
+		this.invoiceId = invoiceId;
 	}
 
 	
