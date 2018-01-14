@@ -162,7 +162,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/financial/invoicedetail"/>
+	        				<c:param name="urlAddress" value="/financial/invoicedetail/${id}"/>
 	       				 </c:import>
        				 </div>
                   </div>

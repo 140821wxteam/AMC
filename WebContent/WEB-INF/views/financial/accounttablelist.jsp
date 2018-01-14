@@ -89,7 +89,7 @@
 					  <form:form modelAttribute="searchModel" class="form-horizontal" method="GET">
 						 <div class="form-body">
 							<div class="row">
-							   <div class="col-md-4">
+							   <div class="col-md-6">
 								  <div class="form-group">
 									 <label class="control-label col-md-3">订单编号</label>
 									 <div class="col-md-8">
@@ -98,7 +98,7 @@
 								  </div>
 							   </div>
 							   <!--/span-->
-							   <div class="col-md-4">
+							   <div class="col-md-6">
 								  <div class="form-group">
 									 <label class="control-label col-md-3">顾客编号</label>
 									 <div class="col-md-8">
