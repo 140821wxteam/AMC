@@ -171,7 +171,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/inventory/outofstockdetail"/>
+	        				<c:param name="urlAddress" value="/inventory/outofstockdetail/${id}"/>
 	       				 </c:import>
        				 </div>
                   </div>

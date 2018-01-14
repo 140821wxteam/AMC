@@ -120,6 +120,25 @@ public class PrepareController extends BaseController{
     
 	}
 	
+	@AuthPassport
+	@RequestMapping(value = "/preparedelete/{id}", method = {RequestMethod.GET})
+	public String orderdelete(HttpServletRequest request, HttpServletResponse response,Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, IOException{	
+		Prepare prepare = prepareService.get(id);
+		String prepareId = prepare.getprepareId();
+		List<Preparedetail> list = preparedetailService.getpreparedetaillist(prepareId);
+		for(Preparedetail p:list) {
+			preparedetailService.delete(p);
+		}
+			prepareService.delete(id);
+		
+		
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		if(returnUrl==null)
+        	returnUrl="inventory/prepare";
+        return "redirect:"+returnUrl;	
+	
+	}
+	
 	//确认备货操作
 		@AuthPassport
 		@RequestMapping(value = "/prepareconfirm/{id}", method = {RequestMethod.GET})

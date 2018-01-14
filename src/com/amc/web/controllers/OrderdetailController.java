@@ -56,6 +56,7 @@ public class OrderdetailController extends BaseController{
 		//String orderId = request.getParameter("orderId");
 		searchModel.setorderId(orderId);
         model.addAttribute("searchModel", searchModel);
+        model.addAttribute("orderId", orderId);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentdetailModel", orderdetailService.listPage(searchModel.getorderId(), pageNo, pageSize));

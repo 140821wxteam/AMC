@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.amc.model.models.Inventory;
 import com.amc.model.models.Outofstock;
 import com.amc.model.models.Outofstockdetail;
+import com.amc.model.models.Prepare;
+import com.amc.model.models.Preparedetail;
 import com.amc.model.models.PurchaseAdvice;
 import com.amc.service.interfaces.IOutofstockService;
 import com.amc.web.auth.AuthPassport;
@@ -52,6 +54,25 @@ public class OutofstockController extends BaseController{
         model.addAttribute("contentModel", outofstockService.listPage(searchModel.getoutofstockId(),searchModel.getstatus(), pageNo, pageSize));
         return "inventory/outofstock";
     }
+	//缺货单删除
+	@AuthPassport
+	@RequestMapping(value = "/outofstockdelete/{id}", method = {RequestMethod.GET})
+	public String orderdelete(HttpServletRequest request, HttpServletResponse response,Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, IOException{	
+		Outofstock outofstock = outofstockService.get(id);
+		String outofstockId = outofstock.getoutofstockId();
+		List<Outofstockdetail> list = outofstockdetailService.getoutofstockdetaillist(outofstockId);
+		for(Outofstockdetail o:list) {
+			outofstockdetailService.delete(o);
+		}
+		outofstockService.delete(id);
+		
+		
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		if(returnUrl==null)
+        	returnUrl="inventory/outofstock";
+        return "redirect:"+returnUrl;	
+	
+	}
 	
 	//打印订单缺货单
 	@AuthPassport

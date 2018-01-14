@@ -90,11 +90,11 @@
 					  <form:form modelAttribute="searchModel" id="searchhistory" class="form-horizontal" method="GET">
 						 <div class="form-body">
 							<div class="row">
-							   <div class="col-md-6">
+							   <div class="col-md-10">
 								  <div class="form-group">
 									 <label class="control-label col-md-3">产品编号</label>
 									 <div class="col-md-9">
-										  <form:select path="productId" class="form-control">
+										  <form:select path="productId" id="productId" class="form-control">
 											  <form:option value="" disabled="disabled">请选择产品</form:option>
 											  <form:options items="${productIds}"/> 
                                            </form:select>									 
@@ -102,14 +102,14 @@
 								  </div>
 							   </div>
 							   <!--/span-->
-							   <div class="col-md-6">
+							   <!--<div class="col-md-6">
 								  <div class="form-group">
 									 <label class="control-label col-md-3">产品名称</label>
 									 <div class="col-md-9">
-										<form:input path="productName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品名称"/>
+										<form:input path="productName" id="productName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品名称"/>
 									 </div>
 								  </div>
-							   </div>
+							   </div>  -->
 							   <!--/span-->
 							</div>
 						 </div>
@@ -168,7 +168,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/sales/list"/>
+	        				<c:param name="urlAddress" value="/sales/listchanging"/>
 	       				 </c:import>
        				 </div>
                   </div>
@@ -198,6 +198,7 @@
          
          $("#data-table").tableManaged();
          var productId=document.getElementById("productId").value;
+         
          if(productId.length>0)
          $(".table-toolbar").toolbarLite({
              items: [

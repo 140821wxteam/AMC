@@ -48,6 +48,7 @@ public class DeliverDetailController extends BaseController{
 		searchModel.setDeliverId(deliverId);
 
         model.addAttribute("searchModel", searchModel);
+        model.addAttribute("id", id);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", deliverDetailService.listPage(searchModel.getDeliverId(), pageNo, pageSize));

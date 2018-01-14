@@ -54,6 +54,7 @@ public class OutofstockdetailController extends BaseController{
 		searchModel.setoutofstockId(outofstockId);
 
         model.addAttribute("searchModel", searchModel);
+        model.addAttribute("id", id);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", outofstockdetailService.listPage(searchModel.getoutofstockId(),searchModel.getstatus(), pageNo, pageSize));

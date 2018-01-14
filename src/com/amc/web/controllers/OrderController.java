@@ -263,7 +263,7 @@ public class OrderController extends BaseController{
 		for(Order o:lists) {
 			if(o.getId()==id) {
 				orderId=o.getorderId();
-				if(o.getstatus().equals("审核通过")||o.getstatus().equals("已退回")||o.getstatus().equals("已处理")) {
+				if(o.getstatus().equals("审核通过")||o.getstatus().equals("已退回")||o.getstatus().equals("已处理")||o.getstatus().equals("仍有缺货")) {
 					response.setContentType("text/html; charset=UTF-8");
 					PrintWriter out = response.getWriter();
 					out.flush();
@@ -283,7 +283,7 @@ public class OrderController extends BaseController{
 		for(Orderdetail od:details) {
 			if(od.getorderId().equals(orderId))
 			{
-				if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")) {
+				if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")||od.getstatus().equals("仍有缺货")) {
 					break;
 				}
 				od.setstatus("已退回");
@@ -307,7 +307,7 @@ public class OrderController extends BaseController{
 			for(Order o:lists) {
 				if(o.getId()==id) {
 					orderId=o.getorderId();
-					if(o.getstatus().equals("审核通过")||o.getstatus().equals("已退回")||o.getstatus().equals("已处理")) {
+					if(o.getstatus().equals("审核通过")||o.getstatus().equals("已退回")||o.getstatus().equals("已处理")||o.getstatus().equals("仍有缺货")) {
 						response.setContentType("text/html; charset=UTF-8");
 						PrintWriter out = response.getWriter();
 						out.flush();
@@ -327,7 +327,7 @@ public class OrderController extends BaseController{
 			for(Orderdetail od:details) {
 				if(od.getorderId().equals(orderId))
 				{
-					if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")) {
+					if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")||od.getstatus().equals("仍有缺货")) {
 						break;
 					}
 					od.setstatus("审核通过");
