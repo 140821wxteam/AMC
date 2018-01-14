@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.amc.model.models.Invoice;
+import com.amc.model.models.Prepare;
 import com.amc.service.interfaces.IInvoiceDetailService;
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.models.InvoiceDetailSearchModel;
+import com.infrastructure.project.common.exception.ValidatException;
 import com.infrastructure.project.common.utilities.PageListUtil;
 
 @Controller
@@ -28,20 +30,16 @@ public class InvoiceDetailController extends BaseController{
 	
 	@AuthPassport
 	@RequestMapping(value="/invoicedetail/{id}", method = {RequestMethod.GET})
-    public String invoicedetail(HttpServletRequest request, Model model, InvoiceDetailSearchModel searchModel,@PathVariable(value="id") Integer id){
-    	model.addAttribute("requestUrl", request.getServletPath());
+    public String invoicedetail(HttpServletRequest request, Model model, InvoiceDetailSearchModel searchModel,@PathVariable(value="id") Integer id) throws ValidatException{
+		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
-		List<Invoice> lists=invoiceService.listAll();
-		String invoiceId=null;
-		for(Invoice in:lists) {
-			if(in.getId()==id) { 
-				invoiceId=in.getInvoiceId();
-			}
-		}
+		Invoice invoice=invoiceService.get(id);
+		String invoiceId=invoice.getInvoiceId();
 		
 		searchModel.setInvoiceId(invoiceId);
 
         model.addAttribute("searchModel", searchModel);
+        model.addAttribute("id", id);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", invoiceDetailService.listPage(searchModel.getInvoiceId(), pageNo, pageSize));
