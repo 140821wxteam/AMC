@@ -5,7 +5,7 @@ import java.util.Calendar;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class InvoiceEditModel {
-	private Integer id;
+private Integer id;
 	
 	public void setId(Integer id){
 		this.id=id;
@@ -16,46 +16,68 @@ public class InvoiceEditModel {
 	}
 	@NotEmpty(message="{name.not.empty}")
 	private String invoiceId;
+	private String orderId;
+	private int objection;
 	private Calendar createTime;
-	private String factoryId;
-	private Double sumPrice;
+	private double amountMoney;
+	private String remark;
 	private String status;
-	private String note;
-	
-	public void setinvoiceId(String invoiceId){
-		this.invoiceId=invoiceId;
+
+	public String getInvoiceId() {
+		return invoiceId;
 	}
-	public String getinvoiceId(){
-		return this.invoiceId;
+
+	public void setInvoiceId(String invoiceId) {
+		this.invoiceId = invoiceId;
 	}
-	public void setcreateTime(Calendar createTime){
-		this.createTime=createTime;
+
+	public String getOrderId() {
+		return orderId;
 	}
-	public Calendar getcreateTime(){
-		return this.createTime;
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
-	public void setfactoryId(String factoryId){
-		this.factoryId=factoryId;
+
+	public Calendar getCreateTime() {
+		return createTime;
 	}
-	public String getfactoryId(){
-		return this.factoryId;
+
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
-	public void setsumPrice(Double sumPrice){
-		this.sumPrice=sumPrice;
+
+	public double getAmountMoney() {
+		return amountMoney;
 	}
-	public Double getsumPrice(){
-		return this.sumPrice;
+
+	public void setAmountMoney(double amountMoney) {
+		this.amountMoney = amountMoney;
 	}
-	public String getstatus() {
-		return this.status;
+
+	public String getRemark() {
+		return remark;
 	}
-	public void setstatus(String status) {
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	public void setnote(String note){
-		this.note=note;
+
+	public int getObjection() {
+		return objection;
 	}
-	public String getnote(){
-		return this.note;
+
+	public void setObjection(int objection) {
+		this.objection = objection;
 	}
+	
+	
 }

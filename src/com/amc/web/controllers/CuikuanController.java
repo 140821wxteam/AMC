@@ -28,8 +28,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.amc.model.models.AccountTable;
 import com.amc.model.models.Cuikuan;
+import com.amc.model.models.CuikuanDetail;
 import com.amc.model.models.Customers;
 import com.amc.model.models.Invoice;
+import com.amc.model.models.InvoiceDetail;
 import com.amc.service.interfaces.ICuikuanService;
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.models.CuikuanSearchModel;
@@ -67,22 +69,27 @@ public class CuikuanController extends BaseController{
 	@RequestMapping(value = "changereceivable/{id}", method = {RequestMethod.GET})
 	public String changereceivable(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{	
 		List<Cuikuan> cuiList=cuikuanService.listAll();
-		//List<AccountTable> atList=accountTableService.listAll();
+		Cuikuan cuikuan=new Cuikuan();
+		
 		String cuikuanId=null;
-		int objection=-1;
-		double money=-1;
+		
+		String date = new SimpleDateFormat("yyyyMMdd").format(new Date());  
+        String seconds = new SimpleDateFormat("HHmmss").format(new Date());
+        
 		for(Cuikuan cui:cuiList){
 			if(cui.getId()==id  && cui.getCuikuanObjection()==0){
+				cuikuan=cui;
 				cuikuanId=cui.getCuikuanId();
-				objection=0;
-				money=cui.getAmountMoney();
 			}
 		}
 		if(cuikuanId!=null){
 			AccountTable at=new AccountTable();
+			at.setAccounttableId("AT"+date+seconds);
 			at.setCuikuanId(cuikuanId);
-			at.setObjection(objection);
-			at.setPayable(money);;
+            at.setOrderId(cuikuan.getOrderId());
+            at.setCustomerId(cuikuan.getCustomerId());
+            at.setObjection(0);
+			at.setPayable(cuikuan.getAmountMoney());
 			accountTableService.save(at);
 		}
 		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
@@ -162,6 +169,7 @@ public class CuikuanController extends BaseController{
 	public String toinvoice(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{	
 		List<Cuikuan> cuiList=cuikuanService.listAll();
 		Cuikuan cuikuan=new Cuikuan();
+		CuikuanDetail cuikuanDetail=new CuikuanDetail();
 
 		String cuikuanId=null;
 		String invoiceId=null;
@@ -183,9 +191,15 @@ public class CuikuanController extends BaseController{
 				amountMoney=cui.getAmountMoney();
 			}
 		}
+		for(CuikuanDetail cd:cuikuanDetailService.listAll()){
+			if(cd.getCuikuanId().equals(cuikuanId)){
+				cuikuanDetail=cd;
+			}
+		}
 		if(cuikuanId!=null){
 			Invoice in=new Invoice();
-			in.setInvoiceId("I"+date+seconds);
+			invoiceId="I"+date+seconds;
+			in.setInvoiceId(invoiceId);
 			in.setObjection(objection);
 			in.setOrderId(orderId);
 			in.setOrderReceiveDate(orderReceiveDate);
@@ -193,6 +207,16 @@ public class CuikuanController extends BaseController{
 			Calendar calendar=Calendar.getInstance(); 
 			in.setCreateTime(calendar);
 			invoiceService.save(in);
+			
+			InvoiceDetail inde=new InvoiceDetail();
+			inde.setInvoiceId(invoiceId);
+			inde.setProductId(cuikuanDetail.getProductId());
+			inde.setProductName(cuikuanDetail.getProductName());
+			inde.setFactoryId(cuikuanDetail.getFactoryId());
+			inde.setNum(cuikuanDetail.getNum());
+			inde.setPrice(cuikuanDetail.getPrice());
+			inde.setMoney(cuikuanDetail.getMoney());
+			invoiceDetailService.save(inde);
 			
 			cuikuan.setInvoiceId("I"+date+seconds);
 			cuikuanService.updateCuikuan(cuikuan);
