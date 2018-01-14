@@ -10,8 +10,8 @@
 		</id>
 		
 		<version  name="version" column="version" type="integer"/>
-		<property name="enable" column="enable" type="boolean" not-null="false"/>
-		<property name="accounttableId" column="accounttableId" type="string" not-null="false"/>
+		<property name="enable" column="enable" type="boolean" not-null="true"/>
+		<property name="accounttableId" column="accounttableId" type="string" not-null="true"/>
 		<property name="orderId" column="orderId" type="string" not-null="false"/>
 	    <property name="deliverId" column="deliverId" type="string" not-null="false"/>
 	    <property name="cuikuanId" column="cuikuanId" type="string" not-null="false"/>

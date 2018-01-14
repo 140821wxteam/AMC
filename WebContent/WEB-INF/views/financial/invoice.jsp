@@ -159,7 +159,12 @@
 							            <td>${item.amountMoney}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
 							            <td>${item.remark}</td>							            
-							            <td>${item.status}</td>
+							            <c:if test="${item.status eq '收到'}">
+							            		<td style="color:blue;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '寄出'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -191,6 +196,8 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
+                 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/invoiceadd", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
+                 { splitter: true }, 
                  { link: true, display: "详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/invoicedetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
   	               selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                    { splitter: true },   

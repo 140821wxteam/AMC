@@ -15,6 +15,7 @@ import com.amc.service.interfaces.ICustomersService;
 import com.amc.service.interfaces.IDeliverDetailService;
 import com.amc.service.interfaces.IDeliverService;
 import com.amc.service.interfaces.IInventoryService;
+import com.amc.service.interfaces.IInvoiceDetailService;
 import com.amc.service.interfaces.IInvoiceService;
 import com.amc.service.interfaces.IOrderService;
 
@@ -116,6 +117,10 @@ public abstract class BaseController {
 	@Autowired
     @Qualifier("InvoiceService")
     protected IInvoiceService invoiceService;
+	
+	@Autowired
+    @Qualifier("InvoiceDetailService")
+    protected IInvoiceDetailService invoiceDetailService;
 	
 	@Autowired
     @Qualifier("CuikuanDetailService")
