@@ -94,7 +94,7 @@
                                  <form:select path="vendorName" id="vendorName" name="vendorName" class="form-control">
 									<form:option value="" disabled="disabled">请选择供应商</form:option>
 									<form:options items="${vendors}"/> 
-                                 </form:select>                           
+                                 </form:select>                        
                               </div>
                            </div>
                            <div class="form-group">
@@ -108,8 +108,7 @@
                         </div>
                         <div class="form-actions fluid">
                            <div class="col-md-offset-4 col-md-6">
-                              <!--<button type="button" class="btn btn-success" onclick="Orderfigure()">刷新总金额</button>-->
-                              <button type="button" class="btn btn-success" onclick="purchaseDetail()">增加明细</button>
+                              <button type="button" class="btn btn-success" onclick="purchaseDetail()">修改明细</button>
                               <button type="submit" class="btn btn-success">保存</button>
                               <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>                              
                            </div>
@@ -139,7 +138,7 @@
       });
    	  function purchaseDetail(){
    		  var orderId = document.getElementById("orderId").value;
-   		  window.location.href = '../purchase/purchasedetail/'+orderId;
+   		  window.location.href = '../purchasedetail/'+orderId;
    	  }
    	  /*function saveOrder(){
    		document.getElementById("orderinfo").submit();

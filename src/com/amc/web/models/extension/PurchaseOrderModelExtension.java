@@ -18,7 +18,7 @@ public class PurchaseOrderModelExtension {
 		return ret;
 	}
 	
-	public static PurchaseOrderEditModel toPuechaseOrderEditModel(PurchaseOrder model){
+	public static PurchaseOrderEditModel toPurchaseOrderEditModel(PurchaseOrder model){
 		PurchaseOrderEditModel ret=new PurchaseOrderEditModel();
 
 		ret.setorderId(model.getorderId());

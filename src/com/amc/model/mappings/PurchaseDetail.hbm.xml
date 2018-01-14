@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>  
+    <class name="com.amc.model.models.PurchaseDetail" table="t_purchasedetail" lazy="false">  
+	    
+	   	<id name="id" column="id" type="integer" >
+			<generator class="native" />
+		</id>
+		
+		<version name="version" column="version" type="integer"/>
+	    <property name="enable" column="enable" type="boolean" not-null="true"/>
+	    <property name="orderdetailId" column="orderdetailId" type="string" not-null="true"/>
+	    <property name="orderId" column="orderId" type="string" not-null="true"/>
+	    <!--<many-to-one name ="orderId" class="com.amc.model.models.Order" foreign-key="FK_order_orderId" index="IDX_order_orderId">
+		  <column name="orderId" not-null="true"/>
+		</many-to-one>-->
+	    <property name="productId" column="productId" type="string" not-null="true"/>
+	    <!--<many-to-one name ="productId" class="com.amc.model.models.Product" foreign-key="FK_product_productId" index="IDX_product_productId">
+		  <column name="productId" not-null="true"/>
+		</many-to-one>-->
+	    <property name="productName" column="productName" type="string" not-null="true"/>
+	    <property name="quantity" column="quantity" type="integer" not-null="true"/>
+	    <property name="unitPrice" column="unitPrice" type="double" not-null="true"/>
+	    <property name="totalPrice" column="totalPrice" type="double" not-null="true"/>
+	    <property name="note" column="note" type="string" not-null="false"/>
+		
+    </class>  
+</hibernate-mapping> 

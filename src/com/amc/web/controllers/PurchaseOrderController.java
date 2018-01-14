@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.amc.model.models.PurchaseDetail;
 import com.amc.model.models.PurchaseOrder;
+import com.amc.service.interfaces.IPurchaseDetailService;
 import com.amc.service.interfaces.IPurchaseOrderService;
-import com.amc.service.interfaces.IVendorService;
-import com.amc.service.services.VendorService;
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.models.PurchaseOrderEditModel;
 import com.amc.web.models.PurchaseOrderSearchModel;
@@ -39,7 +39,7 @@ public class PurchaseOrderController extends BaseController{
 	@Autowired
     @Qualifier("PurchaseOrderService")
 	private IPurchaseOrderService purchaseOrderService;
-	//private IOrderdetailService orderdetailService;
+	private IPurchaseDetailService purchaseDetailService;
 	
 	@AuthPassport
 	@RequestMapping(value="/purchaseorder", method = RequestMethod.GET)
@@ -49,7 +49,7 @@ public class PurchaseOrderController extends BaseController{
 
         model.addAttribute("searchModel", searchModel);
         model.addAttribute("vendors", purchaseOrderService.listVendorNames());
-        //model.addAttribute("vendors", new String[]{});
+
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", purchaseOrderService.listPage(searchModel.getorderId(), searchModel.getvendorName(), searchModel.getstatus(), pageNo, pageSize));
@@ -78,14 +78,14 @@ public class PurchaseOrderController extends BaseController{
 	public String purchaseorderadd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PurchaseOrderEditModel purchaseOrderEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
 		purchaseOrderEditModel.setorderDate(new java.sql.Date(new java.util.Date().getTime()));
 		purchaseOrderEditModel.setstatus("未完成");
-		/*String orderId =purchaseOrderEditModel.getorderId();*/
+		String orderId =purchaseOrderEditModel.getorderId();
 		double tp=0.0;
-		/*List<POdetail> lists=podetailService.listAll();
+		List<PurchaseDetail> lists=purchaseDetailService.listAll();
 		
-		for(Orderdetail od:lists) {
+		for(PurchaseDetail od:lists) {
 			if(od.getorderId().equals(orderId))
 			tp+=od.gettotalPrice();
-		}*/
+		}
 		purchaseOrderEditModel.settotalPrice(tp);
 		purchaseOrderEditModel.setvendorId(purchaseOrderService.getVendorId(purchaseOrderEditModel.getvendorName()));
 		purchaseOrderService.saveOrder(PurchaseOrderModelExtension.toPurchaseOrder(purchaseOrderEditModel));
@@ -97,54 +97,55 @@ public class PurchaseOrderController extends BaseController{
     
 	}
 	
-	/*@AuthPassport
-	@RequestMapping(value = "/orderedit/{id}", method = {RequestMethod.GET})
-	public String orderedit(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException{	
+	@AuthPassport
+	@RequestMapping(value = "/purchaseorderedit/{id}", method = {RequestMethod.GET})
+	public String purchaseorderedit(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException{	
 		if(!model.containsAttribute("contentModel")){
-			OrderEditModel orderEditModel=OrderModelExtension.toOrderEditModel(orderService.get(id));
-			model.addAttribute("contentModel", orderEditModel);
+			PurchaseOrderEditModel purchaseOrderEditModel=PurchaseOrderModelExtension.toPurchaseOrderEditModel(purchaseOrderService.get(id));
+			model.addAttribute("contentModel", purchaseOrderEditModel);
+			model.addAttribute("vendors", purchaseOrderService.listVendorNames());
 		}
 
-        return "sales/orderedit";	
+        return "purchase/purchaseorderedit";	
 	}
 	
-	@AuthPassport
-	@RequestMapping(value = "/orderedit/{id}", method = {RequestMethod.POST})
-    public String orderedit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") OrderEditModel editModel, @PathVariable(value="id") Integer id,BindingResult result) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
+	
+	@RequestMapping(value = "/purchaseorderedit/{id}", method = {RequestMethod.POST})
+    public String purchaseorderedit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PurchaseOrderEditModel editModel, @PathVariable(value="id") Integer id,BindingResult result) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
 		if(result.hasErrors())
-            return orderedit(request, model, id);
+            return purchaseorderedit(request, model, id);
 		//vendorService.updateVendor(VendorModelExtension.toVendor(editModel.setId(id)));
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
         //System.out.println("return_"+returnUrl);
-        List<Order> lists=orderService.listAll();
+        List<PurchaseOrder> lists=purchaseOrderService.listAll();
 		String orderId=null;
-		for(Order o:lists) {
+		for(PurchaseOrder o:lists) {
 			if(o.getId()==id)
 			orderId=o.getorderId();
 		}
 		
         double tp=0.0;
-		List<Orderdetail> details=orderdetailService.listAll();
+		List<PurchaseDetail> details=purchaseDetailService.listAll();
 		
-		for(Orderdetail od:details) {
+		for(PurchaseDetail od:details) {
 			if(od.getorderId().equals(orderId))
 			tp+=od.gettotalPrice();
 		}
 		editModel.settotalPrice(tp);
-		editModel.setcreateTime(Calendar.getInstance());
+		editModel.setorderDate(new java.sql.Date(new java.util.Date().getTime()));
 		editModel.setstatus("未完成");
-        Order order=OrderModelExtension.toOrder(editModel);
+        PurchaseOrder order=PurchaseOrderModelExtension.toPurchaseOrder(editModel);
         order.setId(id);
-        orderService.updateOrder(order);
+        purchaseOrderService.updateOrder(order);
         
     if(returnUrl==null)
-        returnUrl="sales/orderedit";
+        returnUrl="purchase/purchaseorderedit";
     	return "redirect:"+returnUrl;    
-    }*/
+    }
 	
 	@AuthPassport
 	@RequestMapping(value = "purchaseorderdelete/{id}", method = {RequestMethod.GET})
-	public String orderdelete(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException{	
+	public String purchaseorderdelete(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException{	
 		List<PurchaseOrder> lists = purchaseOrderService.listAll();
 		String orderId = null;
 		for(PurchaseOrder o:lists) {
@@ -152,12 +153,12 @@ public class PurchaseOrderController extends BaseController{
 			orderId = o.getorderId();
 		}
 		
-		/*List<Orderdetail> details=orderdetailService.listAll();
+		List<PurchaseDetail> details=purchaseDetailService.listAll();
 		
-		for(Orderdetail od:details) {
+		for(PurchaseDetail od:details) {
 			if(od.getorderId().equals(orderId))
-				orderdetailService.delete(od.getId());
-		}*/
+				purchaseDetailService.delete(od.getId());
+		}
 		purchaseOrderService.delete(id);
 		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
 		if(returnUrl==null)
