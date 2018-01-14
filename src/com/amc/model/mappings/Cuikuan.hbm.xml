@@ -13,12 +13,12 @@
 	    <property name="cuikuanId" column="cuikuanId" type="string" not-null="true"/>
 	    <property name="deliverId" column="deliverId" type="string" not-null="true"/>
 	    <property name="cuikuanObjection" column="cuikuanObjection" type="integer" not-null="false"/>
-	    <property name="customerId" column="customerId" type="string" not-null="true"/>
-	    <property name="orderId" column="orderId" type="string" not-null="true"/>
+	    <property name="customerId" column="customerId" type="string" not-null="false"/>
+	    <property name="orderId" column="orderId" type="string" not-null="false"/>
 	    <property name="orderReceiveDate" column="orderReceiveDate" type="calendar" not-null="false"/>  
 	    <property name="amountMoney" column="amountMoney" type="double" not-null="false"/>
 	    <property name="orderdetailid" column="orderdetailid" type="string" not-null="false"/>
-	    <property name="createTime" column="createTime" type="calendar" not-null="false"/>
+	    <property name="createTime" column="createTime" type="calendar" not-null="true"/>
 	    <property name="remark" column="remark" type="string" not-null="false"/>
 	    <property name="status" column="status" type="string" not-null="false"/>
 	    

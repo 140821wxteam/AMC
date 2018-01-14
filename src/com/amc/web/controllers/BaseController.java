@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.amc.service.interfaces.IAccountService;
 import com.amc.service.interfaces.IAccountTableService;
 import com.amc.service.interfaces.IAuthorityService;
+import com.amc.service.interfaces.ICuikuanDetailService;
 import com.amc.service.interfaces.ICuikuanService;
 import com.amc.service.interfaces.ICustomersService;
 import com.amc.service.interfaces.IDeliverDetailService;
@@ -115,6 +116,10 @@ public abstract class BaseController {
 	@Autowired
     @Qualifier("InvoiceService")
     protected IInvoiceService invoiceService;
+	
+	@Autowired
+    @Qualifier("CuikuanDetailService")
+    protected ICuikuanDetailService cuikuanDetailService;
 	
 	@ExceptionHandler  
     public String exception(HttpServletRequest request, Exception e) {  

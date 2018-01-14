@@ -162,7 +162,7 @@
 							            <td>${item.amountMoney}</td>
 							            <td>${item.remark}</td>							            
 							            
-							            <c:if test="${item.status eq '已记应收账'}">
+							            <c:if test="${item.status eq '已处理'}">
 							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '未处理'}">
@@ -203,9 +203,10 @@
 	              { link: true, display: "查看详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/deliverdetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
 	                selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                   { splitter: true },
-                  { link: true, display: "修改状态", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}
-             ]
+                  { link: true, display: "开催款单，记应收账", css: "icon-arrow-right", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/tocuikuan/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                      selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认开催款单吗？"},
+                  { splitter: true }, 
+              ]
          });
       });
    	  
