@@ -294,7 +294,7 @@
                     		  {
                       		    title : {
                       		        text: '全国销售额统计',
-                      		        subtext: '时间',
+                      		        //subtext: '时间',
                       		        x:'center'
                       		    },
                       		    tooltip : {

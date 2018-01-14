@@ -15,6 +15,7 @@ import com.amc.service.interfaces.ICustomersService;
 import com.amc.service.interfaces.IDeliverDetailService;
 import com.amc.service.interfaces.IDeliverService;
 import com.amc.service.interfaces.IInventoryService;
+import com.amc.service.interfaces.IInvoiceDetailService;
 import com.amc.service.interfaces.IInvoiceService;
 import com.amc.service.interfaces.IOrderService;
 
@@ -26,6 +27,8 @@ import com.amc.service.interfaces.IPrepareService;
 import com.amc.service.interfaces.IPreparedetailService;
 import com.amc.service.interfaces.IProductService;
 import com.amc.service.interfaces.IPurchaseAdviceService;
+import com.amc.service.interfaces.IPurchaseDetailService;
+import com.amc.service.interfaces.IPurchaseOrderService;
 import com.amc.service.interfaces.IRoleService;
 import com.amc.service.interfaces.IVendorService;
 import com.amc.service.services.InvoiceService;
@@ -114,8 +117,20 @@ public abstract class BaseController {
     protected IPurchaseAdviceService purchaseadviceService;
 	
 	@Autowired
+    @Qualifier("PurchaseDetailService")
+    protected IPurchaseDetailService purchaseDetailService;
+	
+	@Autowired
+    @Qualifier("PurchaseOrderService")
+    protected IPurchaseOrderService purchaseOrderService;
+	
+	@Autowired
     @Qualifier("InvoiceService")
     protected IInvoiceService invoiceService;
+	
+	@Autowired
+    @Qualifier("InvoiceDetailService")
+    protected IInvoiceDetailService invoiceDetailService;
 	
 	@Autowired
     @Qualifier("CuikuanDetailService")

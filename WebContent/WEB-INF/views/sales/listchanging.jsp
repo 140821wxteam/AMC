@@ -102,14 +102,14 @@
 								  </div>
 							   </div>
 							   <!--/span-->
-							   <!--<div class="col-md-6">
+							   <div class="col-md-6" style="display:none">
 								  <div class="form-group">
 									 <label class="control-label col-md-3">产品名称</label>
 									 <div class="col-md-9">
 										<form:input path="productName" id="productName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品名称"/>
 									 </div>
 								  </div>
-							   </div>  -->
+							   </div>
 							   <!--/span-->
 							</div>
 						 </div>
@@ -284,8 +284,17 @@
 			                           series: [{
 			                               // 根据名字对应到相应的系列
 			                               name: '销售量',
-			                               data: saleslevel_y
+			                               data: saleslevel_y,
+			                               markLine : {
+			                            	   
+			                                   data : [{
+			                                	   	name:'当月销量',
+			                                	   	xAxis:result[result.length-3].createTime
+			                                   }		                                	   
+			                                   ]
+			                               }
 			                           }]
+			                       
 			                       });
 			                       
 			                }
