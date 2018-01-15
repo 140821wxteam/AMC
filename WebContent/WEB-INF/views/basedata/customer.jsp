@@ -143,6 +143,7 @@
 		                              <th >顾客联系电话</th>
 		                              <th >顾客邮箱</th>
 		                              <th >备注</th>
+		                              <th >信用情况</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -159,6 +160,7 @@
 							            <td>${item.customerTele}</td>
 							            <td>${item.customerEmail}</td>
 							            <td>${item.note}</td>
+							            <td>${item.reputation}</td>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>

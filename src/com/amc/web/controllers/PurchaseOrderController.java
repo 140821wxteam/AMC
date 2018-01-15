@@ -254,7 +254,8 @@ public class PurchaseOrderController extends BaseController{
 		String date = new SimpleDateFormat("yyyyMMdd").format(new Date());  
         String seconds = new SimpleDateFormat("HHmmss").format(new Date());
         int num = 0;
-		
+		//测试
+        System.out.println("zheli");
         for(PurchaseOrder o:lists) {
 			if(o.getId()==id) {
 
@@ -272,7 +273,7 @@ public class PurchaseOrderController extends BaseController{
 					
 					//新建进货单
 					for(PurchaseDetail od:details) {
-						if(od.getorderId().equals(id)){
+						if(od.getorderId().equals(o.getorderId())){
 							Stockin stockin = new Stockin();
 					        String stockinId= "SI"+date+seconds+num;
 					        stockin.setStockinId(stockinId);

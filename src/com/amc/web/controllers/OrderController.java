@@ -274,27 +274,29 @@ public class OrderController extends BaseController{
 				}else {
 					o.setstatus("已退回");
 					orderService.updateOrder(o);
+					
+					List<Orderdetail> details=orderdetailService.listAll();
+					
+					for(Orderdetail od:details) {
+						if(od.getorderId().equals(orderId))
+						{
+							if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")||od.getstatus().equals("仍有缺货")) {
+								break;
+							}
+							od.setstatus("已退回");
+							orderdetailService.updateOrderdetail(od);
+						}
+							
+					}
+					String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+					if(returnUrl==null)
+			        	returnUrl="sales/order";
+			        return "redirect:"+returnUrl;
 				}
 			}
 		}
-		
-		List<Orderdetail> details=orderdetailService.listAll();
-		
-		for(Orderdetail od:details) {
-			if(od.getorderId().equals(orderId))
-			{
-				if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")||od.getstatus().equals("仍有缺货")) {
-					break;
-				}
-				od.setstatus("已退回");
-				orderdetailService.updateOrderdetail(od);
-			}
-				
-		}
-		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-		if(returnUrl==null)
-        	returnUrl="sales/order";
-        return "redirect:"+returnUrl;	
+		return "sales/order";
+			
 	
 	}
 	
