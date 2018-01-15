@@ -20,6 +20,7 @@ public class CustomersEditModel {
 	private String contactPerson;
 	private String customerTele;
 	private String customerEmail;
+	private int reputation;
 	private String note;
 	
 	public void setcustomerId(String customerId){
@@ -63,6 +64,12 @@ public class CustomersEditModel {
 	}
 	public String getcustomerEmail(){
 		return this.customerEmail;
+	}
+	public void setreputation(int reputation){
+		this.reputation=reputation;
+	}
+	public int getreputation(){
+		return this.reputation;
 	}
 	public void setnote(String note){
 		this.note=note;

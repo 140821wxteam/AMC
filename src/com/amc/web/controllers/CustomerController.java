@@ -78,7 +78,7 @@ public class CustomerController extends BaseController{
 	}
 	@RequestMapping(value="/customeradd", method = {RequestMethod.POST})
 	public String customeradd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") CustomersEditModel customerEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
-		      
+		 customerEditModel.setreputation(10);   
 		 customerService.saveCustomer(CustomerModelExtension.toCustomer(customerEditModel));
         
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);

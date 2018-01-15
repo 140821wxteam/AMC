@@ -153,7 +153,13 @@
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
 							            <td>${item.invoiceId}</td>
-							            <td>${item.objection}</td>
+							            <!--<td>${item.objection}</td>  -->
+							            <c:if test="${item.objection eq 1}">
+							            		<td>顾客</td>
+							            </c:if>
+							            <c:if test="${item.objection eq 0}">
+							            		<td>本公司</td>
+							            </c:if>
 							            <td>${item.orderId}</td>
 							            <td>${item.orderReceiveDate.getTime().toLocaleString()}</td>
 							            <td>${item.amountMoney}</td>
@@ -164,6 +170,9 @@
 							            </c:if>
 							            <c:if test="${item.status eq '寄出'}">
 							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${empty item.status}">
+							            		<td>${item.status}</td>
 							            </c:if>
 							        </tr>
 							        </c:forEach>

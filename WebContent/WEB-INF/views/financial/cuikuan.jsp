@@ -156,7 +156,14 @@
 									    </td>
 							            <td>${item.cuikuanId}</td>
 							            <td>${item.deliverId}</td>
-							            <td>${item.cuikuanObjection}</td>
+							            
+							            <!--<td>${item.cuikuanObjection}</td>  -->
+							            <c:if test="${item.cuikuanObjection eq 1}">
+							            		<td>顾客</td>
+							            </c:if>
+							            <c:if test="${item.cuikuanObjection eq 0}">
+							            		<td>本公司</td>
+							            </c:if>
 							            <td>${item.customerId}</td>
 							            <td>${item.orderId}</td>
 							            <td>${item.orderReceiveDate.getTime().toLocaleString()}</td>

@@ -15,6 +15,7 @@ public class CustomerModelExtension {
 		ret.setcontactPerson(customerEditModel.getcontactPerson());
 		ret.setcustomerTele(customerEditModel.getcustomerTele());
 		ret.setcustomerEmail(customerEditModel.getcustomerEmail());
+		ret.setreputation(customerEditModel.getreputation());
 		ret.setnote(customerEditModel.getnote());
 		return ret;
 	}
@@ -29,6 +30,7 @@ public class CustomerModelExtension {
 		ret.setcontactPerson(model.getcontactPerson());
 		ret.setcustomerTele(model.getcustomerTele());
 		ret.setcustomerEmail(model.getcustomerEmail());
+		ret.setreputation(model.getreputation());
 		ret.setnote(model.getnote());
 		
 		return ret;
