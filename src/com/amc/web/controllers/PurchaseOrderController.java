@@ -1,11 +1,15 @@
 package com.amc.web.controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +23,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.amc.model.models.Order;
+import com.amc.model.models.Orderdetail;
+import com.amc.model.models.Prepare;
 import com.amc.model.models.PurchaseDetail;
 import com.amc.model.models.PurchaseOrder;
+import com.amc.model.models.Stockin;
 import com.amc.service.interfaces.IPurchaseDetailService;
 import com.amc.service.interfaces.IPurchaseOrderService;
 import com.amc.web.auth.AuthPassport;
@@ -39,7 +47,7 @@ public class PurchaseOrderController extends BaseController{
 	@Autowired
     @Qualifier("PurchaseOrderService")
 	private IPurchaseOrderService purchaseOrderService;
-	private IPurchaseDetailService purchaseDetailService;
+	//private IPurchaseDetailService purchaseDetailService;
 	
 	@AuthPassport
 	@RequestMapping(value="/purchaseorder", method = RequestMethod.GET)
@@ -77,7 +85,7 @@ public class PurchaseOrderController extends BaseController{
 	@RequestMapping(value="/purchaseorderadd", method = {RequestMethod.POST})	
 	public String purchaseorderadd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PurchaseOrderEditModel purchaseOrderEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
 		purchaseOrderEditModel.setorderDate(new java.sql.Date(new java.util.Date().getTime()));
-		purchaseOrderEditModel.setstatus("未完成");
+		purchaseOrderEditModel.setstatus("待审核");
 		String orderId =purchaseOrderEditModel.getorderId();
 		double tp=0.0;
 		List<PurchaseDetail> lists=purchaseDetailService.listAll();
@@ -99,7 +107,16 @@ public class PurchaseOrderController extends BaseController{
 	
 	@AuthPassport
 	@RequestMapping(value = "/purchaseorderedit/{id}", method = {RequestMethod.GET})
-	public String purchaseorderedit(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException{	
+	public String purchaseorderedit(HttpServletRequest request, HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, IOException{	
+		if(purchaseOrderService.get(id).getstatus().equals("已审核待发送")||purchaseOrderService.get(id).getstatus().equals("已发送待收货")||purchaseOrderService.get(id).getstatus().equals("已收货")) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.flush();
+		    out.println("<script>");
+			out.println("alert('不能编辑！');");
+			out.println("history.back();");
+			out.println("</script>");
+		}		
 		if(!model.containsAttribute("contentModel")){
 			PurchaseOrderEditModel purchaseOrderEditModel=PurchaseOrderModelExtension.toPurchaseOrderEditModel(purchaseOrderService.get(id));
 			model.addAttribute("contentModel", purchaseOrderEditModel);
@@ -111,9 +128,9 @@ public class PurchaseOrderController extends BaseController{
 	
 	
 	@RequestMapping(value = "/purchaseorderedit/{id}", method = {RequestMethod.POST})
-    public String purchaseorderedit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PurchaseOrderEditModel editModel, @PathVariable(value="id") Integer id,BindingResult result) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
+    public String purchaseorderedit(HttpServletRequest request, HttpServletResponse response, Model model, @Valid @ModelAttribute("contentModel") PurchaseOrderEditModel editModel, @PathVariable(value="id") Integer id,BindingResult result) throws EntityOperateException, ValidatException, NoSuchAlgorithmException, IOException {
 		if(result.hasErrors())
-            return purchaseorderedit(request, model, id);
+            return purchaseorderedit(request, response, model, id);
 		//vendorService.updateVendor(VendorModelExtension.toVendor(editModel.setId(id)));
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
         //System.out.println("return_"+returnUrl);
@@ -133,7 +150,7 @@ public class PurchaseOrderController extends BaseController{
 		}
 		editModel.settotalPrice(tp);
 		editModel.setorderDate(new java.sql.Date(new java.util.Date().getTime()));
-		editModel.setstatus("未完成");
+		editModel.setstatus("待审核");
         PurchaseOrder order=PurchaseOrderModelExtension.toPurchaseOrder(editModel);
         order.setId(id);
         purchaseOrderService.updateOrder(order);
@@ -166,35 +183,119 @@ public class PurchaseOrderController extends BaseController{
         return "redirect:"+returnUrl;	
 	
 	}
-	/*
-	//订单退回操作
-	@AuthPassport
-	@RequestMapping(value = "orderback/{id}", method = {RequestMethod.GET})
-	public String orderback(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{	
-		List<Order> lists=orderService.listAll();
-		String orderId=null;
-		for(Order o:lists) {
-			if(o.getId()==id)
-			orderId=o.getorderId();
-			o.setstatus("退回");
-			orderService.updateOrder(o);
-		}
-		
-		List<Orderdetail> details=orderdetailService.listAll();
-		
-		for(Orderdetail od:details) {
-			if(od.getorderId().equals(orderId))
-			{
-				od.setstatus("退回");
-				orderdetailService.updateOrderdetail(od);
-			}
-				
-		}
-		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-		if(returnUrl==null)
-        	returnUrl="sales/order";
-        return "redirect:"+returnUrl;	
 	
-	} */
+	//订单审核通过操作
+	@AuthPassport
+	@RequestMapping(value = "orderconfirm/{id}", method = {RequestMethod.GET})
+	public String orderconfirm(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{	
+		
+		List<PurchaseOrder> lists=purchaseOrderService.listAll();
+
+		for(PurchaseOrder o:lists) {
+			if(o.getId()==id) {
+
+				if(o.getstatus().equals("已审核待发送")||o.getstatus().equals("已发送待收货")||o.getstatus().equals("已收货")) {
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.flush();
+				    out.println("<script>");
+					out.println("alert('不能审核通过！');");
+					out.println("history.back();");
+					out.println("</script>");
+				}else {
+					o.setstatus("已审核待发送");
+					purchaseOrderService.updateOrder(o);
+					String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+					if(returnUrl==null)
+			        	returnUrl="purchase/purchaseorder";
+			        return "redirect:"+returnUrl;	
+				}
+			}
+		}
+        return "purchase/purchaseorder";		
+	}
+	
+	//发送订单操作
+	@AuthPassport
+	@RequestMapping(value = "ordersend/{id}", method = {RequestMethod.GET})
+	public String ordersend(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{	
+		List<PurchaseOrder> lists=purchaseOrderService.listAll();
+
+		for(PurchaseOrder o:lists) {
+			if(o.getId()==id) {
+
+				if(o.getstatus().equals("待审核")||o.getstatus().equals("已发送待收货")||o.getstatus().equals("已收货")) {
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.flush();
+				    out.println("<script>");
+					out.println("alert('不能发送订单！');");
+					out.println("history.back();");
+					out.println("</script>");
+				}else {
+					o.setstatus("已发送待收货");
+					purchaseOrderService.updateOrder(o);
+					String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+					if(returnUrl==null)
+			        	returnUrl="purchase/purchaseorder";
+			        return "redirect:"+returnUrl;	
+				}
+			}
+		}
+        return "purchase/purchaseorder";		
+	}
+
+	//订单到货确认并生成进货单操作
+	@AuthPassport
+	@RequestMapping(value = "productreceived/{id}", method = {RequestMethod.GET})
+	public String productreceived(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{	
+		List<PurchaseOrder> lists=purchaseOrderService.listAll();
+		List<PurchaseDetail> details=purchaseDetailService.listAll();
+		String date = new SimpleDateFormat("yyyyMMdd").format(new Date());  
+        String seconds = new SimpleDateFormat("HHmmss").format(new Date());
+        int num = 0;
+		
+        for(PurchaseOrder o:lists) {
+			if(o.getId()==id) {
+
+				if(o.getstatus().equals("已审核待发送")||o.getstatus().equals("已收货")||o.getstatus().equals("待审核")) {
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.flush();
+				    out.println("<script>");
+					out.println("alert('不能确认到货！');");
+					out.println("history.back();");
+					out.println("</script>");
+				}else {
+					o.setstatus("已收货");
+					purchaseOrderService.updateOrder(o);
+					
+					//新建进货单
+					for(PurchaseDetail od:details) {
+						if(od.getorderId().equals(id)){
+							Stockin stockin = new Stockin();
+					        String stockinId= "SI"+date+seconds+num;
+					        stockin.setStockinId(stockinId);
+					        stockin.setProductId(od.getproductId());
+					        stockin.setAmount(od.getquantity());
+					        stockin.setVendorId(o.getvendorId());
+					        stockin.setCreateTime(Calendar.getInstance());
+					        stockin.setNote(od.getnote());
+					        stockin.setStatus("未处理");
+					        stockinService.saveStockin(stockin);
+						}			
+					    num++;
+					}
+					String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+					if(returnUrl==null)
+			        	returnUrl="purchase/purchaseorder";
+			        return "redirect:"+returnUrl;
+			       
+				}
+			}
+		}
+        return "purchase/purchaseorder";	
+	
+	}
 
 }

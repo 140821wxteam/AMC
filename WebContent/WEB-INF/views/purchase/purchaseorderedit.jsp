@@ -110,7 +110,7 @@
                            <div class="col-md-offset-4 col-md-6">
                               <button type="button" class="btn btn-success" onclick="purchaseDetail()">修改明细</button>
                               <button type="submit" class="btn btn-success">保存</button>
-                              <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>                              
+                              <button type="button" class="btn btn-success" onclick="window.self.location='/AMC/purchase/purchaseorder'">返回</button>                              
                            </div>
                         	</div>
                      

@@ -115,9 +115,10 @@
 									 <div class="col-md-8">
 										<form:select path="status" class="form-control">
 										  <form:option value="" disabled="disabled">请选择订单状态</form:option>
-										  <form:option value="1">退回</form:option>
-                                          <form:option value="2">通过</form:option>
-                                          <form:option value="3">未完成</form:option>
+										  <form:option value="待审核">待审核</form:option>
+                                          <form:option value="已审核待发送">已审核待发送</form:option>
+                                          <form:option value="已发送待收货">已发送待收货</form:option>
+                                          <form:option value="已收货">已收货</form:option>
                                         </form:select>
 									 </div>
 								  </div>
@@ -170,14 +171,17 @@
 							            <td>${item.totalPrice}</td>
 							            <td>${item.orderDate.toString()}</td>
 							            <td>${item.note}</td>
-							            <c:if test="${item.status eq '退回'}">
+							            <c:if test="${item.status eq '待审核'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
-							            <c:if test="${item.status eq '通过'}">
-							            		<td style="color:green;">${item.status}</td>
+							            <c:if test="${item.status eq '已审核待发送'}">
+							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
-							            <c:if test="${item.status eq '未完成'}">
-							            		<td style="color:black;">${item.status}</td>
+							            <c:if test="${item.status eq '已发送待收货'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已收货'}">
+							            		<td style="color:green;">${item.status}</td>
 							            </c:if>
 							        </tr>
 							        </c:forEach>
@@ -262,15 +266,17 @@
                  { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/purchase/purchaseorderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { splitter: true },
-                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/purchase/purchaseorderdetailview/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/purchase/purchasedetailview/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                   { splitter: true },
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/purchase/purchaseorderdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
-                 { link: true, display: "订单退回", css: "icon-arrow-left", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/purchase/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选订单吗？"},
                  { link: true, display: "审核通过", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/purchase/orderconfirm/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认审核通过所选订单吗？"}
+                    selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认审核通过所选订单吗？"},
+                 { link: true, display: "发送订单", css: "icon-arrow-right", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/purchase/ordersend/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                    selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认发送所选订单吗？"},
+                 { link: true, display: "到货确认，生成进货单", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/purchase/productreceived/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                    selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认所选订单已到货,并生成进货单吗？"}
              ]
          });
       });

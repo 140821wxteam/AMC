@@ -31,6 +31,7 @@ import com.amc.service.interfaces.IPurchaseOrderService;
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.jsonmodels.InventoryJson;
 import com.amc.web.models.InventorySearchModel;
+import com.amc.web.models.OrderdetailSearchModel;
 import com.amc.web.models.PurchaseDetailEditModel;
 import com.amc.web.models.PurchaseDetailSearchModel;
 import com.amc.web.models.extension.PurchaseDetailModelExtension;
@@ -45,7 +46,6 @@ public class PurchaseDetailController extends BaseController{
 	@Autowired
     @Qualifier("PurchaseDetailService")
 	private IPurchaseDetailService purchaseDetailService;
-	private IPurchaseOrderService purchaseOrderService;
 	
 	@AuthPassport
 	@RequestMapping(value="/purchasedetail/{orderId}", method = {RequestMethod.GET})
@@ -55,11 +55,13 @@ public class PurchaseDetailController extends BaseController{
 		//String orderId = request.getParameter("orderId");
 		searchModel.setorderId(orderId);
         model.addAttribute("searchModel", searchModel);
+        model.addAttribute("orderId", orderId);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
-        model.addAttribute("contentdetailModel", orderdetailService.listPage(searchModel.getorderId(), pageNo, pageSize));
+        model.addAttribute("contentdetailModel", purchaseDetailService.listPage(searchModel.getorderId(), pageNo, pageSize));
         return "purchase/purchasedetail";
     }
+
 	//查看订单详情
 	@AuthPassport
 	@RequestMapping(value="/purchasedetailview/{id}", method = {RequestMethod.GET})
@@ -157,7 +159,7 @@ public class PurchaseDetailController extends BaseController{
 	}
 	
 	@AuthPassport
-	@RequestMapping(value = "/purchasedetailedit/{purchasedetailId}", method = {RequestMethod.GET})
+	@RequestMapping(value = "/purchasedetailedit/{orderdetailId}", method = {RequestMethod.GET})
 	public String purchasedetailedit(HttpServletRequest request, Model model, @PathVariable(value="orderdetailId") String orderdetailId) throws ValidatException{	
 		if(!model.containsAttribute("contentModel")){
 			PurchaseDetailEditModel purchaseDetailEditModel = new PurchaseDetailEditModel();

@@ -117,12 +117,11 @@
 				</div>
                
                <!-- BEGIN EXAMPLE TABLE PORTLET-->
-               <div class="portlet box light-grey">
+                <div class="portlet box light-grey">
                   <div class="portlet-title">
                      <div class="caption"><i class="icon-table"></i>${requestScope.permissionMenu.curName}</div>
                   </div>
                   <div class="portlet-body">
-                     <div class="table-toolbar"></div>
                      <div class="dataTables_wrapper form-inline" role="grid">
 	                     <div class="table-scrollable">
 		                     <table class="table table-striped table-bordered table-hover" id="data-table">
@@ -164,7 +163,7 @@
                   </div>
                </div>
                <div class="text-center">
-				 <button type="button" class="btn btn-success" onclick="javascript:history.go(-1);">返回</button>
+				 <button type="button" class="btn btn-success" onclick="window.self.location='/AMC/purchase/purchaseorder'">返回</button>
 			   </div>
                <!-- END EXAMPLE TABLE PORTLET-->
                
@@ -183,17 +182,6 @@
          
          $("#data-table").tableManaged();
          
-         $(".table-toolbar").toolbarLite({
-             items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "../purchasedetailadd/"+document.getElementById("orderId").value},
-                 { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "../purchasedetailedit/{0}", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                  
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "../purchasedetaildelete/{0}", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
-             ]
-         });
       });
    	  function returntoorder(){
    		  window.close();
