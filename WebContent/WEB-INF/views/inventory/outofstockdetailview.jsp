@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 订单缺货单信息</title>
+   <title>AMC | 订单缺件表管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>订单缺货单信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -92,7 +92,7 @@
 							<div class="row">
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">订单缺货单编号</label>
+									 <label class="control-label col-md-3">订单缺件表编号</label>
 									 <div class="col-md-9">
 										<form:input readonly="readonly" UNSELECTABLE="on" path="outofstockId" id="outofstockId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单缺货单编号"/>
 									 </div>
@@ -129,7 +129,7 @@
 		                        <thead>
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
-		                              <th>订单缺货单明细编号</th>
+		                              <th>订单缺件表明细编号</th>
 		                              <th>产品编号</th>
 		                              <th>需求数量</th>
 		                              <th>已满足数量</th>
@@ -137,7 +137,7 @@
 		                              <th>操作员姓名</th>
 		                              <th>操作时间</th>
 		                              <th>备注</th>
-		                              <th>订单缺货单明细状态</th>
+		                              <th>订单缺件表明细状态</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -198,7 +198,7 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../orderdetailviewer/{0}", 
+                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../outofstockdetailviewer/{0}", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { splitter: true }                 
              ]

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.amc.model.models.Account;
 import com.amc.model.models.Authority;
+import com.amc.model.models.Role;
 import com.amc.service.interfaces.IAccountService;
 import com.amc.web.auth.AccountAuth;
 import com.amc.web.auth.AccountRole;
@@ -143,7 +144,7 @@ public class AccountController extends BaseController {
         
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
         if(returnUrl==null)
-        	returnUrl="account/login";
+        	returnUrl="login";
     	return "redirect:"+returnUrl; 	
 	}
 	
@@ -198,4 +199,40 @@ public class AccountController extends BaseController {
         	returnUrl="account/list";
     	return "redirect:"+returnUrl; 	
 	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/accountdelete/{id}", method = {RequestMethod.GET})
+	public String accountdelete(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException{	
+		accountService.delete(id);
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		if(returnUrl==null)
+        	returnUrl="account/list";
+        return "redirect:"+returnUrl;	
+	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/accountdisable/{id}", method = {RequestMethod.GET})
+    public String accountdisable(HttpServletRequest request, @PathVariable(value="id") Integer id) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
+		
+        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+        Account account_init=accountService.get(id);
+        account_init.setEnable(false);
+        accountService.update(account_init);
+    if(returnUrl==null)
+    		returnUrl="account/list";
+    	return "redirect:"+returnUrl;    
+    }
+	
+	@AuthPassport
+	@RequestMapping(value = "/accountenable/{id}", method = {RequestMethod.GET})
+    public String accountenable(HttpServletRequest request, @PathVariable(value="id") Integer id) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
+		
+        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+        Account account_init=accountService.get(id);
+        account_init.setEnable(true);
+        accountService.update(account_init);
+    if(returnUrl==null)
+    		returnUrl="account/list";
+    	return "redirect:"+returnUrl;    
+    }
 }  

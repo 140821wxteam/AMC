@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 订单缺货单信息</title>
+   <title>AMC | 订单缺件表管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>订单缺货单信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -136,7 +136,7 @@
 		                        <thead>
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
-		                              <th>订单缺货单编号</th>
+		                              <th>订单缺件表编号</th>
 		                              <th>订单编号</th>
 		                              <th>顾客编号</th>
 		                              <th>订单项目数</th>
@@ -144,7 +144,7 @@
 		                              <th>部分满足项目数</th>
 		                              <th>完全缺货项目数</th>
 		                              <th>创建时间</th>		                             
-		                              <th>订单状态</th>
+		                              <th>状态</th>
 		                              <th>备注</th>
 		                           </tr>
 		                        </thead>
@@ -163,7 +163,7 @@
 							            <td>${item.outofstockNum}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
 							            
-							            <c:if test="${item.status eq '处理中'}">
+							            <c:if test="${item.status eq '待处理'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '已处理'}">
@@ -204,20 +204,16 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderaddnew", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
-                 { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },
+            	 
                  { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/outofstockdetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                     	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                   { splitter: true },
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/outofstockdetaildelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"},
-                 { link: true, display: "缺货单处理", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderback/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认退回所选缺货单吗？"},
-                 { link: true, display: "缺货单打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/printoutofstock/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认打印所选缺货单吗？"}
+                 { link: true, display: "生成采购建议", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/advice/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认生成采购建议吗？"},
+                 { link: true, display: "缺件表打印", css: "icon-print", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/printoutofstock/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}
              ]
          });
       });

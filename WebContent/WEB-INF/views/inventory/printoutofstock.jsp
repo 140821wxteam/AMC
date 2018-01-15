@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 订单缺货单信息</title>
+   <title>AMC | 订单缺件表管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>订单缺货单信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -149,19 +149,9 @@
    	  $(function() {   
          App.init();
          
-         $("#data-table").tableManaged();
          
-         $(".table-toolbar").toolbarLite({
-             items: [
-                 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "../orderdetailviewer/{0}", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true }                 
-             ]
-         });
       });
-   	  function returntoorder(){
-   		  window.close();
-   	  }
+   	  
    	  
    </script>
    <!-- END JAVASCRIPTS -->   

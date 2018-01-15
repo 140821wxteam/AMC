@@ -53,22 +53,7 @@ public class DeliverDetailController extends BaseController{
         model.addAttribute("contentModel", deliverDetailService.listPage(searchModel.getDeliverId(), pageNo, pageSize));
         return "inventory/deliverdetailview";
     }
-	//测试
-	@AuthPassport
-	@RequestMapping(value="/deliverdetail", method = {RequestMethod.GET})
-    public String deliverdetaillist(HttpServletRequest request, Model model, DeliverDetailSearchModel searchModel){
-    System.out.println("jinru");
-		model.addAttribute("requestUrl", request.getServletPath());
-		model.addAttribute("requestQuery", request.getQueryString());
-		
-		
-
-        model.addAttribute("searchModel", searchModel);
-        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
-        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
-        model.addAttribute("contentModel", deliverDetailService.listPage(searchModel.getDeliverId(), pageNo, pageSize));
-        return "inventory/deliverdetail";
-    }
+	
 	
 	
 

@@ -2,6 +2,7 @@ package com.amc.service.interfaces;
 
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.amc.dao.ICustomerDao;
 import com.amc.model.models.Customers;
@@ -19,7 +20,7 @@ public interface ICustomersService extends IEnableEntityService<Integer, Custome
 	
 	public void saveCustomer(Customers customer) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	public void updateCustomer(Customers customer) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
-
+	public List<String> listcustomersId();
 	//public void updateBind(Integer id, Integer roleId, Integer organizationId) throws ValidatException, EntityOperateException;
 
 }

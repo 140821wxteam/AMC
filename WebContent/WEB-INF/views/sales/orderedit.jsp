@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>Conquer | Form Stuff - Form Controls</title>
+   <title>AMC | 销售订单管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -52,7 +52,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Form Controls <small>form controls and more</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -91,8 +91,10 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">顾客编号</label>
                               <div class="col-md-10">
-                                 <form:input path="customerId" name="customerId" class="form-control" placeholder="顾客编号"/>
-                                                            
+                                 <!--<form:input path="customerId" name="customerId" class="form-control" placeholder="顾客编号"/>-->
+                                 <form:select path="customerId" class="form-control">
+									<form:options items="${customerIds}"/> 
+                                 </form:select>                          
                               </div>
                            </div>
                            <!--<div class="form-group">

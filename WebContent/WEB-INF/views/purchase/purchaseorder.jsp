@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 采购订单信息</title>
+   <title>AMC | 采购订单管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>采购订单信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -186,6 +186,53 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
+	        				<c:param name="urlAddress" value="/purchase/purchaseorder"/>
+	       				 </c:import>
+       				 </div>
+                  </div>
+               </div>
+               <!-- END EXAMPLE TABLE PORTLET-->
+               
+               <!-- BEGIN EXAMPLE TABLE PORTLET-->
+               <div class="portlet box light-grey">
+                  <div class="portlet-title">
+                     <div class="caption"><i class="icon-table"></i>采购建议</div>
+                  </div>
+                  <div class="portlet-body">
+                     <!--<div class="table-toolbar"></div>  -->
+                     <div class="dataTables_wrapper form-inline" role="grid">
+	                     <div class="table-scrollable">
+		                     <table class="table table-striped table-bordered table-hover" id="data-table1">
+		                        <thead>
+		                           <tr>
+		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
+		                              <th>产品编号</th>
+		                              <th>产品名称</th>
+		                              <th>库存水平</th>
+		                              <th>需求量</th>
+		                              <th>建议订货量</th>		                             
+		                              
+		                           </tr>
+		                        </thead>
+		                        <tbody>
+		                        	<c:forEach items="${adviceModel.items}" var="item">
+							        <tr class="odd gradeX">
+							        	<td class="check_cell">
+									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
+									    </td>
+							            <td>${item.productId}</td>
+							            <td>${item.productName}</td>
+							            <td>${item.inventoryLevel}</td>
+							            <td>${item.demand}</td>
+							            <td>${item.advice}</td>
+							            
+							        </tr>
+							        </c:forEach>
+		                        </tbody>
+		                     </table>
+	                     </div>
+	                     <c:import url = "../shared/paging.jsp">
+	        				<c:param name="pageModelName" value="adviceModel"/>
 	        				<c:param name="urlAddress" value="/purchase/purchaseorder"/>
 	       				 </c:import>
        				 </div>

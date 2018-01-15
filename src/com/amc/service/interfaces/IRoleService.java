@@ -12,5 +12,5 @@ public interface IRoleService extends IEnableEntityService<Integer, Role, IRoleD
 
 	public PageList<Role> listPage(RoleSearch search, int pageNo, int pageSize);
 	public void saveAuthorize(Integer roleId, Integer[] authorityIds) throws ValidatException, EntityOperateException;
-
+	public void updateRole(Role role) throws ValidatException, EntityOperateException;
 }

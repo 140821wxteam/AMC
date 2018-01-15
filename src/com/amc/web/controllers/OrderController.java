@@ -89,6 +89,7 @@ public class OrderController extends BaseController{
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", orderService.listPage(searchModel.getorderId(), searchModel.getcustomerId(), searchModel.getstatus(), pageNo, pageSize));
+       
         return "sales/order";
     }
 	
@@ -696,7 +697,7 @@ public class OrderController extends BaseController{
         
         
         
-        System.out.println("========================================"+orderService.getpredict(productId));
+       
         //将json数据返回给客户端
         response.setContentType("text/html; charset=utf-8");
         response.getWriter().write(json);

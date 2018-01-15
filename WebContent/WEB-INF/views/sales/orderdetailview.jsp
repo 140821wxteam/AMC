@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 销售订单信息</title>
+   <title>AMC | 销售订单管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>销售订单信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -154,11 +154,17 @@
 							            <td>${item.unitPrice}</td>
 							            <td>${item.totalPrice}</td>							            
 							            <td>${item.note}</td>
-							            <c:if test="${item.status eq '退回'}">
+							            <c:if test="${item.status eq '已退回'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '仍有缺货'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '审核通过'}">
 							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已处理'}">
+							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '未完成'}">
 							            		<td style="color:black;">${item.status}</td>

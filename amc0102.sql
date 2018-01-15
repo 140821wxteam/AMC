@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 15/12/2017 17:21:10
+ Date: 02/01/2018 18:20:56
 */
 
 SET NAMES utf8mb4;
@@ -40,7 +40,7 @@ CREATE TABLE `account` (
   KEY `FK_account_organization` (`organizationId`),
   CONSTRAINT `account_ibfk_1` FOREIGN KEY (`organizationId`) REFERENCES `organization` (`id`),
   CONSTRAINT `account_ibfk_2` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of account
@@ -60,6 +60,7 @@ INSERT INTO `account` VALUES (11, 0, 0, 'RTYV', '123@123.com', 'WWW', 'B04874C43
 INSERT INTO `account` VALUES (12, 0, 1, 'fc', 'fc@163.com', 'fc', 'f79a121e29600f0fb867a6c4eea6b29e', '2017-05-02 18:09:06', 1, 1);
 INSERT INTO `account` VALUES (13, 0, 1, 'wx', 'wenxin_199511@126.com', 'wenxin', 'c0bbf3c4f4ae2172be3aaeb8a4852391', '2017-10-26 17:04:10', 1, 1);
 INSERT INTO `account` VALUES (14, 1, 1, '赵雅萍', 'zyp@qq.com', 'zyp', 'a9e2e2a3da6cf7dba8727de483b7c917', '2017-11-04 09:46:55', 2, NULL);
+INSERT INTO `account` VALUES (15, 0, 1, '景怡', 'kuran_king@163.com', '景怡', '141ad0fb9d1120484013f69aaeb3c822', '2017-12-18 16:46:50', 1, 1);
 COMMIT;
 
 -- ----------------------------
@@ -81,7 +82,7 @@ CREATE TABLE `authority` (
   PRIMARY KEY (`id`),
   KEY `FK_authority_parentId_authority` (`parentId`),
   CONSTRAINT `authority_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `authority` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of authority
@@ -112,35 +113,42 @@ INSERT INTO `authority` VALUES (23, 4, 0, '查询菜单', '21,23', 0, '2', '/wei
 INSERT INTO `authority` VALUES (24, 2, 0, '销售子系统', '24', 0, '4', '/sales', '^/sales$', 'icon-barcode', NULL);
 INSERT INTO `authority` VALUES (25, 2, 0, '销售订单管理', '24,25', 0, '1', '/sales/order', '/sales/order', '', 24);
 INSERT INTO `authority` VALUES (30, 1, 0, '采购子系统', '30', 0, '4', '/purchase/list', '^/purchase/list$', 'icon-shopping-cart', NULL);
-INSERT INTO `authority` VALUES (31, 1, 0, '采购订单管理', '30,31', 0, '1', '/purchase/orderlist', '/purchase/orderlist', '', 30);
-INSERT INTO `authority` VALUES (32, 1, 0, '采购单据管理', '30,32', 0, '2', '/purchase/ordercontract', '/purchase/ordercontract', '', 30);
-INSERT INTO `authority` VALUES (33, 1, 0, '销售合同管理', '24,33', 0, '2', '/sales/salescontract', '/sales/salescontract', '', 24);
+INSERT INTO `authority` VALUES (31, 1, 0, '采购订单管理', '30,31', 0, '1', '/purchase/purchaseorder', '/purchase/purchaseorder', '', 30);
+INSERT INTO `authority` VALUES (32, 1, 0, '新增采购订单', '30,31,32', 0, '1', '/purchase/purchaseorderadd', '/purchase/purchaseorderadd', NULL, 31);
+INSERT INTO `authority` VALUES (33, 1, 0, '删除采购订单', '30,31,33', 0, '2', '/purchase/purchaseorderdelete', '/purchase/purchaseorderdelete', NULL, 31);
 INSERT INTO `authority` VALUES (34, 1, 0, '库存子系统', '34', 0, '7', '/inventory/list', '/inventory/list', '', NULL);
 INSERT INTO `authority` VALUES (35, 1, 0, '备货单管理', '34,35', 2, '2', '/inventory/prepare', '/inventory/prepare', '', 34);
 INSERT INTO `authority` VALUES (36, 1, 0, '进货单管理', '34,36', 3, '3', '/inventory/stockin', '/inventory/stockin', '', 34);
-INSERT INTO `authority` VALUES (37, 1, 0, '出库单管理', '34,37', 4, '4', '/inventory/stockout', '/inventory/stockout', '', 34);
-INSERT INTO `authority` VALUES (38, 1, 0, '包装发货管理', '34,38', 5, '5', '/inventory/package', '/inventory/package', '', 34);
 INSERT INTO `authority` VALUES (43, 1, 0, '新增角色', '3,7,43', 0, '3', '/role/add', '/role/add', '', 7);
 INSERT INTO `authority` VALUES (44, 1, 0, '修改角色', '3,7,44', 0, '4', '/role/edit', '/role/edit', '', 7);
 INSERT INTO `authority` VALUES (49, 1, 0, '订单列表', '24,25,49', 0, '1', '/sales/order', '/sales/order', '', 25);
 INSERT INTO `authority` VALUES (50, 1, 0, '查看订单明细', '24,25,50', 0, '1', '/sales/orderdetail', '/sales/orderdetail', '', 25);
 INSERT INTO `authority` VALUES (51, 1, 0, '增加订单', '24,25,51', 0, '3', '/sales/orderaddnew', '/sales/orderaddnew', '', 25);
 INSERT INTO `authority` VALUES (53, 2, 0, '新建订单明细', '24,25,53', 0, '4', '/sales/orderdetailadd', '/sales/orderdetailadd', '', 25);
-INSERT INTO `authority` VALUES (54, 1, 0, '基础数据管理', '54', 0, '', '/basedata', '^/basedata$', 'icon-folder-close', NULL);
-INSERT INTO `authority` VALUES (55, 1, 0, '产品信息', '54,55', 0, '', '/basedata/product', '^/basedata$', '', 54);
-INSERT INTO `authority` VALUES (56, 1, 0, '顾客信息', '54,56', 0, '', '/basedata/customer', '^/basedata$', '', 54);
-INSERT INTO `authority` VALUES (57, 1, 0, '供应商信息', '54,57', 0, '', '/basedata/vendor', '^/basedata$', '', 54);
-INSERT INTO `authority` VALUES (58, 1, 0, '产品列表', '54,55,58', 0, '', '/basedata/product', '/basedata/product', '', 55);
-INSERT INTO `authority` VALUES (59, 1, 0, '增加产品', '54,55,59', 0, '', '/basedata/productadd', '/basedata/productadd', '', 55);
-INSERT INTO `authority` VALUES (60, 1, 0, '编辑产品', '54,55,60', 0, '', '/basedata/productedit', '/basedata/productedit', '', 55);
-INSERT INTO `authority` VALUES (61, 1, 0, '供应商列表', '54,57,61', 0, '', '/basedata/vendor', '/basedata/vendor', '', 57);
-INSERT INTO `authority` VALUES (62, 1, 0, '增加供应商', '54,57,62', 0, '', '/basedata/vendoradd', '/basedata/vendoradd', '', 57);
-INSERT INTO `authority` VALUES (63, 1, 0, '编辑供应商', '54,57,63', 0, '', '/basedata/vendoredit', '/basedata/vendoredit', '', 57);
-INSERT INTO `authority` VALUES (64, 1, 0, '顾客列表', '54,56,64', 0, '', '/basedata/customer', '/basedata/customer', '', 56);
-INSERT INTO `authority` VALUES (66, 1, 0, '增加顾客', '54,56,66', 0, '', '/basedata/customeradd', '/basedata/customeradd', '', 56);
-INSERT INTO `authority` VALUES (67, 1, 0, '编辑顾客', '54,56,67', 0, '', '/basedata/customeredit', '/basedata/customeredit', '', 56);
-INSERT INTO `authority` VALUES (68, 1, 0, '库存基本信息', '34,68', 1, '1', '/inventory/list', '/inventory/list', '', 34);
-INSERT INTO `authority` VALUES (69, 1, 0, '订单缺货单管理', '34,69', 3, '3', '/inventory/outofstock', '/inventory/outofstock', '', 34);
+INSERT INTO `authority` VALUES (69, 2, 0, '订单缺件表管理', '34,69', 3, '3', '/inventory/outofstock', '/inventory/outofstock', '', 34);
+INSERT INTO `authority` VALUES (70, 3, 0, '财务子系统', '70', 0, '1', '/financial/invoice', '/financial/invoice', '', NULL);
+INSERT INTO `authority` VALUES (71, 2, 0, '发票管理', '70,71', 0, '1', '/financial/invoice', '/financial/invoice', '', 70);
+INSERT INTO `authority` VALUES (73, 2, 0, '发货单管理', '34,73', 6, '6', '/inventory/deliverlist', '/inventory/deliverlist', '', 34);
+INSERT INTO `authority` VALUES (75, 1, 0, '发票列表', '70,71,75', 0, '', '/financial/invoice', '/financial/invoice', '', 71);
+INSERT INTO `authority` VALUES (76, 1, 0, '顾客管理', '24,76', 0, '', '/basedata/customer', '/basedata/customer', '', 24);
+INSERT INTO `authority` VALUES (77, 1, 0, '顾客列表', '24,76,77', 0, '', '/basedata/customer', '/basedata/customer', '', 76);
+INSERT INTO `authority` VALUES (78, 1, 0, '添加顾客', '24,76,78', 0, '', '/basedata/customeradd', '/basedata/customeradd', '', 76);
+INSERT INTO `authority` VALUES (79, 1, 0, '编辑顾客', '24,76,79', 0, '', '/basedata/customeredit', '/basedata/customeredit', '', 76);
+INSERT INTO `authority` VALUES (80, 1, 0, '催款单管理', '70,80', 0, '', '/financial/reminder', '/financial/reminder', '', 70);
+INSERT INTO `authority` VALUES (82, 1, 0, '销售业务账管理', '70,82', 0, '', '/financial/salesaccount', '/financial/salesaccount', '', 70);
+INSERT INTO `authority` VALUES (83, 1, 0, '采购业务账管理', '70,83', 0, '', '/financial/purchaseaccount', '/financial/purchaseaccount', '', 70);
+INSERT INTO `authority` VALUES (84, 1, 0, '失信记录管理', '70,84', 0, '', '/financial/liquidate', '/financial/liquidate', '', 70);
+INSERT INTO `authority` VALUES (85, 1, 0, '产品管理', '34,85', 0, '', '/basedata/product', '/basedata/product', '', 34);
+INSERT INTO `authority` VALUES (86, 1, 0, '产品列表', '34,85,86', 0, '', '/basedata/product', '/basedata/product', '', 85);
+INSERT INTO `authority` VALUES (87, 1, 0, '添加产品', '34,85,87', 0, '', '/basedata/productadd', '/basedata/productadd', '', 85);
+INSERT INTO `authority` VALUES (88, 1, 0, '编辑产品', '34,85,88', 0, '', '/basedata/productedit', '/basedata/productedit', '', 85);
+INSERT INTO `authority` VALUES (89, 1, 0, '供应商管理', '30,89', 0, '', '/basedata/vendor', '/basedata/vendor', '', 30);
+INSERT INTO `authority` VALUES (90, 1, 0, '供应商列表', '30,89,90', 0, '', '/basedata/vendor', '/basedata/vendor', '', 89);
+INSERT INTO `authority` VALUES (91, 1, 0, '添加供应商', '30,89,91', 0, '', '/basedata/vendoradd', '/basedata/vendoradd', '', 89);
+INSERT INTO `authority` VALUES (92, 1, 0, '编辑供应商', '30,89,92', 0, '', '/basedata/vendoredit', '/basedata/vendoredit', '', 89);
+INSERT INTO `authority` VALUES (93, 1, 0, '库存基本信息', '34,93', 0, '', '/inventory/list', '/inventory/list', '', 34);
+INSERT INTO `authority` VALUES (94, 1, 0, '发货单详情', '34,73,94', 0, '', '/inventory/deliverdetail', '/inventory/deliverdetail', '', 73);
+INSERT INTO `authority` VALUES (95, 1, 0, '订单缺件表打印预览', '34,69,95', 0, '', '/inventory/printoutofstock', '/inventory/printoutofstock', '', 69);
 COMMIT;
 
 -- ----------------------------
@@ -190,7 +198,7 @@ CREATE TABLE `role` (
 -- Records of role
 -- ----------------------------
 BEGIN;
-INSERT INTO `role` VALUES (1, 24, '系统管理员', 0);
+INSERT INTO `role` VALUES (1, 33, '系统管理员', 0);
 INSERT INTO `role` VALUES (2, 3, '顾客', 0);
 INSERT INTO `role` VALUES (3, 0, '仓库管理员', 0);
 INSERT INTO `role` VALUES (4, 0, '销售管理员', 0);
@@ -244,31 +252,55 @@ INSERT INTO `role_authority` VALUES (1, 25);
 INSERT INTO `role_authority` VALUES (1, 49);
 INSERT INTO `role_authority` VALUES (1, 50);
 INSERT INTO `role_authority` VALUES (1, 53);
-INSERT INTO `role_authority` VALUES (1, 33);
+INSERT INTO `role_authority` VALUES (1, 76);
+INSERT INTO `role_authority` VALUES (1, 77);
+INSERT INTO `role_authority` VALUES (1, 78);
+INSERT INTO `role_authority` VALUES (1, 79);
 INSERT INTO `role_authority` VALUES (1, 30);
 INSERT INTO `role_authority` VALUES (1, 31);
-INSERT INTO `role_authority` VALUES (1, 32);
+INSERT INTO `role_authority` VALUES (1, 89);
+INSERT INTO `role_authority` VALUES (1, 90);
+INSERT INTO `role_authority` VALUES (1, 91);
+INSERT INTO `role_authority` VALUES (1, 92);
 INSERT INTO `role_authority` VALUES (1, 34);
 INSERT INTO `role_authority` VALUES (1, 35);
 INSERT INTO `role_authority` VALUES (1, 36);
-INSERT INTO `role_authority` VALUES (1, 37);
-INSERT INTO `role_authority` VALUES (1, 38);
-INSERT INTO `role_authority` VALUES (1, 68);
 INSERT INTO `role_authority` VALUES (1, 69);
-INSERT INTO `role_authority` VALUES (1, 54);
-INSERT INTO `role_authority` VALUES (1, 55);
-INSERT INTO `role_authority` VALUES (1, 58);
-INSERT INTO `role_authority` VALUES (1, 59);
-INSERT INTO `role_authority` VALUES (1, 60);
-INSERT INTO `role_authority` VALUES (1, 56);
-INSERT INTO `role_authority` VALUES (1, 64);
-INSERT INTO `role_authority` VALUES (1, 66);
-INSERT INTO `role_authority` VALUES (1, 67);
-INSERT INTO `role_authority` VALUES (1, 57);
-INSERT INTO `role_authority` VALUES (1, 61);
-INSERT INTO `role_authority` VALUES (1, 62);
-INSERT INTO `role_authority` VALUES (1, 63);
+INSERT INTO `role_authority` VALUES (1, 95);
+INSERT INTO `role_authority` VALUES (1, 73);
+INSERT INTO `role_authority` VALUES (1, 94);
+INSERT INTO `role_authority` VALUES (1, 85);
+INSERT INTO `role_authority` VALUES (1, 86);
+INSERT INTO `role_authority` VALUES (1, 87);
+INSERT INTO `role_authority` VALUES (1, 88);
+INSERT INTO `role_authority` VALUES (1, 93);
+INSERT INTO `role_authority` VALUES (1, 70);
+INSERT INTO `role_authority` VALUES (1, 71);
+INSERT INTO `role_authority` VALUES (1, 75);
+INSERT INTO `role_authority` VALUES (1, 80);
+INSERT INTO `role_authority` VALUES (1, 82);
+INSERT INTO `role_authority` VALUES (1, 83);
+INSERT INTO `role_authority` VALUES (1, 84);
 COMMIT;
+
+-- ----------------------------
+-- Table structure for t_backoder
+-- ----------------------------
+DROP TABLE IF EXISTS `t_backoder`;
+CREATE TABLE `t_backoder` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(11) NOT NULL DEFAULT '1',
+  `enable` tinyint(1) NOT NULL DEFAULT '0',
+  `backoderId` varchar(20) COLLATE utf8_bin NOT NULL,
+  `productId` varchar(20) COLLATE utf8_bin NOT NULL,
+  `productName` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `factoryId` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `size` varchar(2) COLLATE utf8_bin DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `note` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Table structure for t_customer
@@ -285,6 +317,7 @@ CREATE TABLE `t_customer` (
   `customerTele` varchar(13) COLLATE utf8_bin DEFAULT NULL,
   `customerEmail` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `note` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+  `credit` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -292,9 +325,9 @@ CREATE TABLE `t_customer` (
 -- Records of t_customer
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_customer` VALUES (3, 2, 0, 'C0001', '上海五菱汽车修配厂有限公司', '上海市嘉定安亭镇墨玉路北', '', '(021)59577339', '', '');
-INSERT INTO `t_customer` VALUES (4, 1, 0, 'C0002', '杭州袁富汽车修配有限公司', '杭州市双浦镇轮渡路10号', '张幸军', '13357119793', NULL, NULL);
-INSERT INTO `t_customer` VALUES (6, 0, 0, 'C0003', '深圳市日兴达汽车修配有限公司', '广东省深圳市福田区滨河路3155号深华工业厂房一楼', '李先生', '0755-83610965', '', '');
+INSERT INTO `t_customer` VALUES (3, 2, 0, 'C0001', '上海五菱汽车修配厂有限公司', '上海市嘉定安亭镇墨玉路北', '', '(021)59577339', '', '', NULL);
+INSERT INTO `t_customer` VALUES (4, 1, 0, 'C0002', '杭州袁富汽车修配有限公司', '杭州市双浦镇轮渡路10号', '张幸军', '13357119793', NULL, NULL, NULL);
+INSERT INTO `t_customer` VALUES (6, 0, 0, 'C0003', '深圳市日兴达汽车修配有限公司', '广东省深圳市福田区滨河路3155号深华工业厂房一楼', '李先生', '0755-83610965', '', '', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -315,6 +348,57 @@ CREATE TABLE `t_customerinfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
+-- Table structure for t_deliver
+-- ----------------------------
+DROP TABLE IF EXISTS `t_deliver`;
+CREATE TABLE `t_deliver` (
+  `id` int(11) NOT NULL,
+  `deliverId` varchar(255) NOT NULL,
+  `prepareId` varchar(255) NOT NULL,
+  `deliverDetailId` varchar(255) NOT NULL,
+  `createTime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `amountMoney` decimal(65,2) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `version` int(11) NOT NULL,
+  `enable` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_deliver
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_deliver` VALUES (1, 'd01', 'P001', 'dt01', '2017-12-27 17:16:51', 20.20, NULL, '运送中', 0, 0);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_deliverdetail
+-- ----------------------------
+DROP TABLE IF EXISTS `t_deliverdetail`;
+CREATE TABLE `t_deliverdetail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deliverId` varchar(255) NOT NULL,
+  `no` int(11) NOT NULL,
+  `productId` varchar(255) NOT NULL,
+  `productName` varchar(255) DEFAULT NULL,
+  `factoryId` varchar(255) DEFAULT NULL,
+  `num` int(11) DEFAULT NULL,
+  `shortNum` int(11) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `version` int(11) NOT NULL,
+  `enable` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_deliverdetail
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_deliverdetail` VALUES (1, 'd01', 1, 'P00198', 'name', 'factory', 10, 5, NULL, 0, 0);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for t_inventory
 -- ----------------------------
 DROP TABLE IF EXISTS `t_inventory`;
@@ -329,7 +413,7 @@ CREATE TABLE `t_inventory` (
   `status` varchar(20) COLLATE utf8_bin NOT NULL,
   `note` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of t_inventory
@@ -343,7 +427,55 @@ INSERT INTO `t_inventory` VALUES (6, 1, 0, 'G001', 'dls', 128, '2017-12-11 09:44
 INSERT INTO `t_inventory` VALUES (7, 1, 0, 'G001', 'dls', 342, '2017-12-11 09:44:53', '不足', NULL);
 INSERT INTO `t_inventory` VALUES (8, 1, 0, 'G001', 'dls', 3253, '2017-12-11 09:46:01', '充足', NULL);
 INSERT INTO `t_inventory` VALUES (9, 1, 0, 'G001', 'dls', 100, '2017-12-11 09:46:30', '不足', NULL);
+INSERT INTO `t_inventory` VALUES (12, 0, 0, 'G001', '大螺丝', 0, '2018-01-02 00:44:26', '未知', NULL);
+INSERT INTO `t_inventory` VALUES (13, 0, 0, 'C002', '大螺丝', 357, '2018-01-02 00:46:15', '未知', NULL);
+INSERT INTO `t_inventory` VALUES (14, 0, 0, 'C002', '大螺丝', 279, '2018-01-02 11:52:05', '未知', NULL);
 COMMIT;
+
+-- ----------------------------
+-- Table structure for t_invoice
+-- ----------------------------
+DROP TABLE IF EXISTS `t_invoice`;
+CREATE TABLE `t_invoice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(11) NOT NULL DEFAULT '1',
+  `enable` tinyint(1) NOT NULL DEFAULT '0',
+  `invoiceId` varchar(20) COLLATE utf8_bin NOT NULL,
+  `factoryId` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `createTime` datetime NOT NULL,
+  `sumPrice` double NOT NULL,
+  `status` varchar(255) COLLATE utf8_bin NOT NULL,
+  `note` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of t_invoice
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_invoice` VALUES (1, 0, 0, 'S20171203172351', 'V0001', '2017-12-03 17:32:27', 600, '未完成', '');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_invoicedetail
+-- ----------------------------
+DROP TABLE IF EXISTS `t_invoicedetail`;
+CREATE TABLE `t_invoicedetail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(11) NOT NULL,
+  `enable` tinyint(1) NOT NULL,
+  `invoicedetailId` varchar(255) NOT NULL,
+  `invoiceId` varchar(255) NOT NULL,
+  `productId` varchar(255) NOT NULL,
+  `productName` varchar(255) NOT NULL,
+  `factoryId` varchar(255) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `unitPrice` double NOT NULL,
+  `totalPrice` double NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_order
@@ -366,8 +498,8 @@ CREATE TABLE `t_order` (
 -- Records of t_order
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_order` VALUES (40, 6, 0, 'S20171127164424', '2017-11-27 16:45:29', 'C001', 492.00, '审核通过', 'test2');
-INSERT INTO `t_order` VALUES (41, 5, 0, 'S20171203112816', '2017-12-03 11:29:23', 'C001', 9562.00, '审核通过', '优秀供应商');
+INSERT INTO `t_order` VALUES (40, 10, 0, 'S20171127164424', '2017-11-27 16:45:29', 'C001', 492.00, '已退回', 'test2');
+INSERT INTO `t_order` VALUES (41, 8, 0, 'S20171203112816', '2018-01-02 00:45:47', 'C001', 10452.00, '已处理', '优秀');
 INSERT INTO `t_order` VALUES (42, 5, 0, 'S20171204230844', '2017-12-04 23:09:18', 'C001', 2400.00, '审核通过', '优秀供应商');
 COMMIT;
 
@@ -398,9 +530,9 @@ CREATE TABLE `t_orderdetail` (
 -- Records of t_orderdetail
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_orderdetail` VALUES (98, 5, 0, 'S20171127164424D164452', 'S20171127164424', 'G001', '大螺丝', 123, 0, 4.00, 492.00, '审核通过', '');
+INSERT INTO `t_orderdetail` VALUES (98, 9, 0, 'S20171127164424D164452', 'S20171127164424', 'G001', '大螺丝', 123, 0, 4.00, 492.00, '已退回', '');
 INSERT INTO `t_orderdetail` VALUES (99, 2, 0, 'S20171203112816D112841', 'S20171203112816', 'G001', '大车轮', 98, 0, 78.00, 3510.00, '审核通过', '');
-INSERT INTO `t_orderdetail` VALUES (100, 2, 0, 'S20171203112816D112858', 'S20171203112816', 'C002', '大螺丝', 2325, 0, 89.00, 6052.00, '审核通过', '');
+INSERT INTO `t_orderdetail` VALUES (100, 3, 0, 'S20171203112816D112858', 'S20171203112816', 'C002', '大螺丝', 78, 0, 89.00, 6942.00, '审核通过', '');
 INSERT INTO `t_orderdetail` VALUES (101, 3, 0, 'S20171204230844D230859', 'S20171204230844', 'G001', '大螺丝', 120, 0, 20.00, 2400.00, '审核通过', '');
 COMMIT;
 
@@ -423,15 +555,13 @@ CREATE TABLE `t_outofstock` (
   `status` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
   `note` varchar(1024) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of t_outofstock
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_outofstock` VALUES (5, 0, 0, 'S20171127164424OOS', 'S20171127164424', 'C001', 1, 0, 1, 0, '2017-12-14 19:32:29', '处理中', NULL);
-INSERT INTO `t_outofstock` VALUES (6, 0, 0, 'S20171204230844OOS', 'S20171204230844', 'C001', 1, 0, 1, 0, '2017-12-14 22:44:05', '处理中', NULL);
-INSERT INTO `t_outofstock` VALUES (7, 0, 0, 'S20171203112816OOS', 'S20171203112816', 'C001', 2, 1, 1, 0, '2017-12-14 22:49:15', '处理中', NULL);
+INSERT INTO `t_outofstock` VALUES (25, 0, 0, 'S20171203112816OOS', 'S20171203112816', 'C001', 2, 1, 0, 1, '2018-01-02 11:52:05', '处理中', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -453,16 +583,71 @@ CREATE TABLE `t_outofstockdetail` (
   `status` varchar(20) COLLATE utf8_bin NOT NULL,
   `note` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of t_outofstockdetail
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_outofstockdetail` VALUES (1, 1, 0, 'OS100D123', 'OS100', 'P001', 1234, 34, 1200, 'ws', '2017-12-12 22:25:05', '未完成', NULL);
-INSERT INTO `t_outofstockdetail` VALUES (2, 0, 0, 'S20171127164424OOSD193229', 'S20171127164424OOS', 'G001', 123, 100, 23, NULL, '2017-12-14 19:32:29', '待处理', NULL);
-INSERT INTO `t_outofstockdetail` VALUES (3, 0, 0, 'S20171204230844OOSD224405', 'S20171204230844OOS', 'G001', 120, 100, 20, NULL, '2017-12-14 22:44:05', '待处理', NULL);
-INSERT INTO `t_outofstockdetail` VALUES (4, 0, 0, 'S20171203112816OOSD224915', 'S20171203112816OOS', 'C002', 2325, 435, 1890, NULL, '2017-12-14 22:49:15', '待处理', NULL);
+INSERT INTO `t_outofstockdetail` VALUES (25, 0, 0, 'S20171203112816OOSD115205', 'S20171203112816OOS', 'G001', 98, 0, 98, 'wenxin', '2018-01-02 11:52:05', '待处理', NULL);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_prepare
+-- ----------------------------
+DROP TABLE IF EXISTS `t_prepare`;
+CREATE TABLE `t_prepare` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(11) NOT NULL,
+  `enable` tinyint(1) NOT NULL,
+  `prepareId` varchar(255) NOT NULL,
+  `orderId` varchar(255) NOT NULL,
+  `createTime` datetime NOT NULL,
+  `customerId` varchar(255) NOT NULL,
+  `orderNum` int(11) NOT NULL,
+  `fitNum` int(11) NOT NULL,
+  `partfitNum` int(11) NOT NULL,
+  `outofstockNum` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `receivePers` varchar(255) DEFAULT NULL,
+  `receiveAddr` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_prepare
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_prepare` VALUES (5, 0, 0, 'S20171203112816P', 'S20171203112816', '2018-01-02 11:52:05', 'C001', 2, 1, 0, 1, '待备货', NULL, NULL, NULL);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_preparedetail
+-- ----------------------------
+DROP TABLE IF EXISTS `t_preparedetail`;
+CREATE TABLE `t_preparedetail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(11) NOT NULL,
+  `enable` tinyint(1) NOT NULL,
+  `preparedetailId` varchar(255) NOT NULL,
+  `prepareId` varchar(255) NOT NULL,
+  `productId` varchar(255) NOT NULL,
+  `productName` varchar(255) NOT NULL,
+  `factoryId` varchar(255) NOT NULL,
+  `preparePers` varchar(255) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `size` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_preparedetail
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_preparedetail` VALUES (8, 0, 0, 'S20171203112816PD115205', 'S20171203112816P', 'C002', '大螺丝', '', '', 78, NULL, '待备货', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -488,9 +673,37 @@ CREATE TABLE `t_product` (
 -- Records of t_product
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_product` VALUES (1, 6, 0, 'C001', '大螺丝', 'S', 'S00989-098', 'V001', '个', 1000, '');
-INSERT INTO `t_product` VALUES (2, 0, 0, 'M0019', '大螺丝', 'M', NULL, '', '个', 800, '');
+INSERT INTO `t_product` VALUES (1, 7, 0, 'C001', '大螺丝a', 'S', 'S00989-098', 'V001', '个', 1000, '');
+INSERT INTO `t_product` VALUES (2, 1, 0, 'M0019', '大螺丝b', 'M', NULL, '', '个', 800, '');
 INSERT INTO `t_product` VALUES (3, 0, 0, 'G001', '大螺丝', 'G', NULL, '', '个', 2008, '优秀供应商');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_purchaseorder
+-- ----------------------------
+DROP TABLE IF EXISTS `t_purchaseorder`;
+CREATE TABLE `t_purchaseorder` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(11) NOT NULL DEFAULT '1',
+  `enable` tinyint(1) NOT NULL DEFAULT '0',
+  `orderId` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `orderDate` date NOT NULL,
+  `vendorId` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `vendorName` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `totalPrice` decimal(65,2) NOT NULL,
+  `status` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `note` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `vendorId` (`vendorId`),
+  KEY `vendorName` (`vendorName`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Records of t_purchaseorder
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_purchaseorder` VALUES (6, 0, 0, 'P20171225215627', '2017-12-25', 'V0001', '螺丝厂', 0.00, '未完成', '备注');
+INSERT INTO `t_purchaseorder` VALUES (7, 0, 0, 'P20171225222158', '2017-12-25', 'V002', '车轮厂', 0.00, '未完成', '一个很长长长长长长长长长长长长长长长长长长长长长长的备注');
 COMMIT;
 
 -- ----------------------------

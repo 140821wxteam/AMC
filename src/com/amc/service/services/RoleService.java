@@ -1,5 +1,6 @@
 package com.amc.service.services;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.amc.dao.IRoleDao;
 import com.amc.model.models.Authority;
 import com.amc.model.models.Role;
+import com.amc.model.models.Vendor;
 import com.amc.service.interfaces.IAuthorityService;
 import com.amc.service.interfaces.IRoleService;
 import com.amc.service.models.RoleSearch;
@@ -78,6 +80,16 @@ public class RoleService extends EnableEntityService<Integer, Role, IRoleDao> im
 		role.setAuthorities(authorities);
 		super.update(role);
 	}
+	
+	public void updateRole(Role role) throws ValidatException, EntityOperateException{
+		Role dbModel=super.get(role.getId());
+		dbModel.setName(role.getName());
+		dbModel.setEnable(role.getEnable());
+		dbModel.setAuthorities(role.getAuthorities());
+		
+		super.update(dbModel);
+	}
+
 
 
    /* @Override

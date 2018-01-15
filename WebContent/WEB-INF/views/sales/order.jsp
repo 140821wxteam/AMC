@@ -11,7 +11,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 销售订单信息</title>
+   <title>AMC | 销售订单管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -58,7 +58,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>销售订单信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -102,8 +102,11 @@
 								  <div class="form-group">
 									 <label class="control-label col-md-3">顾客编号</label>
 									 <div class="col-md-8">
-										<form:input path="customerId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="顾客编号"/>
-									 </div>
+										  <form:select path="customerId" class="form-control">
+											  <form:option value="" disabled="disabled">请选择顾客</form:option>
+											  <form:options items="${customerIds}"/> 
+                                           </form:select>
+									</div>
 								  </div>
 							   </div>
 							   <!--/span-->
@@ -111,7 +114,14 @@
 								  <div class="form-group">
 									 <label class="control-label col-md-3">订单状态</label>
 									 <div class="col-md-8">
-										<form:input path="status" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单状态"/>
+									 	  <form:select path="status" class="form-control">
+										  <form:option value="" disabled="disabled">请选择订单状态</form:option>
+										  <form:option value="未完成">未完成</form:option>
+										  <form:option value="已退回">已退回</form:option>
+										  <form:option value="审核通过">审核通过</form:option>
+										  <form:option value="已处理">已处理</form:option>
+										  <form:option value="仍有缺货">仍有缺货</form:option>
+                                           </form:select>
 									 </div>
 								  </div>
 							   </div>
@@ -163,11 +173,17 @@
 							            <td>${item.totalPrice}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
 							            <td>${item.note}</td>
-							            <c:if test="${item.status eq '退回'}">
+							            <c:if test="${item.status eq '已退回'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '仍有缺货'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '审核通过'}">
 							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已处理'}">
+							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '未完成'}">
 							            		<td style="color:black;">${item.status}</td>
@@ -217,11 +233,12 @@
                      selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认退回所选订单吗？"},
                  { link: true, display: "审核通过", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderconfirm/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                      selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认审核通过所选订单吗？"},
-                 { link: true, display: "处理", css: "icon-wrench", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderinprocess/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                 { link: true, display: "订单处理", css: "icon-wrench", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/orderinprocess/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                      selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认处理所选订单吗？"}
              ]
          });
       });
+   	  
    </script>
    <!-- END JAVASCRIPTS -->   
 </body>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>  
+    <class name="com.amc.model.models.Cuikuan" table="t_cuikuan" lazy="false">  
+	    
+	   	<id name="id" column="id" type="integer" >
+			<generator class="native" />
+		</id>
+		
+	    <property name="cuikuanId" column="cuikuanId" type="string" not-null="true"/>
+	    <property name="deliverId" column="deliverId" type="string" not-null="true"/>
+	    <property name="cuikuanObjection" column="cuikuanObjection" type="integer" not-null="false"/>
+	    <property name="customerId" column="customerId" type="string" not-null="true"/>
+	    <property name="orderId" column="orderId" type="string" not-null="true"/>
+	    <property name="orderReceiveDate" column="orderReceiveDate" type="date" not-null="false"/>  
+	    <property name="amountMoney" column="amountMoney" type="double" not-null="false"/>
+	    <property name="orderdetailid" column="orderdetailid" type="string" not-null="false"/>
+	    <property name="createTime" column="createTime" type="calendar" not-null="true"/>
+	    <property name="receiveDate" column="receiveDate" type="date" not-null="false"/>    
+	    <property name="remark" column="remark" type="string" not-null="false"/>
+	    <property name="status" column="status" type="string" not-null="false"/>
+	    
+		
+    </class>  
+</hibernate-mapping> 

@@ -35,7 +35,7 @@ import com.infrastructure.project.common.utilities.PageListUtil;
 @RequestMapping(value = "/purchase")
 
 
-public class PurchaseOrderController {
+public class PurchaseOrderController extends BaseController{
 	@Autowired
     @Qualifier("PurchaseOrderService")
 	private IPurchaseOrderService purchaseOrderService;
@@ -53,6 +53,8 @@ public class PurchaseOrderController {
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", purchaseOrderService.listPage(searchModel.getorderId(), searchModel.getvendorName(), searchModel.getstatus(), pageNo, pageSize));
+        model.addAttribute("adviceModel", purchaseadviceService.listPage(pageNo, pageSize));
+
         return "purchase/purchaseorder";
     }
 	

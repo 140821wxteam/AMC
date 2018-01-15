@@ -5,7 +5,7 @@
   <div class="header-inner">
      <!-- BEGIN LOGO -->  
      <a class="navbar-brand" href="index.html">
-     <img src="assets/img/logo.png" alt="logo" class="img-responsive" />
+     <img src="<c:url value='/images/amc_small.png'/>" alt="logo" class="img-responsive" style="width:50px;length:100px"/>
      </a>
      <!-- <form class="search-form search-form-header" role="form" action="index.html" >
         <div class="input-icon right">
@@ -35,7 +35,7 @@
               </li>
               <li class="divider"></li>
               </li>
-              <li><a href="../account/login.jsp"><i class="icon-off"></i>注销登录</a>
+              <li><a href="../account/login"><i class="icon-off"></i>注销登录</a>
               </li>
            </ul>
         </li>

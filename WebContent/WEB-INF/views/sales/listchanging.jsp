@@ -139,7 +139,7 @@
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>产品编号</th>
-		                              <th >产品名称</th>
+		                              <th>产品名称</th>
 		                              <th>订单号</th>
 		                              <th>订单明细号</th>
 		                              <th >需求数量</th>

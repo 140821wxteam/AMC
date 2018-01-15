@@ -137,25 +137,5 @@ public class InvoiceController extends BaseController{
 		
         return "financial/invoiceaddnew";	
 	}*/
-	@RequestMapping(value="/invoiceaddnew", method = {RequestMethod.POST})	
-	public String invoiceadd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") InvoiceEditModel invoiceEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
-		invoiceEditModel.setcreateTime(Calendar.getInstance());
-		invoiceEditModel.setstatus("未完成");
-		String invoiceId=invoiceEditModel.getinvoiceId();
-		double tp=0.0;
-		List<Invoicedetail> lists=invoicedetailService.listAll();
-		
-		for(Invoicedetail od:lists) {
-			if(od.getinvoiceId().equals(invoiceId))
-			tp+=od.gettotalPrice();
-		}
-		invoiceEditModel.setsumPrice(tp);
-		invoiceService.saveInvoice(InvoiceModelExtension.toInvoice(invoiceEditModel));
-		
-      String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-        if(returnUrl==null)
-        	returnUrl="financial/invoice";
-    	return "redirect:"+returnUrl; 
-    
-	}
+
 }

@@ -1,6 +1,7 @@
 package com.amc.service.services;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.amc.dao.IProductDao;
+import com.amc.model.models.Customers;
 import com.amc.model.models.Product;
 import com.amc.service.interfaces.IProductService;
 import com.infrastructure.project.base.service.services.EnableEntityService;
@@ -71,12 +73,41 @@ public class ProductService extends EnableEntityService<Integer, Product, IProdu
 	@Override
 	public void updateProduct(Product product) throws ValidatException, EntityOperateException{
 		Product dbModel=super.get(product.getId());
+		
 		dbModel.setproductId(product.getproductId());
 		dbModel.setproductName(product.getproductName());
 		dbModel.setproductType(product.getproductType());
+		dbModel.setproductSpecification(product.getproductSpecification());
+		dbModel.setproductOrigin(product.getproductOrigin());
 		dbModel.setproductUnit(product.getproductUnit());
 		dbModel.setsafeStock(product.getsafeStock());		
 		dbModel.setnote(product.getnote());
+		dbModel.setimages(product.getimages());
 		super.update(dbModel);
+	}
+
+	@Override
+	public List<String> listproductId() {
+		List<Product> products = super.listAll();
+		List<String> productsId = new ArrayList<>();
+		for(Product p:products) {
+			if(!productsId.contains(p.getproductId())) {
+				productsId.add(p.getproductId());
+			}
+		}
+		
+		return productsId;
+	}
+
+	@Override
+	public List<Product> getproduct(String productId) {
+		List<Product> products = super.listAll();
+		List<Product> product = new ArrayList<>();
+		for(Product p:products) {
+			if(p.getproductId().equals(productId)) {
+				product.add(p);
+			}
+		}
+		return product;
 	}
 }

@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>Conquer | Form Stuff - Form Controls</title>
+   <title>AMC | 销售订单管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -49,7 +49,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Form Controls <small>form controls and more</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -87,61 +87,61 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">订单编号</label>
                               <div class="col-md-10">
-                                 <form:input path="orderId" name="orderId" class="form-control" placeholder="订单编号"/>                                 
+                                 <form:input path="orderId" name="orderId" class="form-control" readonly="true" placeholder="订单编号"/>                                 
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">订单明细编号</label>
                               <div class="col-md-10">
-                                 <form:input path="orderdetailId" name="orderdetailId" class="form-control" placeholder="订单明细编号"/>                               
+                                 <form:input path="orderdetailId" name="orderdetailId" class="form-control" readonly="true" placeholder="订单明细编号"/>                               
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品编号</label>
                               <div class="col-md-10">
-                                 <form:input path="productId" name="productId" class="form-control" placeholder="产品编号"/>                               
+                                 <form:input path="productId" name="productId" class="form-control" readonly="true" placeholder="产品编号"/>                               
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">产品名称</label>
                               <div class="col-md-10">
-                                 <form:input path="productName" name="productName" class="form-control" placeholder="产品名称"/>                               
+                                 <form:input path="productName" name="productName" class="form-control" readonly="true" placeholder="产品名称"/>                               
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">需求数量</label>
                               <div class="col-md-10">
-                                 <form:input path="quantityDemand" name="quantityDemand" id="quantityDemand" class="form-control" placeholder="需求数量" onchange="figure()"/>
+                                 <form:input path="quantityDemand" name="quantityDemand" id="quantityDemand" class="form-control" readonly="true" placeholder="需求数量" onchange="figure()"/>
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">已供数量</label>
                               <div class="col-md-10">
-                                 <form:input path="quantitySupplied" name="quantitySupplied" class="form-control" placeholder="已供数量"/>
+                                 <form:input path="quantitySupplied" name="quantitySupplied" class="form-control" readonly="true" placeholder="已供数量"/>
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">单价</label>
                               <div class="col-md-10">
-                                 <form:input path="unitPrice" name="unitPrice" id="unitPrice" class="form-control" placeholder="单价" onchange="figure()"/>
+                                 <form:input path="unitPrice" name="unitPrice" id="unitPrice" class="form-control" readonly="true" placeholder="单价" onchange="figure()"/>
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">总价</label>
                               <div class="col-md-10">
-                                 <form:input path="totalPrice" name="totalPrice" id="totalPrice" class="form-control" placeholder="总价"/>
+                                 <form:input path="totalPrice" name="totalPrice" id="totalPrice" class="form-control" readonly="true" placeholder="总价"/>
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">备注</label>
                               <div class="col-md-10">
-                                 <form:input path="note" name="note" class="form-control" placeholder="备注"/>
+                                 <form:input path="note" name="note" class="form-control" readonly="true" placeholder="备注"/>
                               </div>
                            </div>
                            <div class="form-group">
                               <label  class="col-md-2 control-label">状态</label>
                               <div class="col-md-10">
-                                 <form:input path="status" name="status" class="form-control" placeholder="状态"/>
+                                 <form:input path="status" name="status" class="form-control" readonly="true" placeholder="状态"/>
                               </div>
                            </div>                                      
                         </div>

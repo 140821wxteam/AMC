@@ -15,7 +15,7 @@
 	    <property name="productName" column="productName" type="string" not-null="true"/>
 	    <property name="inventoryLevel" column="inventoryLevel" type="integer" not-null="true"/>
 	    	<property name="createTime" column="createTime" type="calendar" not-null="true"/>  
-	    <property name="status" column="status" type="string" not-null="true"/>
+	    <property name="status" column="status" type="string" not-null="false"/>
 	    <property name="note" column="note" type="string" not-null="false"/>
 		
     </class>  

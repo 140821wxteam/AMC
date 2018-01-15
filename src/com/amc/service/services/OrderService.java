@@ -193,9 +193,9 @@ public class OrderService extends EnableEntityService<Integer, Order, IOrderDao>
 	
 	
 	public static int[] predict(TreeMap<String, Integer> yearsale){
-		int[] predictlist = null;
+		int[] predictlist =new int[2];
 		//3个销售周期的加权移动个平均，加权数分别为3,2,1
-		int[] input = null;
+		int[] input = new int[12];
 		int i=0;
 		for(Entry entry:yearsale.entrySet()){
 			input[i]=(int) entry.getValue();
