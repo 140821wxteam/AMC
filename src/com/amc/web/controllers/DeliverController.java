@@ -142,11 +142,19 @@ public class DeliverController extends BaseController{
     	            cuikuanDetail.setProductName(dd.getProductName());
     	            cuikuanDetail.setFactoryId(dd.getFactoryId());
     	            cuikuanDetail.setNum(dd.getNum());
-    	            Orderdetail orderdetail = orderdetailService.getorderdetailByoIdpId(deliver.getOrderId(), 
+    	            Orderdetail orderdetail=new Orderdetail();
+    	            for(Orderdetail od:orderdetailService.listAll()){
+    	            	if(od.getorderId().equals(prepare.getorderId()) && od.getproductId().equals(dd.getProductId())){
+    	            		orderdetail=od;
+    	            	}
+    	            }
+    	            System.out.println(prepare.getorderId()+"----"+dd.getProductId()+"----------------------");
+/*    	            Orderdetail orderdetail = orderdetailService.getorderdetailByoIdpId(deliver.getOrderId(), 
     	            		dd.getProductId());
-    				double unitPrice = orderdetail.getunitPrice();
-    				cuikuanDetail.setPrice(unitPrice);
-    				cuikuanDetail.setMoney(unitPrice*dd.getNum());
+    	            System.out.println("unitPrice"+orderdetail.getunitPrice()+"------------------");
+    				double unitPrice = orderdetail.getunitPrice();*/
+    				cuikuanDetail.setPrice(orderdetail.getunitPrice());
+    				cuikuanDetail.setMoney(orderdetail.getunitPrice()*dd.getNum());
     				cuikuanDetailService.save(cuikuanDetail);
     			}
     		}

@@ -68,6 +68,7 @@ public class CuikuanController extends BaseController{
 	@AuthPassport
 	@RequestMapping(value = "changereceivable/{id}", method = {RequestMethod.GET})
 	public String changereceivable(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{	
+		//记应付账
 		List<Cuikuan> cuiList=cuikuanService.listAll();
 		Cuikuan cuikuan=new Cuikuan();
 		
@@ -77,7 +78,7 @@ public class CuikuanController extends BaseController{
         String seconds = new SimpleDateFormat("HHmmss").format(new Date());
         
 		for(Cuikuan cui:cuiList){
-			if(cui.getId()==id  && cui.getCuikuanObjection()==0){
+			if(cui.getId()==id  && cui.getCuikuanObjection()==1){
 				cuikuan=cui;
 				cuikuanId=cui.getCuikuanId();
 			}
@@ -119,7 +120,7 @@ public class CuikuanController extends BaseController{
 			ck.setStatus("已支付");
 			cuikuanService.updateCuikuan(ck);
 			for(AccountTable at:accountTableService.listAll()){
-				if(cuikuanId==at.getCuikuanId()){
+				if(cuikuanId.equals(at.getCuikuanId())){
 					at.setSalesBusiness(at.getReceivable());
 					at.setReceivable(0);
 					accountTableService.updateAccountTable(at);
