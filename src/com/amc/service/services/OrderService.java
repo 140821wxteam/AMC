@@ -1,6 +1,18 @@
 package com.amc.service.services;
 
 import java.io.IOException;
+<<<<<<< HEAD
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+=======
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +23,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 import java.util.TreeMap;
 
 import org.hibernate.Criteria;
@@ -20,20 +33,32 @@ import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.amc.dao.IOrderDao;
+<<<<<<< HEAD
+=======
 import com.amc.model.models.Customers;
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 import com.amc.model.models.Deliver;
 import com.amc.model.models.Inventory;
 import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
 import com.amc.model.models.Prepare;
+<<<<<<< HEAD
+import com.amc.service.interfaces.IOrderService;
+import com.amc.service.interfaces.IOrderdetailService;
+import com.amc.web.jsonmodels.OrderdetailJson;
+import com.amc.web.models.OrderdetailSearchModel;
+=======
 import com.amc.service.interfaces.ICustomersService;
 import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOrderdetailService;
 import com.amc.web.jsonmodels.OrderdetailJson;
 import com.amc.web.jsonmodels.RegionsalesJson;
 import com.amc.web.jsonmodels.RegionsalesdetailJson;
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 import com.infrastructure.project.base.service.services.EnableEntityService;
 import com.infrastructure.project.common.exception.EntityOperateException;
 import com.infrastructure.project.common.exception.ValidatException;
@@ -43,10 +68,21 @@ import com.infrastructure.project.common.utilities.PageListUtil;;
 @Service("OrderService")
 public class OrderService extends EnableEntityService<Integer, Order, IOrderDao> implements IOrderService {
 	
+<<<<<<< HEAD
+	/*@Autowired
+    @Qualifier("AuthorityService")
+	protected IAuthorityService authorityService;*/
+	
+	@Autowired
+    @Qualifier("OrderdetailService")
+	protected IOrderdetailService orderdetailService;
+	/*
+=======
 	@Autowired
     @Qualifier("OrderdetailService")
 	protected IOrderdetailService orderdetailService;
 	
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 	@Autowired
     @Qualifier("CustomerService")
 	protected ICustomersService customerService;
@@ -194,6 +230,30 @@ public class OrderService extends EnableEntityService<Integer, Order, IOrderDao>
 	
 	
 	public static int[] predict(TreeMap<String, Integer> yearsale){
+<<<<<<< HEAD
+		int[] predictlist =new int[2];
+		//3个销售周期的加权移动个平均，加权数分别为3,2,1
+		int[] input = new int[12];
+		int i=0;
+		for(Entry entry:yearsale.entrySet()){
+			input[i]=(int) entry.getValue();
+			i++;
+		}
+		if(input.length>2){
+			int a=input[input.length-1];
+			int b=input[input.length-2];
+			int c=input[input.length-3];
+			int pre1=(a*3+b*2+c*1)/6;
+			predictlist[0]=pre1;
+			int pre2=(pre1*3+a*2+b*1)/6;
+			predictlist[1]=pre2;
+		}
+		else{
+			predictlist[0]=input[input.length-1];
+		}
+		return predictlist;
+	}
+=======
 		  System.out.println("predict begin");
 		  int[] predictlist = new int[2];
 		  //3个销售周期的加权移动个平均，加权数分别为3,2,1
@@ -220,6 +280,7 @@ public class OrderService extends EnableEntityService<Integer, Order, IOrderDao>
 		  }
 		  return predictlist;
 		 }
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 
 	public List<OrderdetailJson> listsalebyOrderdetail(String productId,String productName, int pageNo, int pageSize, IOrderdetailService orderdetailService)
 	{
@@ -363,6 +424,76 @@ public class OrderService extends EnableEntityService<Integer, Order, IOrderDao>
 //        return PageListUtil.getPageList(count, pageNo, items, pageSize);
         return result;
 	}
+<<<<<<< HEAD
+	
+	@Override
+    public int getpredict(String productId) throws IOException{
+
+    	Calendar now=Calendar.getInstance();
+        int year=now.get(Calendar.YEAR);
+		int month=now.get(Calendar.MONTH)+1;//month是从0开始的
+		int day=now.get(Calendar.DATE);
+		int time=year*10000+month*100+day;
+        System.out.println("time  "+time);
+        List<Orderdetail> itemsPre = orderdetailService.listAll();
+       
+        List<OrderdetailJson> result=new ArrayList<>();
+        //我决定还是一个月一个月推荐,有一个简单的方法是由于orderdetailId的格式中前几位为时间，因此可以直接根据id来计算
+        int allamount=0;
+//        HashMap<String,Integer> sales=new HashMap<String,Integer>();
+        TreeMap<String, Integer> sales = new TreeMap<String, Integer>();
+ArrayList<Integer> chalist=new ArrayList<>();
+        
+        for(Orderdetail item:itemsPre){
+        	System.out.println("item-----------------------------");
+ 	        System.out.println(item.getproductId());
+ 	        System.out.println("item-----------------------------");	
+        	if(item.getproductId().equals(productId)){
+      	
+        	int thistime=Integer.parseInt(item.getorderdetailId().substring(1,9));
+        	int thisyear=thistime/10000;
+//        	System.out.println("thisyear   "+thisyear);
+        	int thismonth=(thistime-thisyear*10000)/100;
+//        	System.out.println("thismonth   "+thismonth);
+        	int thisday=thistime%100;
+//        	System.out.println("thisday   "+thisday);
+
+//        	int yue=(time-thistime)/100;
+        	//计算与当前时间隔了多少个月
+        	int chayear=year-thisyear;
+        	int cha=chayear*12+month-thismonth;
+   	
+        	if(cha<12 && cha>=0){
+        		chalist.add(cha);
+        		if(sales.containsKey(String.valueOf(thistime/100))){
+        			sales.put(String.valueOf(thistime/100), sales.get(String.valueOf(thistime/100))+item.getquantityDemand());
+        			System.out.println(thistime/100+"  "+item.getquantityDemand());
+        		}
+        		else{
+        			sales.put(String.valueOf(thistime/100), item.getquantityDemand());
+        			System.out.println(thistime/100+"  "+item.getquantityDemand());
+        		}
+        	}
+        	}
+        }
+//可能有的月份销量是0，因此要对其进行填充
+        for(int m=0;m<12;m++){
+        	if(!chalist.contains(m)){
+        		int a=(month+12-m)/12;
+        		int b=(month+12-m)%12;
+        		if(a==1){
+        			sales.put(String.valueOf(year*100+b),0);
+        		}else if(a==0){
+        			sales.put(String.valueOf((year-1)*100+b),0);
+        		}
+        	}
+        }
+        for(int presale:this.predict(sales)){
+        	return presale;
+        }
+		return 0;
+    }
+=======
 
 	@Override
 	public List<RegionsalesJson> listbyregion(Date startTime, Date endTime) throws ParseException {
@@ -481,6 +612,7 @@ public class OrderService extends EnableEntityService<Integer, Order, IOrderDao>
 	    }
 
 
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 
 	
 

@@ -1,6 +1,7 @@
 package com.amc.web.controllers;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
@@ -26,14 +27,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+<<<<<<< HEAD
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+import com.amc.model.models.Orderdetail;
+=======
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 
 import com.amc.model.models.Inventory;
 import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
 import com.amc.model.models.Outofstock;
 import com.amc.model.models.Outofstockdetail;
+import com.amc.model.models.Product;
+import com.amc.service.interfaces.IOrderdetailService;
+import com.amc.service.interfaces.IOrderService;
+import com.amc.service.interfaces.IOutofstockService;
+import com.amc.service.interfaces.IOutofstockdetailService;
+import com.amc.service.services.OrderService;
 import com.amc.model.models.Prepare;
 import com.amc.model.models.Preparedetail;
 import com.amc.model.models.Product;
@@ -42,9 +56,17 @@ import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOutofstockService;
 import com.amc.service.interfaces.IOutofstockdetailService;
 import com.amc.web.auth.AccountAuth;
+
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.jsonmodels.OrderdetailJson;
+<<<<<<< HEAD
+import com.amc.web.jsonmodels.OrderdetailJson;
+import com.amc.web.models.DeliverSearchModel;
+import com.amc.web.models.InventorySearchModel;
+import com.amc.web.models.OrderdetailSearchModel;
+=======
 import com.amc.web.jsonmodels.RegionsalesJson;
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 import com.amc.web.models.OrderEditModel;
 import com.amc.web.models.OrderSearchModel;
 import com.amc.web.models.OrderdetailSearchModel;
@@ -78,6 +100,7 @@ public class OrderController extends BaseController{
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", orderService.listPage(searchModel.getorderId(), searchModel.getcustomerId(), searchModel.getstatus(), pageNo, pageSize));
+       
         return "sales/order";
     }
 	
@@ -546,12 +569,51 @@ public class OrderController extends BaseController{
 	
 	}
 	
+<<<<<<< HEAD
+	
+//	@AuthPassport
+//	@RequestMapping(value="/salepredict", method = {RequestMethod.GET})
+//    public void getsalepredict(HttpServletRequest request,HttpServletResponse response, Model model,OrderdetailSearchModel searchModel, String productId,String productName) throws IOException{
+//    	model.addAttribute("requestUrl", request.getServletPath());
+//		model.addAttribute("requestQuery", request.getQueryString());
+//
+//        model.addAttribute("searchModel", searchModel);
+//        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
+//        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
+//        model.addAttribute("contentModel", orderService.listsalebyOrderdetail(productId, productName, pageNo, pageSize, orderdetailService));
+//        //(searchModel.getDeliverId(), searchModel.getCustomerId(), pageNo, pageSize, prepareService));
+//		List<OrderdetailJson> i=new ArrayList<>();
+//		i=orderService.listsalebyOrderdetail(productId, productName, pageNo, pageSize, orderdetailService);
+//		ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
+//        
+//        String json = mapper.writeValueAsString(i);    //将list中的对象转换为Json格式的数组
+//        
+//        //将json数据返回给客户端
+//        response.setContentType("text/html; charset=utf-8");
+//        response.getWriter().write(json);
+//		
+//    }
+	
+	@AuthPassport
+	@RequestMapping(value="/listchanging/{id}", method = {RequestMethod.GET})
+    public String salechanging(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel,@PathVariable(value="id") Integer id){
+    	System.out.println("listchanging-------------------");
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		List<Orderdetail> sales=orderdetailService.listAll();
+		String productId="";
+		for(Orderdetail sale:sales) {
+			if(sale.getId()==id) productId=sale.getproductId();
+		}
+		searchModel.setproductId(productId);
+=======
 	@AuthPassport
 	@RequestMapping(value="/listchanging", method = {RequestMethod.GET})
     public String salechanging(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel){
     	model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 		model.addAttribute("productIds", productService.listproductId());
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
         model.addAttribute("searchModel", searchModel);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
@@ -660,8 +722,13 @@ public class OrderController extends BaseController{
 //            orderdetailjson.setProductName(productName);
             orderdetailjson.setCreateTime(map.getKey().toString());
             orderdetailjson.setSaleLevel(Integer.parseInt(map.getValue().toString()));
+<<<<<<< HEAD
+//            System.out.println(orderdetailjson.getProductId()+"  "+orderdetailjson.getCreateTime()
+//            +"  "+orderdetailjson.getSaleLevel());
+=======
             System.out.println(orderdetailjson.getProductId()+"  "+orderdetailjson.getCreateTime()
             +"  "+orderdetailjson.getSaleLevel());
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
             result.add(orderdetailjson);
         }
         int m=1;
@@ -682,6 +749,12 @@ public class OrderController extends BaseController{
         
         String json = mapper.writeValueAsString(result);    //将list中的对象转换为Json格式的数组
         
+<<<<<<< HEAD
+        
+        
+       
+=======
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
         //将json数据返回给客户端
         response.setContentType("text/html; charset=utf-8");
         response.getWriter().write(json);
@@ -716,6 +789,20 @@ public class OrderController extends BaseController{
 		return predictlist;
 	}
 	
+<<<<<<< HEAD
+	@AuthPassport
+	@RequestMapping(value="/list", method = {RequestMethod.GET})
+    public String sales(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel){
+    	model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+        model.addAttribute("searchModel", searchModel);
+        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
+        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
+        model.addAttribute("contentModel", orderdetailService.listAllPage(searchModel.getproductId(), searchModel.getproductName(), pageNo, pageSize));
+        return "sales/list";
+    }
+=======
 
 	@RequestMapping(value="/regioncollect/{start}/{end}", method = {RequestMethod.GET})
 	@ResponseBody
@@ -732,4 +819,5 @@ public class OrderController extends BaseController{
         response.getWriter().write(json);
     }
     
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 }

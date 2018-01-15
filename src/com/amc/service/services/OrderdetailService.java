@@ -94,6 +94,8 @@ public class OrderdetailService extends EnableEntityService<Integer, Orderdetail
         
         return PageListUtil.getPageList(count, pageNo, items, pageSize);
     }
+<<<<<<< HEAD
+=======
 
 	@Override
 	public Orderdetail getorderdetailByoIdpId(String orderId, String productId) {
@@ -107,6 +109,7 @@ public class OrderdetailService extends EnableEntityService<Integer, Orderdetail
 		}
 		return orderdetail;
 	}
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 	
 	
 	

@@ -28,11 +28,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+<<<<<<< HEAD
+import com.amc.model.models.Deliver;
+import com.amc.model.models.Inventory;
+=======
 import com.amc.model.models.Customers;
 import com.amc.model.models.Deliver;
 import com.amc.model.models.DeliverDetail;
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 import com.amc.model.models.Order;
 import com.amc.model.models.Orderdetail;
+import com.amc.model.models.Outofstock;
+import com.amc.model.models.Outofstockdetail;
 import com.amc.model.models.Prepare;
 import com.amc.model.models.Preparedetail;
 import com.amc.model.models.Product;
@@ -182,11 +189,111 @@ public class PrepareController extends BaseController{
 	        return "redirect:"+returnUrl;	
 		
 		}
+<<<<<<< HEAD
+		
+		
+		
+=======
 
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 		//发货操作
 		@AuthPassport
 		@RequestMapping(value = "/todeliver/{id}", method = {RequestMethod.GET})
 		public String todeliver(HttpServletRequest request, HttpServletResponse response,Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{
+<<<<<<< HEAD
+			List<Prepare> lists=prepareService.listAll();
+			String prepareId=null;
+			String customerId=null;
+			Prepare prepare=null;
+			for(Prepare p:lists) {
+				if(p.getId()==id) {
+					if(p.getstatus().equals("已生成发货单")||p.getstatus().equals("待备货")) {
+						response.setContentType("text/html; charset=UTF-8");
+						PrintWriter out = response.getWriter();
+						out.flush();
+					    out.println("<script>");
+						out.println("alert('不能处理！');");
+						out.println("history.back();");
+						out.println("</script>");
+					}else if(p.getstatus().equals("已备货")){
+						System.out.println("test-----------------------");
+						prepareId=p.getprepareId();
+						customerId=p.getcustomerId();
+						prepare=p;
+						p.setstatus("已生成发货单");
+						prepareService.updatePrepare(p);
+						//order.setstatus("已处理");
+						//orderService.updateOrder(order);
+					}
+				}
+			}
+			
+			//System.out.println(orderId+" "+customerId);
+			String date = new SimpleDateFormat("yyyyMMdd").format(new Date());  
+	        String seconds = new SimpleDateFormat("HHmmss").format(new Date());
+
+	        String deliverId=prepareId+"D"+date+seconds;
+	        System.out.println("-----------------"+deliverId);
+        
+			List<Preparedetail> details=preparedetailService.listAll();
+			List<Preparedetail> preparedetail_used=new ArrayList<>();//存储备货单号对应的备货单明细
+			int orderNum=0;//订单项目数
+			
+			int fitNum=0;//订单完全满足项目数
+			int partfitNum=0;//订单部分满足项目数
+			int outofstockNum=0;//订单完全缺货项目数
+			for(Preparedetail pd:details) {
+				if(pd.getprepareId().equals(prepareId)) {
+					if(pd.getstatus().equals("待备货")) {
+						//这里应该有一个提醒的功能，就是待备货的按理说在整个备货单当中应该修改状态为“部分备货”
+						fitNum++;
+					}
+					if(pd.getstatus().equals("已备货")) {
+						preparedetail_used.add(pd);
+					}
+				}
+			}
+			orderNum = details.size();
+			for(Preparedetail pd_used:preparedetail_used) {
+				String productId = pd_used.getproductId();
+				String productName= pd_used.getproductName();
+				String preparedetailId=pd_used.getpreparedetailId();
+				System.out.println("productName "+productName);
+				System.out.println(inventoryService.listinventory(productId));
+				int current_inventoryLevel = inventoryService.listinventory(productId).getinventoryLevel();
+//				System.out.println(od_used.getquantityDemand()+" "+current_inventoryLevel);
+				//如果该备货单明细的备货数量小于当前产品库存，可以发货
+				if(pd_used.getamount()<current_inventoryLevel) {
+					fitNum++;
+					//生成发货单
+					Deliver deliver_detail = new Deliver();
+					deliver_detail.setPrepareId(prepareId);
+					deliver_detail.setDeliverDetailId(preparedetailId+"D");
+					deliver_detail.setDeliverId(deliverId);
+					deliver_detail.setCreateTime(Calendar.getInstance());					
+					deliver_detail.setStatus("已到货");
+					deliver_detail.setReceiveAddr("待填");
+					deliver_detail.setReceivePers("待填");
+					deliver_detail.setAmountMoney(0.00);
+					deliverService.saveDeliver(deliver_detail);//存储备货单
+					pd_used.setstatus("已生成发货单");
+					System.out.println("fahuo--------------------------------");
+				}
+					
+			}
+
+			String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+			System.out.println(returnUrl);
+			//这里是可以打印的
+			if(returnUrl==null)
+	        	returnUrl="inventory/prepare";
+	        return "redirect:"+returnUrl;	
+			
+			
+		//	return searchModelName;	
+			
+		}		
+=======
 			Prepare prepare = prepareService.get(id);
 			if(prepare.getstatus().equals("已生成发货单")) {
 				response.setContentType("text/html; charset=UTF-8");
@@ -268,4 +375,5 @@ public class PrepareController extends BaseController{
 
 
 	
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 }

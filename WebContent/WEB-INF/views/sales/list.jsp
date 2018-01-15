@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 销售预测</title>
+   <title>AMC | 销售信息</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -59,11 +59,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-<<<<<<< HEAD
-                  AMC <small>销售预测</small>
-=======
-                  AMC <small>${requestScope.permissionMenu.subName}</small>
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
+                  AMC <small>销售信息</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -85,17 +81,12 @@
          <div class="row">
             <div class="col-md-12">
             
-<<<<<<< HEAD
-				<div class="portlet box light-grey" style="display:none">
-=======
 				<div class="portlet box light-grey">
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 				   <div class="portlet-title">
 					  <div class="caption"><i class="icon-search"></i>数据检索</div>
 				   </div>
 				   <div class="portlet-body form">
 					  <!-- BEGIN FORM-->
-<<<<<<< HEAD
 					  <form:form modelAttribute="searchModel" class="form-horizontal" method="GET">
 						 <div class="form-body">
 							<div class="row">
@@ -103,7 +94,7 @@
 								  <div class="form-group">
 									 <label class="control-label col-md-3">产品编号</label>
 									 <div class="col-md-9">
-										<form:input id="productId" name="productId" path="productId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品编号"/>
+										<form:input path="productId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品编号"/>
 									 </div>
 								  </div>
 							   </div>
@@ -113,28 +104,6 @@
 									 <label class="control-label col-md-3">产品名称</label>
 									 <div class="col-md-9">
 										<form:input path="productName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品名称"/>
-=======
-					  <form:form modelAttribute="searchModel" id="searchhistory" class="form-horizontal" method="GET">
-						 <div class="form-body">
-							<div class="row">
-							   <div class="col-md-10">
-								  <div class="form-group">
-									 <label class="control-label col-md-3">产品编号</label>
-									 <div class="col-md-9">
-										  <form:select path="productId" id="productId" class="form-control">
-											  <form:option value="" disabled="disabled">请选择产品</form:option>
-											  <form:options items="${productIds}"/> 
-                                           </form:select>									 
-                                       </div>
-								  </div>
-							   </div>
-							   <!--/span-->
-							   <div class="col-md-6" style="display:none">
-								  <div class="form-group">
-									 <label class="control-label col-md-3">产品名称</label>
-									 <div class="col-md-9">
-										<form:input path="productName" id="productName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品名称"/>
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 									 </div>
 								  </div>
 							   </div>
@@ -145,12 +114,8 @@
 							<div class="row">
 							   <div class="col-md-12">
 								  <div class="col-md-offset-5">
-<<<<<<< HEAD
 									 <button type="submit" class="btn btn-success">搜索</button> 
-									 <button id="chartview" type="button" class="btn btn-success">统计图</button>                           
-=======
-									 <button type="button" class="btn btn-success" onclick="resultdisplay()">搜索</button> 
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
+									                           
 								  </div>
 							   </div>
 							</div>
@@ -161,15 +126,9 @@
 				</div>
                
                <!-- BEGIN EXAMPLE TABLE PORTLET-->
-<<<<<<< HEAD
                <div class="portlet box light-grey">
                   <div class="portlet-title">
                      <div class="caption"><i class="icon-table"></i>${requestScope.permissionMenu.curName}</div>
-=======
-               <div id ="searchresult" class="portlet box light-grey">
-                  <div class="portlet-title">
-                     <div class="caption"><i class="icon-table"></i>销售历史</div>
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
                   </div>
                   <div class="portlet-body">
                      <div class="table-toolbar"></div>
@@ -180,20 +139,12 @@
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>产品编号</th>
-<<<<<<< HEAD
-		                              <th>产品名称</th>
-		                              <th>订单号</th>
-		                              <th>订单明细号</th>
-		                              <th >需求数量</th>
-		                              <th >已供给数量</th>
-=======
 		                              <th >产品名称</th>
 		                              <th>订单号</th>
 		                              <th>订单明细号</th>
 		                              <th >需求数量</th>
-		                              <!--<th >已供给数量</th>  -->
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
-		  
+		                              <th >已供给数量</th>
+
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -207,11 +158,7 @@
 							            <td>${item.orderId}</td>
 							            <td>${item.orderdetailId}</td>
 							            <td>${item.quantityDemand}</td>
-<<<<<<< HEAD
 							            <td>${item.quantitySupplied}</td>							            
-=======
-							            <!--<td>${item.quantitySupplied}</td>  -->							            
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -219,18 +166,14 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-<<<<<<< HEAD
 	        				<c:param name="urlAddress" value="/sales/list"/>
-=======
-	        				<c:param name="urlAddress" value="/sales/listchanging"/>
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 	       				 </c:import>
        				 </div>
                   </div>
                   
                </div>
                
-               <div id="chart" class="portlet box light-grey" style="display:none">
+                <div id="chart" class="portlet box light-grey" style="display:none">
                	<div class="portlet-title">
                		<div class="caption"><i class="icon-signal"></i>统计图</div>
                	</div>
@@ -252,142 +195,118 @@
          App.init();
          
          $("#data-table").tableManaged();
-<<<<<<< HEAD
          
-=======
-         var productId=document.getElementById("productId").value;
-         
-         if(productId.length>0)
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "显示统计图", css: "icon-signal", showIcon: true, click:function(){
-			$("#chart").css('display','block');
-             // 基于准备好的dom，初始化echarts实例
-           var myChart = echarts.init(document.getElementById('main'));
-       		  
-           // 指定图表的配置项和数据
-			myChart.setOption({
-			    title: {
-			        text: '销售变化情况'
-			    },
-			    tooltip: {
-			        trigger: 'axis'
-			    },
-			    legend: {
-			        data:['销售量']
-			    },
-			    toolbox: {
-			        show: true,
-			        feature: {
-			            dataZoom: {
-			                yAxisIndex: 'none'
-			            },
-			            dataView: {readOnly: false},			            
-			            restore: {},
-			            saveAsImage: {}
-			        }
-			    },
-			    xAxis:  {
-			        type: 'category',
-			        boundaryGap: true,
-			        data: []
-			    },
-			    yAxis: {
-			        type: 'value',
-			        
-			    },
-			    series: [
-			        {
-			            name:'销售量',
-			            type:'line',//折线图，柱状图是bar
-			            data:[]
-			          
-			        }
-			    ]
-			});
-					myChart.showLoading(); 
-					var productId=document.getElementById("productId").value;
-					
-			        //通过Ajax获取数据  
-			        $.ajax({  
-			            type : "post",
-			            contentType: "application/json",
-			            async : false, //异步执行  
-<<<<<<< HEAD
-			            url : "../listchanging/"+productId,  
-=======
-			            url : "../sales/listchanging/"+productId,  
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
-			            dataType : "json", //返回数据形式为json  
-			            success : function(result) {
-			                //请求成功时执行该函数内容，result即为服务器返回的json对象
-			                if (result) {
-			                		   
-			                		   var calendar_x=[];
-								   var saleslevel_y=[];
-						
-			                		   
-			                       for(var i=0;i<result.length;i++){       
-			                    	   calendar_x.push(result[i].createTime);    
-			                    	   //x轴的数，result返回的是json，把他的createTime的值放到这个数组里
-			                        }
-			                       
-			                       for(var i=0;i<result.length;i++){       
-			                    	   saleslevel_y.push(result[i].saleLevel);    
-			                    	   //销售变化，每一个saleslevel字段的值放到数组里
-			                         }
-			                      
-			                       
-			                       myChart.hideLoading();    //隐藏加载动画
-			                       myChart.setOption({        //加载数据图表
-			                           xAxis: {
-			                               data: calendar_x
-			                           },
-			                           series: [{
-			                               // 根据名字对应到相应的系列
-			                               name: '销售量',
-<<<<<<< HEAD
-			                               data: saleslevel_y
-			                           }]
-=======
-			                               data: saleslevel_y,
-			                               markLine : {
-			                            	   
-			                                   data : [{
-			                                	   	name:'当月销量',
-			                                	   	xAxis:result[result.length-3].createTime
-			                                   }		                                	   
-			                                   ]
-			                               }
-			                           }]
-			                       
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
-			                       });
-			                       
-			                }
-			            
-			           },  
-			            error : function(errorMsg) {  
-			                alert("请求数据失败");  
-			            }  
-			        });
-                 myChart.setOption(option);} },
-                 { splitter: true }
-                 
-             ]
+                 { link: true, display: "查看销售预测图", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/sales/listchanging/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                  { splitter: true }             ]
          });
 
       });
-<<<<<<< HEAD
-=======
-   	  
-   	  function resultdisplay(){
-   		document.getElementById("searchhistory").submit();
-   		//$("#searchresult").css('display','block');
-   	  }
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
-
+      $("#chartview").click(function(){
+    	  $("#chart").css('display','block');
+    	// 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('main'));
+		  
+          // 指定图表的配置项和数据
+          option = {
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    legend: {
+        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎','百度','谷歌','必应','其他']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['周一','周二','周三','周四','周五','周六','周日']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'直接访问',
+            type:'bar',
+            data:[320, 332, 301, 334, 390, 330, 320]
+        },
+        {
+            name:'邮件营销',
+            type:'bar',
+            stack: '广告',
+            data:[120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name:'联盟广告',
+            type:'bar',
+            stack: '广告',
+            data:[220, 182, 191, 234, 290, 330, 310]
+        },
+        {
+            name:'视频广告',
+            type:'bar',
+            stack: '广告',
+            data:[150, 232, 201, 154, 190, 330, 410]
+        },
+        {
+            name:'搜索引擎',
+            type:'bar',
+            data:[862, 1018, 964, 1026, 1679, 1600, 1570],
+            markLine : {
+                lineStyle: {
+                    normal: {
+                        type: 'dashed'
+                    }
+                },
+                data : [
+                    [{type : 'min'}, {type : 'max'}]
+                ]
+            }
+        },
+        {
+            name:'百度',
+            type:'bar',
+            barWidth : 5,
+            stack: '搜索引擎',
+            data:[620, 732, 701, 734, 1090, 1130, 1120]
+        },
+        {
+            name:'谷歌',
+            type:'bar',
+            stack: '搜索引擎',
+            data:[120, 132, 101, 134, 290, 230, 220]
+        },
+        {
+            name:'必应',
+            type:'bar',
+            stack: '搜索引擎',
+            data:[60, 72, 71, 74, 190, 130, 110]
+        },
+        {
+            name:'其他',
+            type:'bar',
+            stack: '搜索引擎',
+            data:[62, 82, 91, 84, 109, 110, 120]
+        }
+    	]
+	};
+          myChart.setOption(option);
+    		  });
+        
+  	
    </script>
    <!-- END JAVASCRIPTS -->   
 </body>

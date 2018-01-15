@@ -178,6 +178,12 @@
 							            		<td style="color:green;">${item.status}</td>
 							            </c:if>
 							            <c:if test="${item.status eq '已生成发货单'}">
+<<<<<<< HEAD
+							            		<td style="color:black;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '已发货'}">
+=======
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
 							        </tr>
@@ -211,7 +217,7 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/preparedetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+            	{ link: true, display: "查看", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/preparedetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                  	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                { splitter: true },
               { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/inventory/preparedelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 

@@ -59,11 +59,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-<<<<<<< HEAD
                   AMC <small>销售预测</small>
-=======
-                  AMC <small>${requestScope.permissionMenu.subName}</small>
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -85,17 +81,12 @@
          <div class="row">
             <div class="col-md-12">
             
-<<<<<<< HEAD
 				<div class="portlet box light-grey" style="display:none">
-=======
-				<div class="portlet box light-grey">
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 				   <div class="portlet-title">
 					  <div class="caption"><i class="icon-search"></i>数据检索</div>
 				   </div>
 				   <div class="portlet-body form">
 					  <!-- BEGIN FORM-->
-<<<<<<< HEAD
 					  <form:form modelAttribute="searchModel" class="form-horizontal" method="GET">
 						 <div class="form-body">
 							<div class="row">
@@ -113,28 +104,6 @@
 									 <label class="control-label col-md-3">产品名称</label>
 									 <div class="col-md-9">
 										<form:input path="productName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品名称"/>
-=======
-					  <form:form modelAttribute="searchModel" id="searchhistory" class="form-horizontal" method="GET">
-						 <div class="form-body">
-							<div class="row">
-							   <div class="col-md-10">
-								  <div class="form-group">
-									 <label class="control-label col-md-3">产品编号</label>
-									 <div class="col-md-9">
-										  <form:select path="productId" id="productId" class="form-control">
-											  <form:option value="" disabled="disabled">请选择产品</form:option>
-											  <form:options items="${productIds}"/> 
-                                           </form:select>									 
-                                       </div>
-								  </div>
-							   </div>
-							   <!--/span-->
-							   <div class="col-md-6" style="display:none">
-								  <div class="form-group">
-									 <label class="control-label col-md-3">产品名称</label>
-									 <div class="col-md-9">
-										<form:input path="productName" id="productName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="产品名称"/>
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 									 </div>
 								  </div>
 							   </div>
@@ -145,12 +114,8 @@
 							<div class="row">
 							   <div class="col-md-12">
 								  <div class="col-md-offset-5">
-<<<<<<< HEAD
 									 <button type="submit" class="btn btn-success">搜索</button> 
 									 <button id="chartview" type="button" class="btn btn-success">统计图</button>                           
-=======
-									 <button type="button" class="btn btn-success" onclick="resultdisplay()">搜索</button> 
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 								  </div>
 							   </div>
 							</div>
@@ -161,15 +126,9 @@
 				</div>
                
                <!-- BEGIN EXAMPLE TABLE PORTLET-->
-<<<<<<< HEAD
                <div class="portlet box light-grey">
                   <div class="portlet-title">
                      <div class="caption"><i class="icon-table"></i>${requestScope.permissionMenu.curName}</div>
-=======
-               <div id ="searchresult" class="portlet box light-grey">
-                  <div class="portlet-title">
-                     <div class="caption"><i class="icon-table"></i>销售历史</div>
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
                   </div>
                   <div class="portlet-body">
                      <div class="table-toolbar"></div>
@@ -180,20 +139,11 @@
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>产品编号</th>
-<<<<<<< HEAD
-		                              <th>产品名称</th>
-		                              <th>订单号</th>
-		                              <th>订单明细号</th>
-		                              <th >需求数量</th>
-		                              <th >已供给数量</th>
-=======
 		                              <th >产品名称</th>
-		                              <th>订单号</th>
-		                              <th>订单明细号</th>
-		                              <th >需求数量</th>
-		                              <!--<th >已供给数量</th>  -->
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
-		  
+		                              <th >销售量</th>
+		                              <th >销售时间</th>
+		                              <th >库存状态</th>		                             
+		                              <th >备注</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -204,14 +154,10 @@
 									    </td>
 							            <td>${item.productId}</td>
 							            <td>${item.productName}</td>
-							            <td>${item.orderId}</td>
-							            <td>${item.orderdetailId}</td>
-							            <td>${item.quantityDemand}</td>
-<<<<<<< HEAD
-							            <td>${item.quantitySupplied}</td>							            
-=======
-							            <!--<td>${item.quantitySupplied}</td>  -->							            
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
+							            <td>${item.inventoryLevel}</td>
+							            <td>${item.createTime.getTime().toLocaleString()}</td>							            
+							            <td>${item.status}</td>							            
+							            <td>${item.note}</td>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -219,11 +165,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-<<<<<<< HEAD
 	        				<c:param name="urlAddress" value="/sales/list"/>
-=======
-	        				<c:param name="urlAddress" value="/sales/listchanging"/>
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 	       				 </c:import>
        				 </div>
                   </div>
@@ -252,13 +194,7 @@
          App.init();
          
          $("#data-table").tableManaged();
-<<<<<<< HEAD
          
-=======
-         var productId=document.getElementById("productId").value;
-         
-         if(productId.length>0)
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
          $(".table-toolbar").toolbarLite({
              items: [
             	 { link: true, display: "显示统计图", css: "icon-signal", showIcon: true, click:function(){
@@ -269,13 +205,13 @@
            // 指定图表的配置项和数据
 			myChart.setOption({
 			    title: {
-			        text: '销售变化情况'
+			        text: '销售预测'
 			    },
 			    tooltip: {
 			        trigger: 'axis'
 			    },
 			    legend: {
-			        data:['销售量']
+			        data:['销售量','去年同期']
 			    },
 			    toolbox: {
 			        show: true,
@@ -303,7 +239,13 @@
 			            type:'line',//折线图，柱状图是bar
 			            data:[]
 			          
-			        }
+			        },
+			        {
+			            name:'去年同期',
+			            type:'line',
+			            data:[]
+			          
+			        } 
 			    ]
 			});
 					myChart.showLoading(); 
@@ -314,11 +256,7 @@
 			            type : "post",
 			            contentType: "application/json",
 			            async : false, //异步执行  
-<<<<<<< HEAD
-			            url : "../listchanging/"+productId,  
-=======
-			            url : "../sales/listchanging/"+productId,  
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
+			            url : "../salepredict/"+productId,  
 			            dataType : "json", //返回数据形式为json  
 			            success : function(result) {
 			                //请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -326,7 +264,7 @@
 			                		   
 			                		   var calendar_x=[];
 								   var saleslevel_y=[];
-						
+								
 			                		   
 			                       for(var i=0;i<result.length;i++){       
 			                    	   calendar_x.push(result[i].createTime);    
@@ -334,8 +272,8 @@
 			                        }
 			                       
 			                       for(var i=0;i<result.length;i++){       
-			                    	   saleslevel_y.push(result[i].saleLevel);    
-			                    	   //销售变化，每一个saleslevel字段的值放到数组里
+			                    	   saleslevel_y.push(result[i].inventoryLevel);    
+			                    	   //库存变化，每一个saleslevel字段的值放到数组里
 			                         }
 			                      
 			                       
@@ -347,22 +285,8 @@
 			                           series: [{
 			                               // 根据名字对应到相应的系列
 			                               name: '销售量',
-<<<<<<< HEAD
 			                               data: saleslevel_y
 			                           }]
-=======
-			                               data: saleslevel_y,
-			                               markLine : {
-			                            	   
-			                                   data : [{
-			                                	   	name:'当月销量',
-			                                	   	xAxis:result[result.length-3].createTime
-			                                   }		                                	   
-			                                   ]
-			                               }
-			                           }]
-			                       
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 			                       });
 			                       
 			                }
@@ -379,14 +303,6 @@
          });
 
       });
-<<<<<<< HEAD
-=======
-   	  
-   	  function resultdisplay(){
-   		document.getElementById("searchhistory").submit();
-   		//$("#searchresult").css('display','block');
-   	  }
->>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 
    </script>
    <!-- END JAVASCRIPTS -->   

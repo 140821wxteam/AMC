@@ -154,6 +154,17 @@
 							            <td>${item.amount}</td>
 							            <td>${item.preparePers}</td>
 							            <td>${item.note}</td>
+<<<<<<< HEAD
+							            <c:if test="${item.status eq '完全缺货'}">
+							            		<td style="color:red;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '完全供货'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '部分供货'}">
+							            		<td style="color:black;">${item.status}</td>
+							            </c:if>
+=======
 							            <c:if test="${item.status eq '待备货'}">
 							            		<td style="color:red;">${item.status}</td>
 							            </c:if>
@@ -164,6 +175,7 @@
 							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
 							            
+>>>>>>> 7d8be3018e13daf00452edfae47097df2531461f
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
