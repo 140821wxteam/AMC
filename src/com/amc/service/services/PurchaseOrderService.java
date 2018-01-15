@@ -105,14 +105,14 @@ public class PurchaseOrderService extends EnableEntityService<Integer, PurchaseO
 	
 	@Override
 	public void updateOrder(PurchaseOrder purchaseOrder) throws ValidatException, EntityOperateException{
-		/*PurchasingOrder dbModel=super.get(order.getId());
-		dbModel.setorderId(order.getorderId());
-		dbModel.setcreateTime(order.getcreateTime());
-		dbModel.setcustomerId(order.getcustomerId());
-		dbModel.settotalPrice(order.gettotalPrice());
-		dbModel.setstatus(order.getstatus());
-		dbModel.setnote(order.getnote());
-		super.update(dbModel); */
+		PurchaseOrder dbModel=super.get(purchaseOrder.getId());
+		dbModel.setorderId(purchaseOrder.getorderId());
+		dbModel.setorderDate(purchaseOrder.getorderDate());
+		dbModel.setvendorName(purchaseOrder.getvendorName());
+		dbModel.settotalPrice(purchaseOrder.gettotalPrice());
+		dbModel.setstatus(purchaseOrder.getstatus());
+		dbModel.setnote(purchaseOrder.getnote());
+		super.update(dbModel); 
 	}
 
 	

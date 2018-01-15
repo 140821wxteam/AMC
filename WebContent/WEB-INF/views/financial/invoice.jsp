@@ -100,9 +100,9 @@
 							   <!--/span-->
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">原厂编号</label>
+									 <label class="control-label col-md-3">订单编号</label>
 									 <div class="col-md-9">
-										<form:input path="factoryId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="原厂编号"/>
+										<form:input path="orderId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单编号"/>
 									 </div>
 								  </div>
 							   </div>
@@ -137,11 +137,13 @@
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>发票编号</th>
-		                              <th>原厂编号</th>
-		                              <th>总金额</th>
+		                              <th>发票对象</th>
+		                              <th>订单编号</th>
+		                              <th>订单收到日期</th>
+		                              <th>订单总金额</th>
 		                              <th>创建时间</th>
 		                              <th>备注</th>		                             
-		                              <th>发票状态</th>
+		                              <th>状态</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -151,11 +153,18 @@
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
 							            <td>${item.invoiceId}</td>
-							            <td>${item.factoryId}</td>
-							            <td>${item.sumPrice}</td>
+							            <td>${item.objection}</td>
+							            <td>${item.orderId}</td>
+							            <td>${item.orderReceiveDate.getTime().toLocaleString()}</td>
+							            <td>${item.amountMoney}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
-							            <td>${item.note}</td>							            
-							            <td>${item.status}</td>
+							            <td>${item.remark}</td>							            
+							            <c:if test="${item.status eq '收到'}">
+							            		<td style="color:blue;">${item.status}</td>
+							            </c:if>
+							            <c:if test="${item.status eq '寄出'}">
+							            		<td style="color:green;">${item.status}</td>
+							            </c:if>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -187,13 +196,17 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/invoiceaddnew", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
+                 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/invoiceadd", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
                  { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                  
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+                 { link: true, display: "详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/invoicedetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+  	               selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                   { splitter: true },   
+                 { link: true, display: "寄送发票", css: "icon-arrow-right", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/changeinvoicestatus/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                 { splitter: true }, 
+                 { link: true, display: "转采购业务账", css: "icon-wrench", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/changepurchasebusiness/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确定转采购业务账吗？"},
+                 { splitter: true }, 
              ]
          });
       });

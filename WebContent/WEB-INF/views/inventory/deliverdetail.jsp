@@ -28,7 +28,8 @@
    <script type="text/javascript" src="<c:url value='/plugins/data-tables/DT_bootstrap.js'/>"></script>
    <script type="text/javascript" src="<c:url value='/plugins/uniform/jquery.uniform.min.js'/>"></script>
    <script type="text/javascript" src="<c:url value='/js/jquery.toolbarlite.js?ver=10'/>"></script> 
-   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script> 
+   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/js/jquery-1.11.0.min.js'/>"></script> 
    <script type="text/javascript" src="<c:url value='/js/jquery.tableManaged.js'/>"></script>
    <!-- END PAGE LEVEL SCRIPTS -->
 
@@ -129,8 +130,7 @@
 		                        <thead>
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
-		                              <th>发货单编号</th>
-		                              <th>序号</th>
+		                              <th>发货单明细编号</th>
 		                              <th>配件编号</th>
 		                              <th>名称</th>
 		                              <th>原厂编号</th>		                             
@@ -146,8 +146,7 @@
 							        	<td class="check_cell">
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
-							            <td>${item.deliverId}</td>
-							            <td>${item.no}</td>
+							            <td>${item.deliverdetailId}</td>
 							            <td>${item.productId}</td>
 							            <td>${item.productName}</td>
 							            <td>${item.factoryId}</td>
@@ -163,7 +162,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/inventory/deliverdetail"/>
+	        				<c:param name="urlAddress" value="/inventory/deliverdetail/${id}"/>
 	       				 </c:import>
        				 </div>
                   </div>

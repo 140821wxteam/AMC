@@ -13,12 +13,14 @@
 	    <property name="enable" column="enable" type="boolean" not-null="true"/>
 	    <property name="customerId" column="customerId" type="string" not-null="true"/>  
 	    <property name="customerName" column="customerName" type="string" not-null="true"/>
+	    <property name="province" column="province" type="string" not-null="true"/>
 	    <property name="customerAddr" column="customerAddr" type="string" not-null="false"/>
 	    <property name="contactPerson" column="contactPerson" type="string" not-null="false"/>
 	    <property name="customerTele" column="customerTele" type="string" not-null="false"/>
 	    <property name="customerEmail" column="customerEmail" type="string" not-null="false"/>
 	    <property name="note" column="note" type="string" not-null="false"/>
 	    <property name="credit" column="credit" type="string" not-null="false"/>
+	    <property name="reputation" column="reputation" type="integer" not-null="false"/>
 		
     </class>  
 </hibernate-mapping> 

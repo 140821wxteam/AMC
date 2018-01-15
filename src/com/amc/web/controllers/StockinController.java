@@ -131,8 +131,9 @@ public class StockinController extends BaseController{
 	
 	@AuthPassport
 	@RequestMapping(value = "/stockindelete/{id}", method = {RequestMethod.GET})
-	public String delete(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException{	
-		stockinService.delete(id);
+	public String delete(HttpServletRequest request, HttpServletResponse response,Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, IOException{	
+		
+	    stockinService.delete(id);
 		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
 		if(returnUrl==null)
         	returnUrl="inventory/stockin";

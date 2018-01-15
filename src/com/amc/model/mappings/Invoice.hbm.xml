@@ -12,11 +12,14 @@
 		<version name="version" column="version" type="integer"/>
 	    <property name="enable" column="enable" type="boolean" not-null="true"/>
 	    <property name="invoiceId" column="invoiceId" type="string" not-null="true"/>
-	    <property name="createTime" column="createTime" type="calendar" not-null="true"/>  
-	    <property name="factoryId" column="factoryId" type="string" not-null="true"/>
-	    <property name="sumPrice" column="sumPrice" type="double" not-null="true"/>
-	    <property name="status" column="status" type="string" not-null="true"/>
-	    <property name="note" column="note" type="string" not-null="false"/>
+	    <property name="objection" column="objection" type="integer" not-null="false"/>
+	    <property name="orderId" column="orderId" type="string" not-null="false"/>
+	    <property name="orderReceiveDate" column="orderReceiveDate" type="calendar" not-null="false"/>
+	    <property name="amountMoney" column="amountMoney" type="double" not-null="false"/>
+	    <property name="createTime" column="createTime" type="calendar" not-null="false"/>  
+	    <property name="remark" column="remark" type="string" not-null="false"/>
+	    <property name="status" column="status" type="string" not-null="false"/>
+	    
 		
     </class>  
 </hibernate-mapping> 

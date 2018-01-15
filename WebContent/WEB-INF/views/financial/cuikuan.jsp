@@ -144,7 +144,6 @@
 		                              <th>订单收到日期</th>
 		                              <th>订单总金额</th>
 		                              <th>创建日期</th>
-		                              <th>催款单收到日期</th>
 		                              <th>备注</th>		                             
 		                              <th>是否支付状态</th>
 		                           </tr>
@@ -156,14 +155,13 @@
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
 							            <td>${item.cuikuanId}</td>
-							            <td>${item.cuikuanId}</td>
-							            <td>${item.cuikuanId}</td>
-							            <td>${item.cuikuanId}</td>
-							            <td>${item.cuikuanId}</td>
-							            <td>${item.cuikuanId}</td>
-							            <td>${item.cuikuanId}</td>
+							            <td>${item.deliverId}</td>
+							            <td>${item.cuikuanObjection}</td>
+							            <td>${item.customerId}</td>
+							            <td>${item.orderId}</td>
+							            <td>${item.orderReceiveDate.getTime().toLocaleString()}</td>
+							            <td>${item.amountMoney}</td>
 							            <td>${item.createTime.getTime().toLocaleString()}</td>
-							            <td>${item.cuikuanId}</td>
 							            <td>${item.remark}</td>	
 							            <c:if test="${item.status eq '未支付'}">
 							            		<td style="color:red;">${item.status}</td>
@@ -202,13 +200,21 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/invoiceaddnew", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>" },
+                 { link: true, display: "查看详细", css: "icon-zoom-in", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/cuikuandetail/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+	               selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                 { splitter: true },
+                 { link: true, display: "记应付账", css: "icon-wrench", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/changereceivable/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认对该订单记应付账吗？"},
                  { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                  
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+                 { link: true, display: "失信处理", css: "icon-wrench", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/editreputation/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认对顾客进行失信处理吗？"},
+                 { splitter: true }, 
+                 { link: true, display: "修改支付状态", css: "icon-check", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/changestatus/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认修改支付状态吗？"},
+                 { splitter: true }, 
+                 { link: true, display: "开发票", css: "icon-arrow-right", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/financial/toinvoice/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                     selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！",confirm: "确认开发票吗？"},
+                 { splitter: true }, 
              ]
          });
       });

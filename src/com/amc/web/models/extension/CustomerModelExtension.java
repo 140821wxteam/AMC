@@ -10,6 +10,7 @@ public class CustomerModelExtension {
 		Customers ret=new Customers();
 		ret.setcustomerId(customerEditModel.getcustomerId());
 		ret.setcustomerName(customerEditModel.getcustomerName());
+		ret.setprovince(customerEditModel.getprovince());
 		ret.setcustomerAddr(customerEditModel.getcustomerAddr());
 		ret.setcontactPerson(customerEditModel.getcontactPerson());
 		ret.setcustomerTele(customerEditModel.getcustomerTele());
@@ -23,6 +24,7 @@ public class CustomerModelExtension {
 		//ret.setId(model.getId());
 		ret.setcustomerId(model.getcustomerId());
 		ret.setcustomerName(model.getcustomerName());
+		ret.setprovince(model.getprovince());
 		ret.setcustomerAddr(model.getcustomerAddr());
 		ret.setcontactPerson(model.getcontactPerson());
 		ret.setcustomerTele(model.getcustomerTele());

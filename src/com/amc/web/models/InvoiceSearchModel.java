@@ -3,18 +3,19 @@ package com.amc.web.models;
 public class InvoiceSearchModel {
 
 	private String invoiceId;
-	private String factoryId;
-	public String getinvoiceId() {
-		return this.invoiceId;
+	private String orderId;
+	public String getInvoiceId() {
+		return invoiceId;
 	}
-	public void setinvoiceId(String invoiceId) {
+	public void setInvoiceId(String invoiceId) {
 		this.invoiceId = invoiceId;
 	}
-	public String getfactoryId() {
-		return this.factoryId;
+	public String getOrderId() {
+		return orderId;
 	}
-	public void setfactoryId(String factoryId) {
-		this.factoryId=factoryId;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
+
 	
 }

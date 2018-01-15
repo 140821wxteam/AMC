@@ -82,6 +82,7 @@
             <div class="col-md-12">
             
 				<div class="portlet box light-grey" style="display:none">
+				
 				   <div class="portlet-title">
 					  <div class="caption"><i class="icon-search"></i>数据检索</div>
 				   </div>
@@ -173,7 +174,7 @@
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/inventory/list"/>
+	        				<c:param name="urlAddress" value="/inventory/listchanging/${id}"/>
 	       				 </c:import>
        				 </div>
                   </div>

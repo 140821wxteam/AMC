@@ -1,6 +1,7 @@
 package com.amc.model.models;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import com.infrastructure.project.base.model.dao.ICUDEable;
 import com.infrastructure.project.base.model.impl.EnableEntity;
@@ -8,48 +9,60 @@ import com.infrastructure.project.base.model.impl.EnableEntity;
 public class Invoice extends EnableEntity<Integer> implements ICUDEable{
 //发票
 	private String invoiceId;
+	private int objection;
+	private String orderId;
+	private Calendar orderReceiveDate;
+	private double amountMoney;
 	private Calendar createTime;
-	private String factoryId;
-	
-	private double sumPrice;
+	private String remark;
 	private String status;
-	private String note;
+	public String getInvoiceId() {
+		return invoiceId;
+	}
+	public void setInvoiceId(String invoiceId) {
+		this.invoiceId = invoiceId;
+	}
+	public int getObjection() {
+		return objection;
+	}
+	public void setObjection(int objection) {
+		this.objection = objection;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+	public Calendar getOrderReceiveDate() {
+		return orderReceiveDate;
+	}
+	public void setOrderReceiveDate(Calendar orderReceiveDate) {
+		this.orderReceiveDate = orderReceiveDate;
+	}
+	public double getAmountMoney() {
+		return amountMoney;
+	}
+	public void setAmountMoney(double amountMoney) {
+		this.amountMoney = amountMoney;
+	}
+	public Calendar getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
-	public void setinvoiceId(String invoiceId){
-		this.invoiceId=invoiceId;
-	}
-	public String getinvoiceId(){
-		return this.invoiceId;
-	}
-	public void setcreateTime(Calendar createTime){
-		this.createTime=createTime;
-	}
-	public Calendar getcreateTime(){
-		return this.createTime;
-	}
-
-	public void setfactoryId(String factoryId){
-		this.factoryId=factoryId;
-	}
-	public String getfactoryId(){
-		return this.factoryId;
-	}
-	public void setsumPrice(double sumPrice){
-		this.sumPrice=sumPrice;
-	}
-	public double getsumPrice(){
-		return this.sumPrice;
-	}
-	public void setstatus(String status){
-		this.status=status;
-	}
-	public String getstatus(){
-		return this.status;
-	}
-	public void setnote(String note){
-		this.note=note;
-	}
-	public String getnote(){
-		return this.note;
-	}
 }

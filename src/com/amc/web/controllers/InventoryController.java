@@ -68,6 +68,7 @@ public class InventoryController extends BaseController{
 		}
 		searchModel.setproductId(productId);
         model.addAttribute("searchModel", searchModel);
+        model.addAttribute("id", id);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
         model.addAttribute("contentModel", inventoryService.listAllPage(searchModel.getproductId(), searchModel.getproductName(), pageNo, pageSize));

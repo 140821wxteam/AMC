@@ -18,5 +18,10 @@ public interface IOrderdetailService extends IEnableEntityService<Integer, Order
 	public void saveOrderdetail(Orderdetail orderdetail) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	public void updateOrderdetail(Orderdetail orderdetail) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	public PageList<Orderdetail> listAllPage(String productId, String productName, int pageNo, int pageSize);
+<<<<<<< HEAD
 
+=======
+	
+	public Orderdetail getorderdetailByoIdpId(String orderId,String productId);//按照订单号与产品号搜索明细
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 }

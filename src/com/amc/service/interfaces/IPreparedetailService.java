@@ -17,5 +17,5 @@ public interface IPreparedetailService extends IEnableEntityService<Integer, Pre
 	//public List<Preparedetail> listEnable();
 	public void savePreparedetail(Preparedetail preparedetail) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	public void updatePreparedetail(Preparedetail preparedetail) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
-
+	public List<Preparedetail> getpreparedetaillist(String prepareId);//按照备货单编号找到对应明细
 }

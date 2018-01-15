@@ -21,9 +21,17 @@
    <%@ include file="../shared/importCss.jsp"%>
    <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
    <link href="<c:url value='/plugins/fullcalendar/fullcalendar/fullcalendar.css'/>" rel="stylesheet" type="text/css"/>
+   <link rel="stylesheet" href="<c:url value='/plugins/data-tables/DT_bootstrap.css'/>" type="text/css"/>
+   <!--<link rel="stylesheet" href="<c:url value='/plugins/jqvmap/jquery-jvectormap-2.0.3.css'/>" type="text/css" media="screen"/>-->
+   <link href="<c:url value='/plugins/jqvmap/jqvmap/jqvmap.css'/>" media="screen" rel="stylesheet" type="text/css" />   
+   <link href="<c:url value='/plugins/bootstrap-datepicker/css/datepicker.css'/>" rel="stylesheet" type="text/css" />   
+   <!--<link href="<c:url value='/plugins/bootstrap/css/bootstrap.css'/>" rel="stylesheet" type="text/css" />  -->   
+   
    <!-- END PAGE LEVEL PLUGIN STYLES -->
    
    <link rel="shortcut icon" href="favicon.ico" />
+   
+   
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -69,7 +77,45 @@
          </div>
          <!-- END PAGE HEADER-->
          <!-- BEGIN PAGE BODY -->
-         
+		
+		
+		<div class="portlet">
+		<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bell"></i>全国销售情况一览
+				</div>
+				
+		</div>
+		
+				<div class="portlet-body">
+				<div class="btn-toolbar margin-bottom-10">
+					    <div class="btn-group" style="height:70px">
+							
+							<div class="input-group input-medium date-picker input-daterange">
+								
+								
+	    							<input id="dtBegin" class="form-control" style="font-size: 13px;" type="text" value="">
+	    							<span class="input-group-addon">到</span>
+	    							<input id="dtEnd" class="form-control" style="font-size: 13px;" type="text" value="">
+							</div>
+							
+							
+										
+						</div>
+						<div class="btn-group pull-right">
+							<button type="button" class="btn btn-success" onclick="getresult()">搜索</button> 
+						</div>
+				</div>
+				
+					<div id="main" style="height:500px">					
+					</div>
+				</div>
+				
+	   </div>
+		
+		
+					
+	
          <!--END PAGE BODY -->                   
          <div class="clearfix"></div>
          <div class="row">
@@ -116,8 +162,24 @@
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script src="<c:url value='/js/app.js'/>" type="text/javascript"></script>
-   <script src="<c:url value='/js/index.js'/>" type="text/javascript"></script>  
-   <!-- END PAGE LEVEL SCRIPTS -->  
+   <script src="<c:url value='/js/index.js'/>" type="text/javascript"></script> 
+   <script type="text/javascript" src="<c:url value='/plugins/data-tables/jquery.dataTables.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/plugins/data-tables/DT_bootstrap.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/plugins/uniform/jquery.uniform.min.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/js/jquery.toolbarlite.js?ver=10'/>"></script> 
+   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script> 
+   <script type="text/javascript" src="<c:url value='/js/jquery.tableManaged.js'/>"></script>
+   <!--<script type="text/javascript" src="<c:url value='/js/jquery-1.11.0.min.js'/>"></script>--> 
+   
+   <!--<script src="<c:url value='/plugins/jqvmap/jquery-jvectormap-2.0.3.min.js'/>" type="text/javascript"></script>-->
+   <!--<script src="<c:url value='/plugins/jqvmap/jquery-jvectormap-cn-mill.js'/>" type="text/javascript"></script>-->
+   <script src="<c:url value='/plugins/jqvmap/jqvmap/jquery.vmap.js'/>" type="text/javascript"></script>
+   <script src="<c:url value='/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js'/>" type="text/javascript"></script>
+   <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script> 
+   <script type="text/javascript" src="<c:url value='/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js'/>" ></script>
+   <script type="text/javascript" src="<c:url value='/plugins/bootstrap/js/locales/bootstrap.js'/>"></script>
+   
+    <!-- END PAGE LEVEL SCRIPTS -->  
 
    <script type="text/javascript">
       jQuery(document).ready(function() {    
@@ -127,7 +189,179 @@
          Index.initPeityElements();
          Index.initKnowElements();
          Index.initDashboardDaterange();
+
       });
+      
+      $('#dtBegin').datepicker({format: 'yyyy-mm-dd'});
+      $('#dtEnd').datepicker({format: 'yyyy-mm-dd'});
+      
+      
+      var myChart = echarts.init(document.getElementById('main')); 
+      
+      var option = {
+    		    title : {
+    		        text: '全国销售额统计',
+    		        //subtext: '时间',
+    		        x:'center'
+    		    },
+    		    tooltip : {
+    		        trigger: 'item'
+    		    },
+    		    legend: {
+    		        orient: 'vertical',
+    		        x:'left',
+    		        data:['地区总销售额（元）']
+    		    },
+    		    dataRange: {
+    		        min: 0,
+    		        max: 2500,
+    		        x: 'left',
+    		        y: 'bottom',
+    		        text:['高','低'],           // 文本，默认为数值文本
+    		        calculable : true
+    		    },
+    		    toolbox: {
+    		        show: true,
+    		        orient : 'vertical',
+    		        x: 'right',
+    		        y: 'center',
+    		        feature : {
+    		            mark : {show: true},
+    		            dataView : {show: true, readOnly: false},
+    		            restore : {show: true},
+    		            saveAsImage : {show: true}
+    		        }
+    		    },
+    		    roamController: {
+    		        show: true,
+    		        x: 'right',
+    		        mapTypeControl: {
+    		            'china': true
+    		        }
+    		    },
+    		    series : [
+    		        {
+    		            name: '地区总销售额（元）',
+    		            type: 'map',
+    		            mapType: 'china',
+    		            roam: false,
+    		            itemStyle:{
+    		                normal:{label:{show:true}},
+    		                emphasis:{label:{show:true}}
+    		            },
+    		            data:[
+    		                
+    		            ]
+    		        }
+    		        
+    		    ]
+    		};
+
+      // 为echarts对象加载数据 
+      myChart.setOption(option); 
+      
+      function getresult(){
+    	  //var curTime = new Date();
+    	  var startTime = document.getElementById("dtBegin").value;
+    	  var endTime = document.getElementById("dtEnd").value;
+    	
+    	  var start = new Date(Date.parse(startTime));
+    	  var end = new Date(Date.parse(endTime));
+	  //alert(start);
+    	  if(end<=start) alert("结束日期必须大于开始日期！");
+    	  else{
+      //通过Ajax获取数据  
+      $.ajax({  
+          type : "get",
+          contentType: "application/json",
+          async : false, //异步执行  
+          url : "../sales/regioncollect/"+start+"/"+end,
+          dataType : "json", //返回数据形式为json  
+          success : function(result) {
+              //请求成功时执行该函数内容，result即为服务器返回的json对象
+              if (result) {
+            		  var json = [];
+                      for (var i=0;i<result.length;i++){
+                          var j = {};
+                          j.name = result[i].province;
+                          j.value = result[i].salesamount;
+                          
+                          json.push(j);
+                      }
+                      var dataset = JSON.stringify(json);
+                      var datas = eval('('+dataset+')');
+                      myChart.setOption(
+                    		  {
+                      		    title : {
+                      		        text: '全国销售额统计',
+                      		        //subtext: '时间',
+                      		        x:'center'
+                      		    },
+                      		    tooltip : {
+                      		        trigger: 'item'
+                      		    },
+                      		    legend: {
+                      		        orient: 'vertical',
+                      		        x:'left',
+                      		        data:['地区总销售额（元）']
+                      		    },
+                      		    dataRange: {
+                      		        min: 0,
+                      		        max: 2500,
+                      		        x: 'left',
+                      		        y: 'bottom',
+                      		        text:['高','低'],           // 文本，默认为数值文本
+                      		        calculable : true
+                      		    },
+                      		    toolbox: {
+                      		        show: true,
+                      		        orient : 'vertical',
+                      		        x: 'right',
+                      		        y: 'center',
+                      		        feature : {
+                      		            mark : {show: true},
+                      		            dataView : {show: true, readOnly: false},
+                      		            restore : {show: true},
+                      		            saveAsImage : {show: true}
+                      		        }
+                      		    },
+                      		    roamController: {
+                      		        show: true,
+                      		        x: 'right',
+                      		        mapTypeControl: {
+                      		            'china': true
+                      		        }
+                      		    },
+                      		    series : [
+                      		        {
+                      		            name: '地区总销售额（元）',
+                      		            type: 'map',
+                      		            mapType: 'china',
+                      		            roam: false,
+                      		            itemStyle:{
+                      		                normal:{label:{show:true}},
+                      		                emphasis:{label:{show:true}}
+                      		            },
+                      		            data:datas
+                      		            
+                      		        }
+                      		        
+                      		    ]
+                      		}
+                    		  );
+            	  
+            	  }
+              		   
+              		   
+         },  
+          error : function(errorMsg) {  
+              alert("请求数据失败");  
+          }  
+      });
+    	  }
+      }
+  
+    //  $('#maps').vectorMap({map:'cn_mill'});
    </script>
    <!-- END JAVASCRIPTS -->
 </body>

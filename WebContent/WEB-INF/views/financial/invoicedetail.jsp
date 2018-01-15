@@ -28,7 +28,8 @@
    <script type="text/javascript" src="<c:url value='/plugins/data-tables/DT_bootstrap.js'/>"></script>
    <script type="text/javascript" src="<c:url value='/plugins/uniform/jquery.uniform.min.js'/>"></script>
    <script type="text/javascript" src="<c:url value='/js/jquery.toolbarlite.js?ver=10'/>"></script> 
-   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script> 
+   <script type="text/javascript" src="<c:url value='/js/app.js'/>"></script>
+   <script type="text/javascript" src="<c:url value='/js/jquery-1.11.0.min.js'/>"></script> 
    <script type="text/javascript" src="<c:url value='/js/jquery.tableManaged.js'/>"></script>
    <!-- END PAGE LEVEL SCRIPTS -->
 
@@ -125,42 +126,43 @@
                      <div class="table-toolbar"></div>
                      <div class="dataTables_wrapper form-inline" role="grid">
 	                     <div class="table-scrollable">
-		                     <table class="table table-striped table-binvoiceed table-hover" id="data-table">
+		                     <table class="table table-striped table-bordered table-hover" id="data-table">
 		                        <thead>
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
-		                              <th>发票明细编号</th>
-		                              <th>产品编号</th>
-		                              <th>产品名称</th>
-		                              <th>数量</th>
-		                              		                             
+		                              <th>发票编号</th>
+		                              <th>配件编号</th>
+		                              <th>配件名称</th>
+		                              <th>原厂编号</th>
+		                              <th>数量</th>                          
 		                              <th>单价</th>
 		                              <th>总价</th>
-		                              <th>备注</th>
+		                        
 		                           </tr>
 		                        </thead>
 		                        <tbody>
-		                        	<c:forEach items="${contentdetailModel.items}" var="item">
+		                        	<c:forEach items="${contentModel.items}" var="item">
 							        <tr class="odd gradeX">
 							        	<td class="check_cell">
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
-							            <td>${item.invoicedetailId}</td>
+							            <td>${item.invoiceId}</td>
 							            <td>${item.productId}</td>
 							            <td>${item.productName}</td>
-							            <td>${item.amount}</td>
-							           
-							            <td>${item.unitPrice}</td>
-							            <td>${item.totalPrice}</td>							            
-							            <td>${item.note}</td>
+							            <td>${item.factoryId}</td>
+							            <td>${item.num}</td>
+							            <td>${item.price}</td>							            
+							            <td>${item.money}</td>
+							            
+							            
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
 		                     </table>
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
-	        				<c:param name="pageModelName" value="contentdetailModel"/>
-	        				<c:param name="urlAddress" value="/financial/invoicedetail"/>
+	        				<c:param name="pageModelName" value="contentModel"/>
+	        				<c:param name="urlAddress" value="/financial/invoicedetail/${id}"/>
 	       				 </c:import>
        				 </div>
                   </div>
@@ -183,23 +185,9 @@
    	  $(function() {   
          App.init();
          
-         $("#data-table").tableManaged();
          
-         $(".table-toolbar").toolbarLite({
-             items: [
-            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "../invoicedetailadd/"+document.getElementById("invoiceId").value},
-                 { splitter: true }, 
-                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productedit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true },                  
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/basedata/productdelete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
-             ]
-         });
       });
-   	  function returntoinvoice(){
-   		  window.close();
-   	  }
+   	  
    	  
    </script>
    <!-- END JAVASCRIPTS -->   

@@ -8,16 +8,16 @@ import com.infrastructure.project.base.model.impl.EnableEntity;
 
 public class Cuikuan extends EnableEntity<Integer> implements ICUDEable{
 //催款单
+	private String invoiceId;
 	private String cuikuanId;
 	private String deliverId;
-	private String cuikuanObjection;
+	private int cuikuanObjection;
 	private String customerId;
 	private String orderId;
-	private Date orderReceiveDate;
+	private Calendar orderReceiveDate;
 	private double amountMoney;
 	private String orderdetailid;
 	private Calendar createTime;
-	private Date receiveDate;
 	private String remark;
 	private String status;
 	public String getCuikuanId() {
@@ -32,10 +32,10 @@ public class Cuikuan extends EnableEntity<Integer> implements ICUDEable{
 	public void setDeliverId(String deliverId) {
 		this.deliverId = deliverId;
 	}
-	public String getCuikuanObjection() {
+	public int getCuikuanObjection() {
 		return cuikuanObjection;
 	}
-	public void setCuikuanObjection(String cuikuanObjection) {
+	public void setCuikuanObjection(int cuikuanObjection) {
 		this.cuikuanObjection = cuikuanObjection;
 	}
 	public String getCustomerId() {
@@ -50,10 +50,10 @@ public class Cuikuan extends EnableEntity<Integer> implements ICUDEable{
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
-	public Date getOrderReceiveDate() {
+	public Calendar getOrderReceiveDate() {
 		return orderReceiveDate;
 	}
-	public void setOrderReceiveDate(Date orderReceiveDate) {
+	public void setOrderReceiveDate(Calendar orderReceiveDate) {
 		this.orderReceiveDate = orderReceiveDate;
 	}
 	public double getAmountMoney() {
@@ -74,12 +74,6 @@ public class Cuikuan extends EnableEntity<Integer> implements ICUDEable{
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
 	}
-	public Date getReceiveDate() {
-		return receiveDate;
-	}
-	public void setReceiveDate(Date receiveDate) {
-		this.receiveDate = receiveDate;
-	}
 	public String getRemark() {
 		return remark;
 	}
@@ -91,6 +85,12 @@ public class Cuikuan extends EnableEntity<Integer> implements ICUDEable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getInvoiceId() {
+		return invoiceId;
+	}
+	public void setInvoiceId(String invoiceId) {
+		this.invoiceId = invoiceId;
 	}
 	
 	

@@ -57,7 +57,7 @@ public class InventoryService extends EnableEntityService<Integer, Inventory, II
 		}
 
         listCriteria.setFirstResult((pageNo-1)*pageSize);  
-        listCriteria.setMaxResults(pageSize);
+        //listCriteria.setMaxResults(pageSize);
         List<Inventory> items = listCriteria.list();
         System.out.println(items.size());
         List<Inventory> items_final = new ArrayList<>();

@@ -109,9 +109,9 @@
                         <div class="form-actions fluid">
                            <div class="col-md-offset-4 col-md-6">
                               <!--<button type="button" class="btn btn-success" onclick="Orderfigure()">刷新总金额</button>-->
-                              <button type="button" class="btn btn-success" onclick="Orderdetail()">增加明细</button>
-                              <button type="button" class="btn btn-success" onclick="saveOrder()">保存</button>
-                              <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>                              
+                              <button type="button" class="btn btn-success" onclick="purchaseDetail()">增加明细</button>
+                              <button type="submit" class="btn btn-success">保存</button>
+                              <button type="button" class="btn btn-success" onclick="window.self.location='/AMC/purchase/purchaseorder'">返回</button>                              
                            </div>
                         	</div>
                      
@@ -137,13 +137,13 @@
    	  $(function() {   
          App.init();
       });
-   	  function Orderdetail(){
+   	  function purchaseDetail(){
    		  var orderId = document.getElementById("orderId").value;
-   		  window.location.href = '../sales/orderdetail/'+orderId;
+   		  window.location.href = '../purchase/purchasedetail/'+orderId;
    	  }
-   	function saveOrder(){
+   	  /*function saveOrder(){
    		document.getElementById("orderinfo").submit();
- 	  }
+ 	  }*/
    	  //function Orderfigure(){
    	//	var orderId = document.getElementById("orderId").value;
    	//	window.location.href = '../sales/orderfigure/'+orderId; 

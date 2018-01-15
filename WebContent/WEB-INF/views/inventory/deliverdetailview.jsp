@@ -130,7 +130,7 @@
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>发货单编号</th>
-		                              <th>序号</th>
+		                              <th>发货单明细编号</th>
 		                              <th>配件编号</th>
 		                              <th>名称</th>
 		                              <th>原厂编号</th>		                             
@@ -146,8 +146,8 @@
 							        	<td class="check_cell">
 									        <input type="checkbox" class="checkboxes" name="id" value="${item.id}" />
 									    </td>
-							            <td>${item.deliverId}</td>
-							            <td>${item.no}</td>
+										<td>${item.deliverId}</td>
+							            <td>${item.deliverdetailId}</td>
 							            <td>${item.productId}</td>
 							            <td>${item.productName}</td>
 							            <td>${item.factoryId}</td>

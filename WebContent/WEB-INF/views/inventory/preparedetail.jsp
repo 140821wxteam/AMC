@@ -171,7 +171,7 @@
 							            <c:if test="${item.status eq '已备货'}">
 							            		<td style="color:green;">${item.status}</td>
 							            </c:if>
-							            <c:if test="${item.status eq '已发货'}">
+							            <c:if test="${item.status eq '已生成发货单'}">
 							            		<td style="color:blue;">${item.status}</td>
 							            </c:if>
 							            
@@ -184,7 +184,7 @@
 	                     
 	                     <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/inventory/preparedetail"/>
+	        				<c:param name="urlAddress" value="/inventory/preparedetail/${id}"/>
 	       				 </c:import>
        				 </div>
                   </div>

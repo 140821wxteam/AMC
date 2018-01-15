@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,10 +27,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.amc.model.models.Orderdetail;
+=======
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 
 import com.amc.model.models.Inventory;
 import com.amc.model.models.Order;
@@ -44,6 +50,7 @@ import com.amc.service.interfaces.IOutofstockdetailService;
 import com.amc.service.services.OrderService;
 import com.amc.model.models.Prepare;
 import com.amc.model.models.Preparedetail;
+import com.amc.model.models.Product;
 import com.amc.service.interfaces.IInventoryService;
 import com.amc.service.interfaces.IOrderService;
 import com.amc.service.interfaces.IOutofstockService;
@@ -52,10 +59,14 @@ import com.amc.web.auth.AccountAuth;
 
 import com.amc.web.auth.AuthPassport;
 import com.amc.web.jsonmodels.OrderdetailJson;
+<<<<<<< HEAD
 import com.amc.web.jsonmodels.OrderdetailJson;
 import com.amc.web.models.DeliverSearchModel;
 import com.amc.web.models.InventorySearchModel;
 import com.amc.web.models.OrderdetailSearchModel;
+=======
+import com.amc.web.jsonmodels.RegionsalesJson;
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 import com.amc.web.models.OrderEditModel;
 import com.amc.web.models.OrderSearchModel;
 import com.amc.web.models.OrderdetailSearchModel;
@@ -129,23 +140,42 @@ public class OrderController extends BaseController{
 	
 	
 	//返回按钮
-	/*@AuthPassport
-	@RequestMapping(value = "/orderaddnew/{orderId}", method = RequestMethod.GET)
-	public String orderaddreturn(HttpServletRequest request, Model model,@PathVariable(value="orderId") String orderId){	
+	//@AuthPassport
+/*	@RequestMapping(value = "/returnorderaddnew", method = RequestMethod.GET)
+	public String orderaddreturn(HttpServletRequest request, Model model,@RequestParam(value="getorderId") String orderId){	
 		if(!model.containsAttribute("contentModel")){
-			OrderEditModel orderEditModel = new OrderEditModel();
-			
-	        
+			OrderEditModel orderEditModel = new OrderEditModel();	        
 			orderEditModel.setorderId(orderId);
 			model.addAttribute("contentModel", orderEditModel);
-		}
-		if(!model.containsAttribute("contentdetailModel")){
-			OrderdetailEditModel orderdetailEditModel = new OrderdetailEditModel();
-			model.addAttribute("contentdetailModel", orderdetailEditModel);
+			model.addAttribute("customerIds",customerService.listcustomersId());
 		}
 		
         return "sales/orderaddnew";	
+	}
+	
+	@RequestMapping(value="/returnorderaddnew", method = {RequestMethod.POST})	
+	public String orderaddreturnadd(HttpServletRequest request, Model model,@Valid @ModelAttribute("contentModel") OrderEditModel orderEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
+		orderEditModel.setcreateTime(Calendar.getInstance());
+		orderEditModel.setstatus("未完成");
+		System.out.println("orderId"+orderEditModel.getorderId());
+		//String orderId=orderEditModel.getorderId().split(",")[0];
+		String orderId=orderEditModel.getorderId();
+		double tp=0.0;
+		List<Orderdetail> lists=orderdetailService.listAll();
+		
+		for(Orderdetail od:lists) {
+			if(od.getorderId().equals(orderId))
+			tp+=od.gettotalPrice();
+		}
+		orderEditModel.settotalPrice(tp);
+		orderEditModel.setorderId(orderId);
+		orderService.saveOrder(OrderModelExtension.toOrder(orderEditModel));
+		
+		return "redirect:order";	
+    
 	}*/
+	
+	
 	@RequestMapping(value="/orderaddnew", method = {RequestMethod.POST})	
 	public String orderadd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") OrderEditModel orderEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
 		orderEditModel.setcreateTime(Calendar.getInstance());
@@ -256,7 +286,7 @@ public class OrderController extends BaseController{
 		for(Order o:lists) {
 			if(o.getId()==id) {
 				orderId=o.getorderId();
-				if(o.getstatus().equals("审核通过")||o.getstatus().equals("已退回")||o.getstatus().equals("已处理")) {
+				if(o.getstatus().equals("审核通过")||o.getstatus().equals("已退回")||o.getstatus().equals("已处理")||o.getstatus().equals("仍有缺货")) {
 					response.setContentType("text/html; charset=UTF-8");
 					PrintWriter out = response.getWriter();
 					out.flush();
@@ -267,27 +297,29 @@ public class OrderController extends BaseController{
 				}else {
 					o.setstatus("已退回");
 					orderService.updateOrder(o);
+					
+					List<Orderdetail> details=orderdetailService.listAll();
+					
+					for(Orderdetail od:details) {
+						if(od.getorderId().equals(orderId))
+						{
+							if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")||od.getstatus().equals("仍有缺货")) {
+								break;
+							}
+							od.setstatus("已退回");
+							orderdetailService.updateOrderdetail(od);
+						}
+							
+					}
+					String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+					if(returnUrl==null)
+			        	returnUrl="sales/order";
+			        return "redirect:"+returnUrl;
 				}
 			}
 		}
-		
-		List<Orderdetail> details=orderdetailService.listAll();
-		
-		for(Orderdetail od:details) {
-			if(od.getorderId().equals(orderId))
-			{
-				if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")) {
-					break;
-				}
-				od.setstatus("已退回");
-				orderdetailService.updateOrderdetail(od);
-			}
-				
-		}
-		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-		if(returnUrl==null)
-        	returnUrl="sales/order";
-        return "redirect:"+returnUrl;	
+		return "sales/order";
+			
 	
 	}
 	
@@ -300,7 +332,7 @@ public class OrderController extends BaseController{
 			for(Order o:lists) {
 				if(o.getId()==id) {
 					orderId=o.getorderId();
-					if(o.getstatus().equals("审核通过")||o.getstatus().equals("已退回")||o.getstatus().equals("已处理")) {
+					if(o.getstatus().equals("审核通过")||o.getstatus().equals("已退回")||o.getstatus().equals("已处理")||o.getstatus().equals("仍有缺货")) {
 						response.setContentType("text/html; charset=UTF-8");
 						PrintWriter out = response.getWriter();
 						out.flush();
@@ -320,7 +352,7 @@ public class OrderController extends BaseController{
 			for(Orderdetail od:details) {
 				if(od.getorderId().equals(orderId))
 				{
-					if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")) {
+					if(od.getstatus().equals("审核通过")||od.getstatus().equals("已退回")||od.getstatus().equals("已处理")||od.getstatus().equals("仍有缺货")) {
 						break;
 					}
 					od.setstatus("审核通过");
@@ -387,6 +419,8 @@ public class OrderController extends BaseController{
         prepare.setprepareId(prepareId);
         prepare.setorderId(orderId);
         prepare.setcustomerId(customerId);
+        prepare.setreceivePers(customerService.getCustomer(customerId).getcontactPerson());
+        prepare.setreceiveAddr(customerService.getCustomer(customerId).getcustomerAddr());
         prepare.setcreateTime(Calendar.getInstance());
         prepare.setstatus("待备货");
         
@@ -405,7 +439,7 @@ public class OrderController extends BaseController{
 				}
 			}
 		}
-		orderNum = details.size();
+		orderNum = orderdetail_used.size()+fitNum;
 		//System.out.println("orderNum "+orderNum);
 		outofstock.setorderNum(orderNum);
 		prepare.setorderNum(orderNum);
@@ -421,11 +455,14 @@ public class OrderController extends BaseController{
 				fitNum++;
 				//生成备货单，同时修改库存
 				Preparedetail preparedetail = new Preparedetail();
+				List<Product> pl=productService.getproduct(productId);
+				Product p=pl.get(0);
 				preparedetail.setprepareId(prepareId);
-				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
+				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date())+fitNum);
 				preparedetail.setproductId(productId);
 				preparedetail.setproductName(productName);
-				preparedetail.setfactoryId("");//要修改
+				preparedetail.setfactoryId(p.getproductOrigin());//要修改
+				preparedetail.setsize(p.getproductSpecification());
 				preparedetail.setpreparePers("");//要修改
 				preparedetail.setamount(od_used.getquantityDemand()-od_used.getquantitySupplied());
 				preparedetail.setstatus("待备货");
@@ -449,7 +486,7 @@ public class OrderController extends BaseController{
 				partfitNum++;
 				Outofstockdetail outofstockdetail = new Outofstockdetail();
 				outofstockdetail.setoutofstockId(outofstockId);
-				outofstockdetail.setoutofstockdetailId(outofstockId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
+				outofstockdetail.setoutofstockdetailId(outofstockId+"D"+new SimpleDateFormat("HHmmss").format(new Date())+partfitNum);
 				outofstockdetail.setproductId(productId);
 				outofstockdetail.setquantityDemand(od_used.getquantityDemand());
 				outofstockdetail.setquantitySupplied(current_inventoryLevel);
@@ -461,11 +498,14 @@ public class OrderController extends BaseController{
 				
 				//生成备货单，同时修改库存
 				Preparedetail preparedetail = new Preparedetail();
+				List<Product> pl=productService.getproduct(productId);
+				Product p=pl.get(0);
 				preparedetail.setprepareId(prepareId);
-				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
+				preparedetail.setpreparedetailId(prepareId+"D"+new SimpleDateFormat("HHmmss").format(new Date())+partfitNum);
 				preparedetail.setproductId(productId);
 				preparedetail.setproductName(productName);
-				preparedetail.setfactoryId("");//要修改
+				preparedetail.setfactoryId(p.getproductOrigin());//要修改
+				preparedetail.setsize(p.getproductSpecification());
 				preparedetail.setpreparePers("");//要修改
 				preparedetail.setamount(current_inventoryLevel);//ss的关系？
 				preparedetail.setstatus("待备货");
@@ -488,7 +528,7 @@ public class OrderController extends BaseController{
 				outofstockNum++;	
 				Outofstockdetail outofstockdetail = new Outofstockdetail();
 				outofstockdetail.setoutofstockId(outofstockId);
-				outofstockdetail.setoutofstockdetailId(outofstockId+"D"+new SimpleDateFormat("HHmmss").format(new Date()));
+				outofstockdetail.setoutofstockdetailId(outofstockId+"D"+new SimpleDateFormat("HHmmss").format(new Date())+outofstockNum);
 				outofstockdetail.setproductId(productId);
 				outofstockdetail.setquantityDemand(od_used.getquantityDemand());
 				outofstockdetail.setquantitySupplied(current_inventoryLevel);
@@ -529,6 +569,7 @@ public class OrderController extends BaseController{
 	
 	}
 	
+<<<<<<< HEAD
 	
 //	@AuthPassport
 //	@RequestMapping(value="/salepredict", method = {RequestMethod.GET})
@@ -565,6 +606,14 @@ public class OrderController extends BaseController{
 			if(sale.getId()==id) productId=sale.getproductId();
 		}
 		searchModel.setproductId(productId);
+=======
+	@AuthPassport
+	@RequestMapping(value="/listchanging", method = {RequestMethod.GET})
+    public String salechanging(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel){
+    	model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		model.addAttribute("productIds", productService.listproductId());
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
         model.addAttribute("searchModel", searchModel);
         int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
         int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
@@ -673,8 +722,13 @@ public class OrderController extends BaseController{
 //            orderdetailjson.setProductName(productName);
             orderdetailjson.setCreateTime(map.getKey().toString());
             orderdetailjson.setSaleLevel(Integer.parseInt(map.getValue().toString()));
+<<<<<<< HEAD
 //            System.out.println(orderdetailjson.getProductId()+"  "+orderdetailjson.getCreateTime()
 //            +"  "+orderdetailjson.getSaleLevel());
+=======
+            System.out.println(orderdetailjson.getProductId()+"  "+orderdetailjson.getCreateTime()
+            +"  "+orderdetailjson.getSaleLevel());
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
             result.add(orderdetailjson);
         }
         int m=1;
@@ -695,9 +749,12 @@ public class OrderController extends BaseController{
         
         String json = mapper.writeValueAsString(result);    //将list中的对象转换为Json格式的数组
         
+<<<<<<< HEAD
         
         
        
+=======
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
         //将json数据返回给客户端
         response.setContentType("text/html; charset=utf-8");
         response.getWriter().write(json);
@@ -732,6 +789,7 @@ public class OrderController extends BaseController{
 		return predictlist;
 	}
 	
+<<<<<<< HEAD
 	@AuthPassport
 	@RequestMapping(value="/list", method = {RequestMethod.GET})
     public String sales(HttpServletRequest request, Model model, OrderdetailSearchModel searchModel){
@@ -744,4 +802,22 @@ public class OrderController extends BaseController{
         model.addAttribute("contentModel", orderdetailService.listAllPage(searchModel.getproductId(), searchModel.getproductName(), pageNo, pageSize));
         return "sales/list";
     }
+=======
+
+	@RequestMapping(value="/regioncollect/{start}/{end}", method = {RequestMethod.GET})
+	@ResponseBody
+    public void regioncollect(HttpServletRequest request,HttpServletResponse response,@PathVariable("start") Date startTime,@PathVariable("end") Date endTime) throws ParseException, IOException{
+    
+        List<RegionsalesJson> rsjl=orderService.listbyregion(startTime, endTime);
+        System.out.println(rsjl.get(1).getSalesamount());
+        ObjectMapper mapper = new ObjectMapper();    //提供java-json相互转换功能的类
+        
+        String json = mapper.writeValueAsString(rsjl);    //将list中的对象转换为Json格式的数组
+        
+        //将json数据返回给客户端
+        response.setContentType("text/html; charset=utf-8");
+        response.getWriter().write(json);
+    }
+    
+>>>>>>> 1584fb891c2e4c7343a38e9312bfeb1b4db25a82
 }

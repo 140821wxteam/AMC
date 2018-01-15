@@ -1,5 +1,6 @@
 package com.amc.service.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.amc.dao.IOutofstockDao;
 import com.amc.dao.IOutofstockdetailDao;
 import com.amc.model.models.Outofstockdetail;
+import com.amc.model.models.Preparedetail;
 import com.amc.service.interfaces.IOutofstockService;
 import com.amc.service.interfaces.IOutofstockdetailService;
 import com.infrastructure.project.base.service.services.EnableEntityService;
@@ -82,5 +84,17 @@ public class OutofstockdetailService extends EnableEntityService<Integer, Outofs
 		dbModel.setstatus(outofstockdetail.getstatus());
 		dbModel.setnote(outofstockdetail.getnote());
 		super.update(dbModel);
+	}
+	
+	@Override
+	public List<Outofstockdetail> getoutofstockdetaillist(String outofstockId) {
+		List<Outofstockdetail> list = super.listAll();
+		List<Outofstockdetail> details = new ArrayList<>();
+		for(Outofstockdetail od:list) {
+			if(od.getoutofstockId().equals(outofstockId)) {
+				details.add(od);
+			}
+		}
+		return details;
 	}
 }

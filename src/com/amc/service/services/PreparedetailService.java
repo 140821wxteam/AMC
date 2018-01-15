@@ -68,4 +68,16 @@ public class PreparedetailService extends EnableEntityService<Integer, Preparede
 		dbModel.setnote(preparedetail.getnote());
 		super.update(dbModel);
 	}
+
+	@Override
+	public List<Preparedetail> getpreparedetaillist(String prepareId) {
+		List<Preparedetail> list = super.listAll();
+		List<Preparedetail> details = new ArrayList<>();
+		for(Preparedetail pd:list) {
+			if(pd.getprepareId().equals(prepareId)) {
+				details.add(pd);
+			}
+		}
+		return details;
+	}
 }

@@ -2,7 +2,7 @@ package com.amc.web.models;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class InvoicedetailEditModel {
+public class PurchaseDetailEditModel {
 	private Integer id;
 	
 	public void setId(Integer id){
@@ -13,21 +13,20 @@ public class InvoicedetailEditModel {
 		return this.id;
 	}
 	@NotEmpty(message="{name.not.empty}")
-	private String invoicedetailId;
-	private String invoiceId;
+	private String orderdetailId;
+	private String orderId;
 	private String productId;
 	private String productName;
-	private int amount;
+	private int quantity;
 	private double unitPrice;
 	private double totalPrice;
-	private String status;
 	private String note;
 	
-	public void setinvoicedetailId(String invoicedetailId) {
-		this.invoicedetailId = invoicedetailId;
+	public void setorderdetailId(String orderdetailId) {
+		this.orderdetailId = orderdetailId;
 	}
-	public String getinvoicedetailId() {
-		return this.invoicedetailId;
+	public String getorderdetailId() {
+		return this.orderdetailId;
 	}
 	public void setproductId(String productId) {
 		this.productId = productId;
@@ -41,18 +40,17 @@ public class InvoicedetailEditModel {
 	public String getproductName() {
 		return this.productName;
 	}
-	public void setamount(int amount) {
-		this.amount = amount;
+	public void setquantity(int quantity) {
+		this.quantity = quantity;
 	}
-	public int getamount() {
-		return this.amount;
+	public int getquantity() {
+		return this.quantity;
 	}
-	
-	public void setinvoiceId(String invoiceId){
-		this.invoiceId=invoiceId;
+	public void setorderId(String orderId){
+		this.orderId=orderId;
 	}
-	public String getinvoiceId(){
-		return this.invoiceId;
+	public String getorderId(){
+		return this.orderId;
 	}
 	public void setunitPrice(double unitPrice){
 		this.unitPrice=unitPrice;
@@ -65,12 +63,6 @@ public class InvoicedetailEditModel {
 	}
 	public double gettotalPrice(){
 		return this.totalPrice;
-	}
-	public void setstatus(String status){
-		this.status=status;
-	}
-	public String getstatus(){
-		return this.status;
 	}
 	public void setnote(String note){
 		this.note=note;

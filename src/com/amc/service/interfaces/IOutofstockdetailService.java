@@ -2,6 +2,7 @@ package com.amc.service.interfaces;
 
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.amc.dao.IOutofstockDao;
 import com.amc.dao.IOutofstockdetailDao;
@@ -19,4 +20,6 @@ public interface IOutofstockdetailService extends IEnableEntityService<Integer, 
 	public void saveOutofstockdetail(Outofstockdetail outofstockdetail) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
 	
 	public void updateOutofstockdetail(Outofstockdetail outofstockdetail) throws NoSuchAlgorithmException, EntityOperateException, ValidatException;
+	
+	public List<Outofstockdetail> getoutofstockdetaillist(String outofstockId);
 }

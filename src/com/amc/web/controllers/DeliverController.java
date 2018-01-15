@@ -1,5 +1,6 @@
 package com.amc.web.controllers;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.amc.model.models.AccountTable;
+import com.amc.model.models.Cuikuan;
+import com.amc.model.models.CuikuanDetail;
 import com.amc.model.models.Deliver;
+import com.amc.model.models.DeliverDetail;
+import com.amc.model.models.Invoice;
+import com.amc.model.models.Order;
+import com.amc.model.models.Orderdetail;
+import com.amc.model.models.Prepare;
 import com.amc.model.models.Preparedetail;
 import com.amc.service.interfaces.IDeliverService;
 import com.amc.service.interfaces.IPrepareService;
@@ -71,95 +81,84 @@ public class DeliverController extends BaseController{
         return "inventory/deliverlist";
     }
 	
-	
-	
-/*	@AuthPassport
-	@RequestMapping(value="/preparedetail", method = {RequestMethod.GET})
-    public String preparedetail(HttpServletRequest request, Model model, PreparedetailSearchModel searchModel){
-    	model.addAttribute("requestUrl", request.getServletPath());
-		model.addAttribute("requestQuery", request.getQueryString());
+	@AuthPassport
+	@RequestMapping(value = "tocuikuan/{id}", method = {RequestMethod.GET})
+	public String tocuikuan(HttpServletRequest request,HttpServletResponse response, Model model, @PathVariable(value="id") Integer id) throws ValidatException, EntityOperateException, NoSuchAlgorithmException, IOException{	
+		List<Deliver> deliverList=deliverService.listAll();
+		Deliver deliver=new Deliver();
+		Cuikuan cuikuan=new Cuikuan();
+		Prepare prepare=new Prepare();
+		CuikuanDetail cuikuanDetail=new CuikuanDetail();
 
-        model.addAttribute("searchModel", searchModel);
-        int pageNo = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_NO_NAME, PageListUtil.DEFAULT_PAGE_NO);
-        int pageSize = ServletRequestUtils.getIntParameter(request, PageListUtil.PAGE_SIZE_NAME, PageListUtil.DEFAULT_PAGE_SIZE);      
-        model.addAttribute("contentdetailModel", preparedetailService.listPage(searchModel.getpreparedetailId(), pageNo, pageSize));
-        return "inventory/preparedetail";
-    }
-*/	
-	
-/*	@AuthPassport
-	@RequestMapping(value = "/prepareaddnew", method = RequestMethod.GET)
-	public String prepareadd(HttpServletRequest request, Model model) throws NoSuchAlgorithmException, EntityOperateException, ValidatException{	
-		if(!model.containsAttribute("contentModel")){
-			PrepareEditModel prepareEditModel = new PrepareEditModel();
-			//生成订单号
-			String date = new SimpleDateFormat("yyyyMMdd").format(new Date());  
-	        String seconds = new SimpleDateFormat("HHmmss").format(new Date());
-	        
-			prepareEditModel.setprepareId("S"+date+seconds);
-			//double tp=prepareService.Preparefigure("S"+date+seconds);
-			//prepareEditModel.settotalPrice(tp);
-			model.addAttribute("contentModel", prepareEditModel);
-		}
-		
-        return "inventory/prepareaddnew";	
-	}
-	
-	@AuthPassport
-	@RequestMapping(value = "/preparefigure/{prepareId}", method = RequestMethod.GET)
-	public String figure(HttpServletRequest request, Model model,@RequestParam("prepareId") String prepareId,@PathVariable(value="prepareId") String prepareId) throws NoSuchAlgorithmException, EntityOperateException, ValidatException{	
-		if(!model.containsAttribute("contentModel")){
-			PrepareEditModel prepareEditModel = new PrepareEditModel();
-			
-			prepareEditModel.setprepareId(prepareId);
-			List<Preparedetail> list=preparedetailService.list(prepareId);
-			double tp=0;
-			for(Preparedetail od:list) {
-				tp+=od.gettotalPrice();
+		String date = new SimpleDateFormat("yyyyMMdd").format(new Date());  
+        String seconds = new SimpleDateFormat("HHmmss").format(new Date());
+        
+		for(Deliver de:deliverList){
+			if(de.getId()==id){
+				deliver=de;			
 			}
-			prepareEditModel.settotalPrice(tp);
-			model.addAttribute("contentModel", prepareEditModel);
+		}
+		for(Prepare pre:prepareService.listAll()){
+			if(pre.getprepareId().equals(deliver.getPrepareId())){
+				prepare=pre;
+			}
+		}
+		Calendar orderReceiveDate=null;
+		for(Order o:orderService.listAll()){
+			if(o.getorderId().equals(prepare.getorderId())){
+				orderReceiveDate=o.getcreateTime();
+			}
 		}
 		
-        return "inventory/prepareaddnew";	
-	}
-	//返回按钮
-	@AuthPassport
-	@RequestMapping(value = "/prepareaddnew/{prepareId}", method = RequestMethod.GET)
-	public String prepareaddreturn(HttpServletRequest request, Model model,@PathVariable(value="prepareId") String prepareId){	
-		if(!model.containsAttribute("contentModel")){
-			PrepareEditModel prepareEditModel = new PrepareEditModel();
-			
-	        
-			prepareEditModel.setprepareId(prepareId);
-			model.addAttribute("contentModel", prepareEditModel);
+		if(deliver.getDeliverId()!=null){
+			String cuikuanId="CUI"+date+seconds;
+			cuikuan.setCuikuanId(cuikuanId);
+			cuikuan.setDeliverId(deliver.getDeliverId());
+			cuikuan.setCuikuanObjection(1);
+			cuikuan.setCustomerId(prepare.getcustomerId());
+			cuikuan.setOrderId(prepare.getorderId());
+			cuikuan.setOrderReceiveDate(orderReceiveDate);
+			cuikuan.setAmountMoney(deliver.getAmountMoney());
+			Calendar calendar=Calendar.getInstance();
+			cuikuan.setCreateTime(calendar);
+			cuikuan.setStatus("未支付");
+            cuikuanService.save(cuikuan);
+            
+            AccountTable at=new AccountTable();
+            at.setAccounttableId("AT"+date+seconds);
+            at.setCuikuanId(cuikuanId);
+            at.setOrderId(prepare.getorderId());
+            at.setDeliverId(deliver.getDeliverId());
+            at.setCustomerId(prepare.getcustomerId());
+            at.setObjection(1);
+            at.setReceivable(deliver.getAmountMoney());
+            accountTableService.save(at);
+            
+            for(DeliverDetail dd:deliverDetailService.listAll()){
+    			if(dd.getDeliverId().equals(deliver.getDeliverId())){
+    				//deliverDetail=dd;
+    				cuikuanDetail.setCuikuanId(cuikuan.getCuikuanId());
+    	            cuikuanDetail.setProductId(dd.getProductId());
+    	            cuikuanDetail.setProductName(dd.getProductName());
+    	            cuikuanDetail.setFactoryId(dd.getFactoryId());
+    	            cuikuanDetail.setNum(dd.getNum());
+    	            Orderdetail orderdetail = orderdetailService.getorderdetailByoIdpId(deliver.getOrderId(), 
+    	            		dd.getProductId());
+    				double unitPrice = orderdetail.getunitPrice();
+    				cuikuanDetail.setPrice(unitPrice);
+    				cuikuanDetail.setMoney(unitPrice*dd.getNum());
+    				cuikuanDetailService.save(cuikuanDetail);
+    			}
+    		}
+            
+            deliver.setStatus("已处理");
+            deliverService.updateDeliver(deliver);
+            
 		}
-		if(!model.containsAttribute("contentdetailModel")){
-			PreparedetailEditModel preparedetailEditModel = new PreparedetailEditModel();
-			model.addAttribute("contentdetailModel", preparedetailEditModel);
-		}
-		
-        return "inventory/prepareaddnew";	
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		if(returnUrl==null)
+        	returnUrl="inventory/deliverlist";
+        return "redirect:"+returnUrl;	
+	
 	}
-	@RequestMapping(value="/prepareaddnew", method = {RequestMethod.POST})	
-	public String prepareadd(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PrepareEditModel prepareEditModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
-		prepareEditModel.setcreateTime(Calendar.getInstance());
-		prepareEditModel.setstatus("未完成");
-//		String prepareId=prepareEditModel.getprepareId();
-//		double tp=0.0;
-//		List<Preparedetail> lists=preparedetailService.listAll();
-//		
-//		for(Preparedetail od:lists) {
-//			if(od.getprepareId().equals(prepareId))
-//			tp+=od.gettotalPrice();
-//		}
-//		prepareEditModel.setsumPrice(tp);
-//		prepareService.savePrepare(PrepareModelExtension.toPrepare(prepareEditModel));
-//		
-      String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-        if(returnUrl==null)
-        	returnUrl="inventory/prepare";
-    	return "redirect:"+returnUrl; 
-    
-	}*/
 }

@@ -94,11 +94,13 @@ public class CustomerService extends EnableEntityService<Integer, Customers, ICu
 		Customers dbModel=super.get(customer.getId());
 		dbModel.setcustomerId(customer.getcustomerId());
 		dbModel.setcustomerName(customer.getcustomerName());
+		dbModel.setprovince(customer.getprovince());
 		dbModel.setcustomerAddr(customer.getcustomerAddr());
 		dbModel.setcontactPerson(customer.getcontactPerson());
 		dbModel.setcustomerTele(customer.getcustomerTele());
 		dbModel.setcustomerEmail(customer.getcustomerEmail());
 		dbModel.setnote(customer.getnote());
+		dbModel.setreputation(customer.getreputation());
 		super.update(dbModel);
 	}
 
@@ -113,6 +115,47 @@ public class CustomerService extends EnableEntityService<Integer, Customers, ICu
 		}
 		
 		return customersId;
+	}
+	
+	@Override
+	public String listprovince(String customerId) {
+		List<Customers> customers = super.listAll();
+		String province = "";
+		for(Customers c:customers) {
+			if(c.getcustomerId().equals(customerId)) {
+				province = c.getprovince();
+				break;
+			}
+		}
+		
+		return province;
+	}
+	
+	@Override
+	public List<String> listAllprovince() {
+		List<Customers> customers = super.listAll();
+		List<String> provincelist = new ArrayList<>();
+		for(Customers c:customers) {
+			if(!provincelist.contains(c.getprovince())) {
+				provincelist.add(c.getprovince());
+			}
+		}
+		
+		return provincelist;
+	}
+
+	@Override
+	public Customers getCustomer(String customerId) {
+		List<Customers> list = super.listAll();
+		Customers customer =new Customers();
+		for(Customers c:list) {
+			if(c.getcustomerId().equals(customerId)) {
+				customer = c;
+				break;
+			}
+				
+		}
+		return customer;
 	}
 
 }

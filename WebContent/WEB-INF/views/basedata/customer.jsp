@@ -137,11 +137,13 @@
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>顾客编号</th>
 		                              <th >顾客名称</th>
+		                              <th >所属省份</th>
 		                              <th >顾客地址</th>
 		                              <th >顾客联系人</th>
 		                              <th >顾客联系电话</th>
 		                              <th >顾客邮箱</th>
 		                              <th >备注</th>
+		                              <th >信用情况</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -152,11 +154,13 @@
 									    </td>
 							            <td>${item.customerId}</td>
 							            <td>${item.customerName}</td>
+							            <td>${item.province}</td>
 							            <td>${item.customerAddr}</td>
 							            <td>${item.contactPerson}</td>
 							            <td>${item.customerTele}</td>
 							            <td>${item.customerEmail}</td>
 							            <td>${item.note}</td>
+							            <td>${item.reputation}</td>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>

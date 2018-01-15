@@ -10,7 +10,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta charset="utf-8" />
-   <title>AMC | 顾客档案信息</title>
+   <title>AMC | 采购订单管理</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -57,7 +57,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  AMC <small>顾客档案信息</small>
+                  AMC <small>${requestScope.permissionMenu.subName}</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -75,11 +75,13 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
+         
+         
          <!-- BEGIN PAGE CONTENT-->
          <div class="row">
             <div class="col-md-12">
             
-				<div class="portlet box light-grey">
+				<div class="portlet box light-grey"  style="display:none">
 				   <div class="portlet-title">
 					  <div class="caption"><i class="icon-search"></i>数据检索</div>
 				   </div>
@@ -90,29 +92,21 @@
 							<div class="row">
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">姓名</label>
+									 <label class="control-label col-md-3">订单编号</label>
 									 <div class="col-md-9">
-										<form:input path="name" class="form-control placeholder-no-fix" autocomplete="off" placeholder="姓名"/>
+										<form:input readonly="readonly" UNSELECTABLE="on" path="orderId" id="orderId" class="form-control placeholder-no-fix" autocomplete="off" placeholder="订单编号"/>
 									 </div>
 								  </div>
 							   </div>
-							   <!--/span-->
-							   <div class="col-md-6">
-								  <div class="form-group">
-									 <label class="control-label col-md-3">用户名</label>
-									 <div class="col-md-9">
-										<form:input path="username" class="form-control placeholder-no-fix" autocomplete="off" placeholder="用户名"/>
-									 </div>
-								  </div>
-							   </div>
-							   <!--/span-->
+							   
 							</div>
 						 </div>
 						 <div class="form-actions">
 							<div class="row">
 							   <div class="col-md-12">
 								  <div class="col-md-offset-5">
-									 <button type="submit" class="btn btn-success">搜索</button>                            
+									 <button type="button" class="btn btn-success" onclick="javascript:history.back(-1);">返回</button>
+									                            
 								  </div>
 							   </div>
 							</div>
@@ -135,36 +129,43 @@
 		                        <thead>
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
-		                              <th>姓名</th>
-		                              <th >邮箱</th>
-		                              <th >是否可用</th>
-		                              <th >用户名</th>
-		                              <th >注册时间</th>
+		                              <th>订单明细编号</th>
+		                              <th>产品编号</th>
+		                              <th>产品名称</th>
+		                              <th>订购数量</th>	                             
+		                              <th>单价</th>
+		                              <th>总价</th>
+		                              <th>备注</th>
 		                           </tr>
 		                        </thead>
 		                        <tbody>
-		                        	<c:forEach items="${contentModel.items}" var="item">
+		                        	<c:forEach items="${contentdetailModel.items}" var="item">
 							        <tr class="odd gradeX">
 							        	<td class="check_cell">
-									        <input type="checkbox" class="checkboxes" name="Id" value="${ item.id }" />
+									        <input type="checkbox" class="checkboxes" name="id" value="${item.orderdetailId}" />
 									    </td>
-							            <td>${ item.name }</td>
-							            <td>${ item.email }</td>
-							            <td>${ item.enable }</td>
-							            <td>${ item.username }</td>
-							            <td>${ item.registerTime.getTime().toLocaleString() }</td>
+							            <td id="orderdetailId">${item.orderdetailId}</td>
+							            <td>${item.productId}</td>
+							            <td>${item.productName}</td>
+							            <td>${item.quantity}</td>
+							            <td>${item.unitPrice}</td>
+							            <td>${item.totalPrice}</td>							            
+							            <td>${item.note}</td>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
 		                     </table>
 	                     </div>
 	                     <c:import url = "../shared/paging.jsp">
-	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/account/list"/>
+	        				<c:param name="pageModelName" value="contentdetailModel"/>
+	        				<c:param name="urlAddress" value="/purchase/purchasedetail"/>
 	       				 </c:import>
        				 </div>
                   </div>
                </div>
+               <div class="text-center">
+				 <button type="button" class="btn btn-success" onclick="javascript:history.go(-1);">返回</button>
+			   </div>
                <!-- END EXAMPLE TABLE PORTLET-->
                
             </div>
@@ -176,7 +177,7 @@
    <!-- END CONTAINER -->
    <%@ include file="../shared/pageFooter.jsp"%>
      
-   <script type="text/javascript">
+  <script type="text/javascript">
    	  $(function() {   
          App.init();
          
@@ -184,19 +185,20 @@
          
          $(".table-toolbar").toolbarLite({
              items: [
-                 { link: true, display: "启用", css: "icon-ok", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/account/enable/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>",
-                	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+            	 { link: true, display: "新建", css: "icon-plus", showIcon: true, url: "../purchasedetailadd/"+document.getElementById("orderId").value},
                  { splitter: true }, 
-                 { link: true, display: "禁用", css: "icon-remove", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/account/disable/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                 	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true }, 
-                 { link: true, display: "账户绑定", css: "icon-user", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/account/authorize/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/account/delete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+                 { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "../purchasedetailedit/{0}", 
+                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                 { splitter: true },                  
+                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "../purchasedetaildelete/{0}", 
+                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
              ]
          });
       });
+   	  function returntoorder(){
+   		  window.close();
+   	  }
+   	  
    </script>
    <!-- END JAVASCRIPTS -->   
 </body>

@@ -121,7 +121,6 @@ public class DeliverService extends EnableEntityService<Integer, Deliver, IDeliv
 		Deliver dbModel=super.get(deliver.getId());
 		dbModel.setDeliverId(deliver.getDeliverId());
 		dbModel.setPrepareId(deliver.getPrepareId());
-		dbModel.setDeliverDetailId(deliver.getDeliverDetailId());
 		dbModel.setCreateTime(deliver.getCreateTime());
 		dbModel.setAmountMoney(deliver.getAmountMoney());
 		dbModel.setRemark(deliver.getRemark());

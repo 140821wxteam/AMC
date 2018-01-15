@@ -11,7 +11,6 @@ public class Deliver extends EnableEntity<Integer> implements ICUDEable{
 	private String prepareId;
 	private String customerId;
 	private String orderId;
-	private String deliverDetailId;
 	private Calendar createTime;
 	private String receivePers;
 	private String receiveAddr;
@@ -30,12 +29,6 @@ public class Deliver extends EnableEntity<Integer> implements ICUDEable{
 	}
 	public void setPrepareId(String prepareId) {
 		this.prepareId = prepareId;
-	}
-	public String getDeliverDetailId() {
-		return deliverDetailId;
-	}
-	public void setDeliverDetailId(String deliverDetailId) {
-		this.deliverDetailId = deliverDetailId;
 	}
 	public Calendar getCreateTime() {
 		return createTime;

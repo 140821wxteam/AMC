@@ -1,6 +1,8 @@
 package com.amc.web.controllers;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -55,9 +57,22 @@ public class CustomerController extends BaseController{
 	
 	@AuthPassport
 	@RequestMapping(value = "/customeradd", method = RequestMethod.GET)
-	public String customeradd(HttpServletRequest request, Model model){	
+	public String customeradd(HttpServletRequest request, Model model){
+		List<String> provinces = new ArrayList<>();
+		provinces.add("北京");provinces.add("天津");provinces.add("上海");
+		provinces.add("重庆");provinces.add("河北");provinces.add("河南");
+		provinces.add("云南");provinces.add("辽宁");provinces.add("黑龙江");
+		provinces.add("湖南");provinces.add("安徽");provinces.add("山东");
+		provinces.add("新疆");provinces.add("江苏");provinces.add("浙江");
+		provinces.add("江西");provinces.add("湖北");provinces.add("广西");
+		provinces.add("甘肃");provinces.add("陕西");provinces.add("山西");
+		provinces.add("内蒙古");provinces.add("吉林");provinces.add("福建");
+		provinces.add("贵州");provinces.add("广东");provinces.add("青海");
+		provinces.add("西藏");provinces.add("四川");provinces.add("宁夏");
+		provinces.add("海南");provinces.add("台湾");provinces.add("香港");provinces.add("澳门");
 		if(!model.containsAttribute("contentModel")){
 			model.addAttribute("contentModel", new CustomersEditModel());
+			model.addAttribute("provinces", provinces);
 		}
         return "basedata/customeradd";	
 	}
@@ -93,9 +108,22 @@ public class CustomerController extends BaseController{
 	@AuthPassport
 	@RequestMapping(value = "/customeredit/{id}", method = {RequestMethod.GET})
 	public String customeredit(HttpServletRequest request, Model model, @PathVariable(value="id") Integer id) throws ValidatException{	
+		List<String> provinces = new ArrayList<>();
+		provinces.add("北京");provinces.add("天津");provinces.add("上海");
+		provinces.add("重庆");provinces.add("河北");provinces.add("河南");
+		provinces.add("云南");provinces.add("辽宁");provinces.add("黑龙江");
+		provinces.add("湖南");provinces.add("安徽");provinces.add("山东");
+		provinces.add("新疆");provinces.add("江苏");provinces.add("浙江");
+		provinces.add("江西");provinces.add("湖北");provinces.add("广西");
+		provinces.add("甘肃");provinces.add("陕西");provinces.add("山西");
+		provinces.add("内蒙古");provinces.add("吉林");provinces.add("福建");
+		provinces.add("贵州");provinces.add("广东");provinces.add("青海");
+		provinces.add("西藏");provinces.add("四川");provinces.add("宁夏");
+		provinces.add("海南");provinces.add("台湾");provinces.add("香港");provinces.add("澳门");
 		if(!model.containsAttribute("contentModel")){
 			CustomersEditModel customerEditModel=CustomerModelExtension.toCustomerEditModel(customerService.get(id));
 			model.addAttribute("contentModel", customerEditModel);
+			model.addAttribute("provinces", provinces);
 		}
 
         return "basedata/customeredit";	

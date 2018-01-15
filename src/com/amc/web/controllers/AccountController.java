@@ -210,7 +210,7 @@ public class AccountController extends BaseController {
         return "redirect:"+returnUrl;	
 	}
 	
-	@AuthPassport
+	//@AuthPassport
 	@RequestMapping(value = "/accountdisable/{id}", method = {RequestMethod.GET})
     public String accountdisable(HttpServletRequest request, @PathVariable(value="id") Integer id) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
 		
@@ -223,7 +223,7 @@ public class AccountController extends BaseController {
     	return "redirect:"+returnUrl;    
     }
 	
-	@AuthPassport
+	//@AuthPassport
 	@RequestMapping(value = "/accountenable/{id}", method = {RequestMethod.GET})
     public String accountenable(HttpServletRequest request, @PathVariable(value="id") Integer id) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {
 		
