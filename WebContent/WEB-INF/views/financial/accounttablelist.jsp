@@ -157,10 +157,10 @@
 							            <td>${item.accounttableId}</td>
 							            <td>${item.orderId}</td>
 							            <td>${item.customerId}</td>
-							            <td>${item.receivable}</td>
-							            <td>${item.salesBusiness}</td>
-							            <td>${item.payable}</td>
-							            <td>${item.purchaseBusiness}</td>
+							            <td style="color:red;">${item.receivable}</td>
+							            <td style="color:green;">${item.salesBusiness}</td>
+							            <td style="color:red;">${item.payable}</td>
+							            <td style="color:green;">${item.purchaseBusiness}</td>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
